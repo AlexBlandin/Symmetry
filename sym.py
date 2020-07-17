@@ -6,7 +6,7 @@ from psutil import Process
 from tqdm import tqdm
 
 def main():
-  MAX_N = 1000 # How big the board we should search up to
+  MAX_N = 100 # How big the board we should search up to
   k = 2 # how many Queens to place / branch on
   
   table = [["N", "orbits", "quotient"]]
@@ -39,7 +39,7 @@ def main():
       quotient = sumorbit/len(T) if len(T) else 0.0
       table.append([N, sumorbit, quotient])
 
-  with open("./dataedge.txt", mode="w") as o: o.write(tabulate(table, headers="firstrow", floatfmt=["d","d",".8f"]))
+  with open("./data.txt", mode="w") as o: o.write(tabulate(table, headers="firstrow", floatfmt=["d","d",".8f"]))
 
 def orbits(points):
   # from one set generate the orbits as a set of frozen sets
