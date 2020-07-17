@@ -13,8 +13,8 @@
 - [tqdm 4.30.0+](https://pypi.org/project/tqdm/)
   - [colorama 0.4.3+](https://pypi.org/project/colorama/) on Windows
 
-Or either of:
-- [poetry 0.12+](https://github.com/python-poetry/poetry)
+Or a package manager, such as either of:
+- [Poetry 0.12+](https://github.com/python-poetry/poetry)
 - [UPM 1.0.0+](https://github.com/replit/upm) includes `poetry`
 
 To install requirements:
