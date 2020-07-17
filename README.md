@@ -6,14 +6,13 @@
   - [pip 20.0.1+](https://pypi.org/project/pip/) is standard fare
   - [wheel 0.34.0+](https://pypi.org/project/wheel/) is standard fare
   - [setuptools 48.0.0+](https://pypi.org/project/setuptools/) is standard fare
-  - [requests 2.18+](https://pypi.org/project/requests/) required for `poetry install`
 - [humanize 2.0.0+](https://pypi.org/project/humanize/)
 - [psutil 5.0.0+](https://pypi.org/project/psutil/)
 - [tabulate 0.8.1+](https://pypi.org/project/tabulate/)
 - [tqdm 4.30.0+](https://pypi.org/project/tqdm/)
   - [colorama 0.4.3+](https://pypi.org/project/colorama/) on Windows
 
-Or, you can use a package manager such as [Poetry 0.12+](https://github.com/python-poetry/poetry) (which requires [requests 2.18+](https://pypi.org/project/requests/))
+Or, you can use a package manager such as [Poetry 0.12+](https://github.com/python-poetry/poetry) (requires [requests 2.18+](https://pypi.org/project/requests/))
 
 To install requirements:
 - `pip install humanize psutil tabulate tqdm colorama`
