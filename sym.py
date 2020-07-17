@@ -15,14 +15,12 @@ def main():
     for _N in tq:
       global N
       N, odd = _N, _N%2 # N*N Board
-      # T = Counter() # like a set but tracks occurences
+      # T = Counter() # dict-derived multiset
       T, sumorbit = set(), 0
       
-      # 0,0 is the centre of the board, only appears on odd grids
-      # centre cluster for even boards are the (+-1,+-1) coords (no 0 on even boards)
-      # N=6, indices = -3,-2,-1,1,2,3
+      # centred around origin for easy symmetries, (0,0) only appears on odd grids
+      # N=6, indices = -3,-2,-1,  1,2,3
       # N=7, indices = -3,-2,-1,0,1,2,3
-      # N=8, indices = -4,-3,-2,-1,1,2,3,4
       indices = [i for i in range(-(N//2), N//2+1) if i != 0 or odd]
       middle = [0] if odd else [1,-1] # +/#
       edge = [indices[0],indices[-1]] # [ ]
