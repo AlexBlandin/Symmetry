@@ -43,7 +43,7 @@ version = "4.48.0"
 dev = ["py-make (>=0.1.0)", "twine", "argopt", "pydoc-markdown"]
 
 [metadata]
-content-hash = "902d35a68fefabeefc298ce1764b642d10f3a6d7c0e0fec5212f765d1c15a317"
+content-hash = "8432a3105d701e99ed0856bff2f8259e96bb43487ea66054c07b5891d9b0f8cc"
 python-versions = "^3.7"
 
 [metadata.files]
