@@ -1,6 +1,4 @@
-# Symmetry
-
-Symmetry Breaking Experiments
+# Symmetry Breaking Experiments
 
 ## Requirements
 
