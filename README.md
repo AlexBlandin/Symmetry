@@ -15,7 +15,7 @@
 
 Or either of:
 - [poetry 0.12+](https://github.com/python-poetry/poetry)
-- [upm 1.0.0+](https://github.com/replit/upm) includes `poetry`
+- [UPM 1.0.0+](https://github.com/replit/upm) includes `poetry`
 
 To install requirements:
 - `pip install humanize psutil tabulate tqdm colorama`
