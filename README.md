@@ -12,7 +12,7 @@
 - [tqdm 4.30.0+](https://pypi.org/project/tqdm/)
   - [colorama 0.4.3+](https://pypi.org/project/colorama/) on Windows
 
-Or, you can use a package manager such as [Poetry 0.12+](https://github.com/python-poetry/poetry) (requires [requests 2.18+](https://pypi.org/project/requests/))
+Or, you can use a package manager such as [Poetry](https://github.com/python-poetry/poetry).
 
 To install requirements:
 - `pip install humanize psutil tabulate tqdm colorama`
