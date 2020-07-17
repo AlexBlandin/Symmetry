@@ -5,27 +5,8 @@ from tabulate import tabulate
 from psutil import Process
 from tqdm import tqdm
 
-# 0,0 is the centre of the board, only appears on odd grids
-# centre cluster for even boards are the (+-1,+-1) coords (no 0 on even boards)
-# N=6, indices = -3,-2,-1,1,2,3
-# N=7, indices = -3,-2,-1,0,1,2,3
-# N=8, indices = -4,-3,-2,-1,1,2,3,4
-
-def orbits(points):
-  # from one set generate the orbits as a set of frozen sets
-  rx = frozenset((-x,y) for x,y in points)
-  ry = frozenset((x,-y) for x,y in points)
-  rd = frozenset((y,x) for x,y in points)
-  ra = frozenset((-x,-y) for x,y in points)
-  r1 = frozenset((-y,x) for x,y in points)
-  r2 = frozenset((-y,-x) for x,y in points)
-  r3 = frozenset((y,-x) for x,y in points)
-  r4 = frozenset((x,y) for x,y in points) # r4 = identity
-  return {rx,ry,rd,ra,r1,r2,r3,r4}
-
 def main():
-  
-  MAX_N = 200 # How big the board we should search up to
+  MAX_N = 1000 # How big the board we should search up to
   k = 2 # how many Queens to place / branch on
   
   table = [["N", "orbits", "quotient"]]
@@ -37,6 +18,11 @@ def main():
       # T = Counter() # like a set but tracks occurences
       T, sumorbit = set(), 0
       
+      # 0,0 is the centre of the board, only appears on odd grids
+      # centre cluster for even boards are the (+-1,+-1) coords (no 0 on even boards)
+      # N=6, indices = -3,-2,-1,1,2,3
+      # N=7, indices = -3,-2,-1,0,1,2,3
+      # N=8, indices = -4,-3,-2,-1,1,2,3,4
       indices = [i for i in range(-(N//2), N//2+1) if i != 0 or odd]
       middle = [0] if odd else [1,-1] # +/#
       edge = [indices[0],indices[-1]] # [ ]
@@ -55,6 +41,18 @@ def main():
       table.append([N, sumorbit, quotient])
 
   with open("./dataedge.txt", mode="w") as o: o.write(tabulate(table, headers="firstrow", floatfmt=["d","d",".8f"]))
+
+def orbits(points):
+  # from one set generate the orbits as a set of frozen sets
+  rx = frozenset((-x,y) for x,y in points)
+  ry = frozenset((x,-y) for x,y in points)
+  rd = frozenset((y,x) for x,y in points)
+  ra = frozenset((-x,-y) for x,y in points)
+  r1 = frozenset((-y,x) for x,y in points)
+  r2 = frozenset((-y,-x) for x,y in points)
+  r3 = frozenset((y,-x) for x,y in points)
+  r4 = frozenset((x,y) for x,y in points) # r4 = identity
+  return {rx,ry,rd,ra,r1,r2,r3,r4}
 
 def plot(pl):
   "Place points on an ASCII board"
