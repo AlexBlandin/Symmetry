@@ -22,8 +22,9 @@ def main():
       # N=6, indices = -3,-2,-1,  1,2,3
       # N=7, indices = -3,-2,-1,0,1,2,3
       indices = [i for i in range(-(N//2), N//2+1) if i != 0 or odd_N]
-      midrc = [0] if odd_N else [1,-1] # +/# # cross or octothorpe shaped "middle rows and columns", includes (0,0) when odd or (±1,±1) when even
+      midrc = [0] if odd_N else [1,-1] #  +  # cross/plus shaped "middle rows and columns", includes (0,0) when odd or (±1,±1) when even
       edges = [indices[0],indices[-1]] # [ ] # like evens in that 4 corners have weaker symmetry like midrc's even central 2x2
+      # in terms of symmetry, [] matches +/evens in terms of having two columns and two rows, in which each maps around in 8-orbits, and the corners 1+1+1+1 match the centroid 2x2 in their 4-orbits, so they're equivalent in terms of the quotient
       
       selection = set(chain(product(indices, edges), product(edges, indices)))
       # selection = set(chain(product(indices, midrc), product(midrc, indices)))
