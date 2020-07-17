@@ -14,19 +14,19 @@ def main():
   with tqdm(range(1,MAX_N+1), ascii=True) as tq:
     for _N in tq:
       global N
-      N, odd = _N, _N%2 # N*N Board
+      N, odd_N = _N, _N%2 # for N*N Board
       # T = Counter() # dict-derived multiset
       T, sumorbit = set(), 0
       
       # centred around origin for easy symmetries, (0,0) only appears on odd grids
       # N=6, indices = -3,-2,-1,  1,2,3
       # N=7, indices = -3,-2,-1,0,1,2,3
-      indices = [i for i in range(-(N//2), N//2+1) if i != 0 or odd]
-      middle = [0] if odd else [1,-1] # +/#
-      edge = [indices[0],indices[-1]] # [ ]
+      indices = [i for i in range(-(N//2), N//2+1) if i != 0 or odd_N]
+      midrc = [0] if odd_N else [1,-1] # +/#
+      edges = [indices[0],indices[-1]] # [ ]
       
-      selection = set(chain(product(indices, edge), product(edge, indices)))
-      # selection = set(chain(product(indices, middle), product(middle, indices)))
+      selection = set(chain(product(indices, edges), product(edges, indices)))
+      # selection = set(chain(product(indices, midrc), product(midrc, indices)))
       for points in set(map(frozenset, combinations(selection, k))):
         if len(points) == k:
           # T.update(orbits(points)) # for `T = Counter()`
