@@ -6,7 +6,7 @@ from tqdm import tqdm
 def main():
   global k
   MAX_N = 50 # How big the board we should search up to
-  k = 2 # how many Queens to pre-place / branch on
+  k = 2 # how many Queens to pre-place / branch on, Q27 used 2 max and we only need 2 max, higher gets improved quotients but the combinatoric increase in combinations of points is far too much
   
   table = [["N", "symmetries", "branches", "quotient"]]
   for _N in tqdm(range(1,MAX_N+1), ascii=True):
@@ -20,9 +20,8 @@ def main():
     coron = lambda L: indices[:L] + indices[-L:] # coronal part of the board, edges == coron(1), Q27 used L=2
     # in terms of symmetry, [] matches +/evens in terms of having two columns and two rows, in which each maps around in 8-orbits, and the 4*1 corners match the 2x2 centroid in their symmetries, so ends up equivalent
     
-    select = coron(1) # midrc | edges | coron(2)
-    region = set(chain(product(indices, select), product(select, indices)))
-    for points in preplacement(region):
+    region = coron(1) # midrc | edges | coron(2)
+    for points in preplacement(region, indices):
       if len(points) == k:
         syms = sym(points)
         S.update(syms) # S |= syms # should be able to use in 3.9 for multiset
@@ -30,10 +29,11 @@ def main():
     len_S = len(S)
     quotient = sum_S/len_S if len_S else 0
     table.append([N, sum_S, len_S, quotient])
-  open("./data/coron1.txt", mode="w").write(tabulate(table, headers="firstrow", floatfmt=["d","d","d",".8f"]))
+  open("./data/test.txt", mode="w").write(tabulate(table, headers="firstrow", floatfmt=["d","d","d",".8f"]))
 
-def preplacement(region): # todo: preplacement/branching that is always Queens-legal
-  return set(map(frozenset, combinations(region, k)))
+def preplacement(region, indices): # todo: preplacement/branching that is always Queens-legal
+  s = set(chain(product(indices, region), product(region, indices)))
+  return combinations(s, k)
 
 def sym(points): # from one set generate the symmetries as a set of frozen sets
   rx = frozenset((-x,y) for x,y in points)
