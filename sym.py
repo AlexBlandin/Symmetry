@@ -8,7 +8,7 @@ from tqdm import tqdm
 # N=7, indices = [-3,-2,-1,0,1,2,3]
 
 def main():
-  MAX_N = 100 # How big the board we should search up to
+  MAX_N = 1000 # How big the board we should search up to
   k = 2 # how many Queens to place / branch on
   
   table = [["N", "orbits", "quotient"]]
@@ -22,18 +22,23 @@ def main():
     midrc = [0] if odd_N else [1,-1] #  +  # cross/plus shaped "middle rows and columns"
     edges = [indices[0],indices[-1]] # [ ] # like +/evens in that 4 corners have 4-orbit like 2x2 centroid
     # in terms of symmetry, [] matches +/evens in terms of having two columns and two rows, in which each maps around in 8-orbits, and the corners 1+1+1+1 match the centroid 2x2 in their 4-orbits, so they're equivalent in terms of the quotient
+    coron = lambda L: indices[:L] + indices[-L:] # coronal part of the board, where coron(1) == edges
     
-    selection = set(chain(product(indices, edges), product(edges, indices)))
-    # selection = set(chain(product(indices, midrc), product(midrc, indices)))
-    for points in set(map(frozenset, combinations(selection, k))):
+    select = coron(2) # midrc | edges | coron(L)
+    region = set(chain(product(indices, select), product(select, indices)))
+    for points in preplacement(region):
       if len(points) == k:
         orbit = orbits(points)
         Orb.update(orbit) # Orb |= orbit # should be able to use in 3.9 for multiset
         sumorbit += len(orbit)
-    quotient = sumorbit/len(Orb) if len(Orb) else 0.0
+    branches = len(Orb)
+    quotient = sumorbit/branches if branches else 0.0
     table.append([N, sumorbit, quotient])
+  
+  with open("./datacoron.txt", mode="w") as o: o.write(tabulate(table, headers="firstrow", floatfmt=["d","d",".8f"]))
 
-  with open("./data.txt", mode="w") as o: o.write(tabulate(table, headers="firstrow", floatfmt=["d","d",".8f"]))
+def preplacement(region): # todo: preplacement/branching that is always Queens-legal
+  return set(map(frozenset, combinations(region, k)))
 
 def orbits(points):
   # from one set generate the orbits as a set of frozen sets
