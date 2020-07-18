@@ -21,7 +21,7 @@ def main():
     coron = lambda L: indices[:L] + indices[-L:] # coronal part of the board, where coron(1) == edges
     # in terms of symmetry, [] matches +/evens in terms of having two columns and two rows, in which each maps around in 8-orbits, and the corners 1+1+1+1 match the centroid 2x2 in their 4-orbits, so they're equivalent in terms of the quotient
     
-    select = coron(3) # midrc | edges | coron(2)
+    select = coron(1) # midrc | edges | coron(2)
     region = set(chain(product(indices, select), product(select, indices)))
     for points in preplacement(region):
       if len(points) == k:
@@ -32,7 +32,7 @@ def main():
     quotient = sum_S/len_S if len_S else 0
     table.append([N, sum_S, len_S, quotient])
   
-  open("./data/data3.txt", mode="w").write(tabulate(table, headers="firstrow", floatfmt=["d","d","d",".8f"]))
+  open("./data/coron1.txt", mode="w").write(tabulate(table, headers="firstrow", floatfmt=["d","d","d",".8f"]))
 
 def preplacement(region): # todo: preplacement/branching that is always Queens-legal
   return set(map(frozenset, combinations(region, k)))
