@@ -28,11 +28,11 @@ def main():
         syms = sym(points)
         S.update(syms) # S |= syms # should be able to use in 3.9 for multiset
         sum_S += len(syms)
-    branches = len(Orb)
-    quotient = sum_S/branches if branches else 0
-    table.append([N, sum_S, branches, quotient])
+    len_S = len(S)
+    quotient = sum_S/len_S if len_S else 0
+    table.append([N, sum_S, len_S, quotient])
   
-  with open("./data/data3.txt", mode="w") as o: o.write(tabulate(table, headers="firstrow", floatfmt=["d","d","d",".8f"]))
+  open("./data/data3.txt", mode="w").write(tabulate(table, headers="firstrow", floatfmt=["d","d","d",".8f"]))
 
 def preplacement(region): # todo: preplacement/branching that is always Queens-legal
   return set(map(frozenset, combinations(region, k)))
