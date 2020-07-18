@@ -17,8 +17,8 @@ def main():
     indices = [i for i in range(-(N//2), N//2+1) if i != 0 or odd_N]
     midrc = [0] if odd_N else [1,-1] #  +  # cross/plus shaped "middle rows and columns"
     edges = [indices[0],indices[-1]] # [ ] # like +/evens in that 4 corners have 4-orbit like 2x2 centroid
-    coron = lambda L: indices[:L] + indices[-L:] # coronal part of the board, where coron(1) == edges
-    # in terms of symmetry, [] matches +/evens in terms of having two columns and two rows, in which each maps around in 8-orbits, and the corners 1+1+1+1 match the centroid 2x2 in their 4-orbits, so they're equivalent in terms of the quotient
+    coron = lambda L: indices[:L] + indices[-L:] # coronal part of the board, edges == coron(1)
+    # in terms of symmetry, [] matches +/evens in terms of having two columns and two rows, in which each maps around in 8-orbits, and the 4*1 corners match the 2x2 centroid in their symmetries, so ends up equivalent
     
     select = coron(1) # midrc | edges | coron(2)
     region = set(chain(product(indices, select), product(select, indices)))
