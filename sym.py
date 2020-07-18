@@ -1,8 +1,6 @@
 from itertools import chain, product, combinations
 from collections import Counter
-from humanize import naturalsize
 from tabulate import tabulate
-from psutil import Process
 from tqdm import tqdm
 
 def main():
@@ -34,7 +32,6 @@ def main():
           orbit = orbits(points)
           T |= orbit # `T = Counter()` can use in 3.9, so don't need above then
           sumorbit += len(orbit)
-      rss = max(rss, mem().rss); tq.set_description(f"Processing N = {N} {naturalsize(rss)} used") # just tracking
       
       quotient = sumorbit/len(T) if len(T) else 0.0
       table.append([N, sumorbit, quotient])
