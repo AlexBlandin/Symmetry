@@ -31,7 +31,7 @@ def main():
     quotient = sumorbit/branches if branches else 0.0
     table.append([N, sumorbit, quotient])
   
-  with open("./datacoron.txt", mode="w") as o: o.write(tabulate(table, headers="firstrow", floatfmt=["d","d",".8f"]))
+  with open("./data/data.txt", mode="w") as o: o.write(tabulate(table, headers="firstrow", floatfmt=["d","d",".8f"]))
 
 def preplacement(region): # todo: preplacement/branching that is always Queens-legal
   return set(map(frozenset, combinations(region, k)))
