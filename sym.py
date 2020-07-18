@@ -5,10 +5,10 @@ from tqdm import tqdm
 
 def main():
   global k
-  MAX_N = 100 # How big the board we should search up to
+  MAX_N = 50 # How big the board we should search up to
   k = 2 # how many Queens to place / branch on
   
-  table = [["N", "orbits", "quotient"]]
+  table = [["N", "orbits", "branches", "quotient"]]
   for _N in tqdm(range(1,MAX_N+1), ascii=True):
     global N
     N, odd_N = _N, _N%2 # for N*N Board
@@ -30,7 +30,7 @@ def main():
         sumorbit += len(orbit)
     branches = len(Orb)
     quotient = sumorbit/branches if branches else 0.0
-    table.append([N, sumorbit, quotient])
+    table.append([N, sumorbit, branches, quotient])
   
   with open("./data/data.txt", mode="w") as o: o.write(tabulate(table, headers="firstrow", floatfmt=["d","d",".8f"]))
 
