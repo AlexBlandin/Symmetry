@@ -4,7 +4,8 @@ from tabulate import tabulate
 from tqdm import tqdm
 
 def main():
-  MAX_N = 1000 # How big the board we should search up to
+  global k
+  MAX_N = 100 # How big the board we should search up to
   k = 2 # how many Queens to place / branch on
   
   table = [["N", "orbits", "quotient"]]
