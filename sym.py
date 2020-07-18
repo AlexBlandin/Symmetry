@@ -8,7 +8,6 @@ def main():
   k = 2 # how many Queens to place / branch on
   
   table = [["N", "orbits", "quotient"]]
-  mem, rss = Process().memory_info, 0
   for _N in tqdm(range(1,MAX_N+1), ascii=True):
     global N
     N, odd_N = _N, _N%2 # for N*N Board
