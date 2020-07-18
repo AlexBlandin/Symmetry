@@ -12,26 +12,25 @@ def main():
   for _N in tqdm(range(1,MAX_N+1), ascii=True):
     global N
     N, odd_N = _N, _N%2 # for N*N Board
-    T, sumorbit = set(), 0
-    # T = Counter() # dict-derived multiset
+    T = set() # Counter() for dict-derived multiset
+    sumorbit = 0
     
     # board centred on origin for trivial symmetry generation
     # N=6, indices = [-3,-2,-1,  1,2,3]
     # N=7, indices = [-3,-2,-1,0,1,2,3]
     indices = [i for i in range(-(N//2), N//2+1) if i != 0 or odd_N]
-    midrc = [0] if odd_N else [1,-1] #  +  # cross/plus shaped "middle rows and columns", includes (0,0) when odd or (±1,±1) when even
-    edges = [indices[0],indices[-1]] # [ ] # like evens in that 4 corners have weaker symmetry like midrc's even central 2x2
+    midrc = [0] if odd_N else [1,-1] #  +  # cross/plus shaped "middle rows and columns"
+    edges = [indices[0],indices[-1]] # [ ] # like +/evens in that 4 corners have 4-orbit like 2x2 centroid
     # in terms of symmetry, [] matches +/evens in terms of having two columns and two rows, in which each maps around in 8-orbits, and the corners 1+1+1+1 match the centroid 2x2 in their 4-orbits, so they're equivalent in terms of the quotient
     
     selection = set(chain(product(indices, edges), product(edges, indices)))
     # selection = set(chain(product(indices, midrc), product(midrc, indices)))
     for points in set(map(frozenset, combinations(selection, k))):
       if len(points) == k:
-        # T.update(orbits(points)) # for `T = Counter()`
+        # T.update(orbits(points)) # for `T = Counter()` if not in 3.9
         orbit = orbits(points)
-        T |= orbit # `T = Counter()` can use in 3.9, so don't need above then
+        T |= orbit
         sumorbit += len(orbit)
-    
     quotient = sumorbit/len(T) if len(T) else 0.0
     table.append([N, sumorbit, quotient])
 
