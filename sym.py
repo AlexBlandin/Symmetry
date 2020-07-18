@@ -36,7 +36,7 @@ def main():
 
   with open("./data.txt", mode="w") as o: o.write(tabulate(table, headers="firstrow", floatfmt=["d","d",".8f"]))
 
-def orbits(points):
+def orbits(points): # lru_cache?
   # from one set generate the orbits as a set of frozen sets
   rx = frozenset((-x,y) for x,y in points)
   ry = frozenset((x,-y) for x,y in points)
