@@ -6,39 +6,39 @@ from tqdm import tqdm
 def main():
   global k
   MAX_N = 50 # How big the board we should search up to
-  k = 2 # how many Queens to place / branch on
+  k = 2 # how many Queens to pre-place / branch on
   
-  table = [["N", "orbits", "branches", "quotient"]]
+  table = [["N", "symmetries", "branches", "quotient"]]
   for _N in tqdm(range(1,MAX_N+1), ascii=True):
     global N
     N, odd_N = _N, _N%2 # for N*N Board
-    Orb = set() # multiset() for dict-derived multiset
-    sumorbit = 0
+    S = set() # multiset() for dict-derived multiset
+    sum_S = 0
     
     indices = [i for i in range(-(N//2), N//2+1) if i != 0 or odd_N]
     midrc = [0] if odd_N else [1,-1] #  +  # cross/plus shaped "middle rows and columns"
     edges = [indices[0],indices[-1]] # [ ] # like +/evens in that 4 corners have 4-orbit like 2x2 centroid
-    # in terms of symmetry, [] matches +/evens in terms of having two columns and two rows, in which each maps around in 8-orbits, and the corners 1+1+1+1 match the centroid 2x2 in their 4-orbits, so they're equivalent in terms of the quotient
     coron = lambda L: indices[:L] + indices[-L:] # coronal part of the board, where coron(1) == edges
+    # in terms of symmetry, [] matches +/evens in terms of having two columns and two rows, in which each maps around in 8-orbits, and the corners 1+1+1+1 match the centroid 2x2 in their 4-orbits, so they're equivalent in terms of the quotient
     
     select = coron(3) # midrc | edges | coron(2)
     region = set(chain(product(indices, select), product(select, indices)))
     for points in preplacement(region):
       if len(points) == k:
-        orbit = orbits(points)
-        Orb.update(orbit) # Orb |= orbit # should be able to use in 3.9 for multiset
-        sumorbit += len(orbit)
+        syms = sym(points)
+        S.update(syms) # S |= syms # should be able to use in 3.9 for multiset
+        sum_S += len(syms)
     branches = len(Orb)
-    quotient = sumorbit/branches if branches else 0.0
-    table.append([N, sumorbit, branches, quotient])
+    quotient = sum_S/branches if branches else 0
+    table.append([N, sum_S, branches, quotient])
   
   with open("./data/data3.txt", mode="w") as o: o.write(tabulate(table, headers="firstrow", floatfmt=["d","d","d",".8f"]))
 
 def preplacement(region): # todo: preplacement/branching that is always Queens-legal
   return set(map(frozenset, combinations(region, k)))
 
-def orbits(points):
-  # from one set generate the orbits as a set of frozen sets
+def sym(points):
+  # from one set generate the sym as a set of frozen sets
   rx = frozenset((-x,y) for x,y in points)
   ry = frozenset((x,-y) for x,y in points)
   rd = frozenset((y,x) for x,y in points)
