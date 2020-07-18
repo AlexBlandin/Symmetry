@@ -15,12 +15,12 @@ def main():
     for _N in tq:
       global N
       N, odd_N = _N, _N%2 # for N*N Board
-      # T = Counter() # dict-derived multiset
       T, sumorbit = set(), 0
+      # T = Counter() # dict-derived multiset
       
-      # centred around origin for easy symmetries, (0,0) only appears on odd grids
-      # N=6, indices = -3,-2,-1,  1,2,3
-      # N=7, indices = -3,-2,-1,0,1,2,3
+      # board centred on origin for trivial symmetry generation
+      # N=6, indices = [-3,-2,-1,  1,2,3]
+      # N=7, indices = [-3,-2,-1,0,1,2,3]
       indices = [i for i in range(-(N//2), N//2+1) if i != 0 or odd_N]
       midrc = [0] if odd_N else [1,-1] #  +  # cross/plus shaped "middle rows and columns", includes (0,0) when odd or (±1,±1) when even
       edges = [indices[0],indices[-1]] # [ ] # like evens in that 4 corners have weaker symmetry like midrc's even central 2x2
