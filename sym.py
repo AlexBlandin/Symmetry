@@ -27,9 +27,8 @@ def main():
     # selection = set(chain(product(indices, midrc), product(midrc, indices)))
     for points in set(map(frozenset, combinations(selection, k))):
       if len(points) == k:
-        # Orb.update(orbits(points)) # for `Orb = multiset()` if not in 3.9
         orbit = orbits(points)
-        Orb |= orbit
+        Orb.update(orbit) # Orb |= orbit # should be able to use in 3.9 for multiset
         sumorbit += len(orbit)
     quotient = sumorbit/len(Orb) if len(Orb) else 0.0
     table.append([N, sumorbit, quotient])
