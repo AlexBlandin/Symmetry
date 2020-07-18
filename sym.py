@@ -1,5 +1,5 @@
 from itertools import chain, product, combinations
-from collections import Counter
+from collections import Counter as multiset
 from tabulate import tabulate
 from tqdm import tqdm
 
@@ -15,7 +15,7 @@ def main():
   for _N in tqdm(range(1,MAX_N+1), ascii=True):
     global N
     N, odd_N = _N, _N%2 # for N*N Board
-    T = set() # Counter() for dict-derived multiset
+    Orb = set() # multiset() for dict-derived multiset
     sumorbit = 0
     
     indices = [i for i in range(-(N//2), N//2+1) if i != 0 or odd_N]
@@ -27,11 +27,11 @@ def main():
     # selection = set(chain(product(indices, midrc), product(midrc, indices)))
     for points in set(map(frozenset, combinations(selection, k))):
       if len(points) == k:
-        # T.update(orbits(points)) # for `T = Counter()` if not in 3.9
+        # Orb.update(orbits(points)) # for `Orb = multiset()` if not in 3.9
         orbit = orbits(points)
-        T |= orbit
+        Orb |= orbit
         sumorbit += len(orbit)
-    quotient = sumorbit/len(T) if len(T) else 0.0
+    quotient = sumorbit/len(Orb) if len(Orb) else 0.0
     table.append([N, sumorbit, quotient])
 
   with open("./data.txt", mode="w") as o: o.write(tabulate(table, headers="firstrow", floatfmt=["d","d",".8f"]))
@@ -49,7 +49,7 @@ def orbits(points):
   return {rx,ry,rd,ra,r1,r2,r3,r4}
 
 def plot(pl):
-  "Place points on an ASCII board"
+  "Plots a set of (x,y) points on an N*N ASCII board"
   b = [[0]*N for _ in range(N)]
   def c2i(x): return (x-1 if N%2==0 and x >= 1 else x) + N//2
   for x,y in pl:
