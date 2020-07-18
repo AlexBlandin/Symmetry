@@ -37,8 +37,7 @@ def main():
 def preplacement(region): # todo: preplacement/branching that is always Queens-legal
   return set(map(frozenset, combinations(region, k)))
 
-def sym(points):
-  # from one set generate the sym as a set of frozen sets
+def sym(points): # from one set generate the symmetries as a set of frozen sets
   rx = frozenset((-x,y) for x,y in points)
   ry = frozenset((x,-y) for x,y in points)
   rd = frozenset((y,x) for x,y in points)
