@@ -2,7 +2,7 @@
 
 ## Requirements
 
-- [Python 3.6+](https://www.python.org) (but really you should be using 3.7 or 3.8)
+- [Python 3.6+](https://www.python.org)
   - [pip 20.0.1+](https://pypi.org/project/pip/) is standard fare
   - [wheel 0.34.0+](https://pypi.org/project/wheel/) is standard fare
   - [setuptools 48.0.0+](https://pypi.org/project/setuptools/) is standard fare
@@ -10,13 +10,12 @@
 - [psutil 5.0.0+](https://pypi.org/project/psutil/)
 - [tabulate 0.8.1+](https://pypi.org/project/tabulate/)
 - [tqdm 4.30.0+](https://pypi.org/project/tqdm/)
-  - [colorama 0.4.3+](https://pypi.org/project/colorama/) on Windows
 
-Or, you can use a package manager such as [Poetry](https://github.com/python-poetry/poetry).
+Or, you can use a package manager such as [Poetry](https://github.com/python-poetry/poetry):
+- `pip install poetry`
 
 To install requirements:
 - `pip install humanize psutil tabulate tqdm colorama`
-  - `pip install --update pip wheel setuptools requests` may be necessary
 - `poetry install`
 
 ## Running
