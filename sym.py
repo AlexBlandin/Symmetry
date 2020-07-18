@@ -8,7 +8,7 @@ def main():
   MAX_N = 50 # How big the board we should search up to
   k = 2 # how many Queens to pre-place / branch on
   
-  table = [["N", "symmetries", "branches", "quotient"]]
+  table = [["N", "symmetries", "places", "quotient"]]
   for _N in tqdm(range(1,MAX_N+1), ascii=True):
     global N
     N, odd_N = _N, _N%2 # for N*N Board
@@ -28,9 +28,9 @@ def main():
         syms = sym(points)
         S.update(syms) # S |= syms # should be able to use in 3.9 for multiset
         sum_S += len(syms)
-    branches = len(Orb)
-    quotient = sum_S/branches if branches else 0
-    table.append([N, sum_S, branches, quotient])
+    places = len(Orb)
+    quotient = sum_S/places if places else 0
+    table.append([N, sum_S, places, quotient])
   
   with open("./data/data3.txt", mode="w") as o: o.write(tabulate(table, headers="firstrow", floatfmt=["d","d","d",".8f"]))
 
