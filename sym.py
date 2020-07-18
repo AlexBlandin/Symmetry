@@ -31,7 +31,6 @@ def main():
     len_S = len(S)
     quotient = sum_S/len_S if len_S else 0
     table.append([N, sum_S, len_S, quotient])
-  
   open("./data/coron1.txt", mode="w").write(tabulate(table, headers="firstrow", floatfmt=["d","d","d",".8f"]))
 
 def preplacement(region): # todo: preplacement/branching that is always Queens-legal
