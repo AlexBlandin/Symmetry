@@ -49,10 +49,9 @@ def sym(points):
   r4 = frozenset((x,y) for x,y in points) # r4 = identity
   return {rx,ry,rd,ra,r1,r2,r3,r4}
 
-def board(p):
-  "Places a set of (x,y) points `p` on an N*N ASCII board"
+def board(s):
   b, c2i = [[0]*N for _ in range(N)], lambda x: (x-1 if N%2==0 and x >= 1 else x) + N//2
-  for x,y in p: b[c2i(x)][c2i(y)]=1
+  for x,y in s: b[c2i(x)][c2i(y)]=1
   return "\n".join("".join(map(str,b[i])) for i in range(N))
 
 if __name__ == "__main__": main()
