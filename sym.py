@@ -3,10 +3,6 @@ from collections import Counter as multiset
 from tabulate import tabulate
 from tqdm import tqdm
 
-# uses a board centred on origin to trivialise symmetry
-# N=6, indices = [-3,-2,-1,  1,2,3]
-# N=7, indices = [-3,-2,-1,0,1,2,3]
-
 def main():
   MAX_N = 1000 # How big the board we should search up to
   k = 2 # how many Queens to place / branch on
@@ -52,13 +48,10 @@ def orbits(points):
   r4 = frozenset((x,y) for x,y in points) # r4 = identity
   return {rx,ry,rd,ra,r1,r2,r3,r4}
 
-def plot(pl):
-  "Plots a set of (x,y) points on an N*N ASCII board"
-  b = [[0]*N for _ in range(N)]
-  def c2i(x): return (x-1 if N%2==0 and x >= 1 else x) + N//2
-  for x,y in pl:
-    b[c2i(x)][c2i(y)]=1
-  print("\n".join("".join(map(str,b[i])) for i in range(N)))
+def board(p):
+  "Places a set of (x,y) points `p` on an N*N ASCII board"
+  b, c2i = [[0]*N for _ in range(N)], lambda x: (x-1 if N%2==0 and x >= 1 else x) + N//2
+  for x,y in p: b[c2i(x)][c2i(y)]=1
+  return "\n".join("".join(map(str,b[i])) for i in range(N))
 
-if __name__ == "__main__":
-  main()
+if __name__ == "__main__": main()
