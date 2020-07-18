@@ -12,8 +12,7 @@ def main():
   for _N in tqdm(range(1,MAX_N+1), ascii=True):
     global N
     N, odd_N = _N, _N%2 # for N*N Board
-    S = set() # multiset() for dict-derived multiset
-    sum_S = 0
+    S, sum_S = set(), 0 # use a `multiset()` for dict-derived multiset
     
     indices = [i for i in range(-(N//2), N//2+1) if i != 0 or odd_N]
     midrc = [0] if odd_N else [1,-1] #  +  # cross/plus shaped "middle rows and columns"
