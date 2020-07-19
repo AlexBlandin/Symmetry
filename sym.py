@@ -23,6 +23,7 @@ def main():
         syms = sym(points)
         S |= syms # S.update(syms) # swap out until 3.9 for multiset
         sum_S += len(syms)
+    
     len_S = len(S)
     quotient = sum_S/len_S if len_S else 0
     table.append([N, sum_S, len_S, quotient])
