@@ -38,7 +38,7 @@ def sym(points): # from one set generate the symmetries as a set of frozen sets
   rx = frozenset((-x,y) for x,y in points); ry = frozenset((x,-y) for x,y in points)
   rd = frozenset((y,x) for x,y in points); ra = frozenset((-x,-y) for x,y in points)
   r1 = frozenset((-y,x) for x,y in points); r2 = frozenset((-y,-x) for x,y in points)
-  r3 = frozenset((y,-x) for x,y in points); r4 = frozenset(points) # 360° is identity
+  r3 = frozenset((y,-x) for x,y in points); r4 = frozenset(points)
   return {rx,ry,rd,ra,r1,r2,r3,r4}
 
 def board(s):
