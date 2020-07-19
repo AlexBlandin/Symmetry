@@ -19,7 +19,7 @@ def main():
     
     region = rings(1) # midrc | edges | rings(2)
     for points in preplacement(region, indices, k):
-      if len(points) == k:
+      if len(points) == k and legal(points):
         syms = sym(points)
         S += syms # use `S.update(syms)` if S=multiset()
         sum_S += len(syms)
@@ -29,7 +29,10 @@ def main():
     table.append([N, sum_S, len_S, quotient])
   open("./data/test.txt", mode="w").write(tabulate(table, headers="firstrow", floatfmt=["d","d","d",".8f"]))
 
-def preplacement(region, indices, k): # todo: preplacement/branching that is always Queens-legal
+def legal(points): # todo: Queens-legal # todo: how does this impact branches(n) (keep existing as base)
+  return True
+
+def preplacement(region, indices, k):
   s = set(chain(product(indices, region), product(region, indices)))
   return combinations(s, k)
 
