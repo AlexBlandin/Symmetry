@@ -12,7 +12,7 @@ def main():
   for _N in tqdm(range(1,MAX_N+1), ascii=True):
     global N
     N, odd_N = _N, _N%2 # for N*N Board
-    S, sum_S = set(), 0 # use a `multiset()` for dict-derived multiset
+    S, sum_S = set(), 0 # use multiset() for dict-derived multiset
     
     indices = [i for i in range(-(N//2), N//2+1) if i != 0 or odd_N]
     midrc = [0] if odd_N else [1,-1] #  +  # cross/plus shaped "middle rows and columns"
@@ -24,7 +24,7 @@ def main():
     for points in preplacement(region, indices):
       if len(points) == k:
         syms = sym(points)
-        S.update(syms) # S |= syms # should be able to use in 3.9 for multiset
+        S |= syms # S.update(syms) # swap out until 3.9 for multiset
         sum_S += len(syms)
     len_S = len(S)
     quotient = sum_S/len_S if len_S else 0
