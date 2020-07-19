@@ -4,8 +4,8 @@ from tabulate import tabulate
 from tqdm import tqdm
 
 def main():
-  k = 6 # how many Queens to pre-place / branch on, we focus on k=2 (same as Q27)
-  MAX_N = 14 # how big the board we should search up to (k=6, N=10...14 -> 2GB,4GB,8GB,14GB,24GB)
+  k = 2 # how many Queens to pre-place / branch on, we focus on k=2 (same as Q27)
+  MAX_N = 50 # how big an N*N board we should cheack
   table = [["N", "symmetries", "branches", "quotient", "orbits"]]
   for _N in tqdm(range(1,MAX_N+1), ascii=True): # we could start at 3
     N, odd_N = _N, _N%2 # for N*N Board
@@ -28,7 +28,7 @@ def main():
     quotient = sum_S/len_S if len_S else 0
     orbits.update(S.values())
     table.append([N, sum_S, len_S, quotient, dict(orbits)])
-  open(f"./data/L6.txt", mode="w").write(tabulate(table, headers="firstrow", floatfmt=["d","d","d",".8f"]))
+  open(f"./data/test.txt", mode="w").write(tabulate(table, headers="firstrow", floatfmt=["d","d","d",".8f"]))
 
 def legal(points, LEGAL=True):
   "Whether a set of points are Queens-legal (disable with LEGAL=False)"
