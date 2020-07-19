@@ -7,20 +7,19 @@ def main():
   k = 2 # how many Queens to pre-place / branch on, we focus on k=2 (same as Q27)
   MAX_N = 50 # how big the board we should search up to (k=6, N=10,11,12,13,14->2GB,4GB,8GB,14GB,24GB)
   table = [["N", "symmetries", "branches", "quotient", "orbits"]]
-  for _N in tqdm(range(1,MAX_N+1), ascii=True): # can really start at 4 but oh well
+  for _N in tqdm(range(1,MAX_N+1), ascii=True): # we could start at 3
     N, odd_N = _N, _N%2 # for N*N Board
     S, sum_S = multiset(), 0
     orbits = multiset()
     
     indices = tuple(i for i in range(-(N//2), N//2+1) if i != 0 or odd_N)
-    midrc = (0,) if odd_N else (1,-1) #  +  # midrc.branches(n) = {odd n: (n-1)(2n-1), even n: 2(n-1)(4n-5)
-    edges = (indices[0], indices[-1]) # [ ] # edges of board, branches=https://oeis.org/A014635 +1 offset
+    midrc = (0,) if odd_N else (1,-1) #  +  
+    edges = (indices[0], indices[-1]) # [ ] # edges of board
     rings = lambda r: (*indices[:r],*indices[-r:]) # [O] # r outermost rings, rings(1)=edges, Q27 had r=2
-    # edges ~ even N midrc: each point has 8-orbit except edges' 4*1 corners and midrc's 2x2 centroid
     
     region = rings(1) # midrc | edges | rings(2)
     for points in preplacement(region, indices, k):
-      if len(points) == k and legal(points):
+      if len(points) == k and legal(points, True):
         syms = sym(points)
         S.update(syms)
         sum_S += len(syms)
@@ -29,14 +28,22 @@ def main():
     quotient = sum_S/len_S if len_S else 0
     orbits.update(S.values())
     table.append([N, sum_S, len_S, quotient, dict(orbits)])
-  open("./data/test.txt", mode="w").write(tabulate(table, headers="firstrow", floatfmt=["d","d","d",".8f"]))
+  open(f"./data/test.txt", mode="w").write(tabulate(table, headers="firstrow", floatfmt=["d","d","d",".8f"]))
 
-def legal(points): # todo: Queens-legal # todo: how does this impact branches(n) (keep existing as base)
+
+def legal(points, LEGAL=True): # todo: how does this impact branches(n) (keep existing as "lawless")
+  if not LEGAL: return True
+  for xy in points:
+    for ab in points:
+      if xy!=ab:
+        x,y, a,b = *xy, *ab
+        if x==a or y==b or x+y==a+b or x-y==a-b:
+          return False
   return True
 
 def preplacement(region, indices, k):
-  s = set(chain(product(indices, region), product(region, indices)))
-  return combinations(s, k)
+  points = set(chain(product(indices, region), product(region, indices)))
+  return combinations(points, k)
 
 def sym(points): # from one set generate the symmetries as a set of frozen sets
   rx = frozenset((-x,y) for x,y in points); ry = frozenset((x,-y) for x,y in points)
