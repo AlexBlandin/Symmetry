@@ -21,7 +21,7 @@ def main():
     for points in preplacement(region, indices, k):
       if len(points) == k:
         syms = sym(points)
-        S |= syms # S.update(syms) # swap out with multiset until 3.9+
+        S += syms # use `S.update(syms)` if S=multiset()
         sum_S += len(syms)
     
     len_S = len(S)
