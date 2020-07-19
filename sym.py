@@ -17,7 +17,7 @@ def main():
     midrc = (0,) if odd_N else (1,-1) #  +  # cross/plus shaped "middle rows and columns"
     edges = (indices[0], indices[-1]) # [ ] # like +/evens in that 4 corners have 4-orbit like 2x2 centroid
     rings = lambda r: (*indices[:r],*indices[-r:]) # [O] # r outermost rings, rings(1)=edges, Q27 had r=2
-    # edges ~ even N midrc with 2 columns & 2 rows, each point with 8-orbits except edges' 4*1 corners and midrc's 2x2 centroid
+    # edges ~ even N midrc: each point has 8-orbit except edges' 4*1 corners and midrc's 2x2 centroid
     
     region = rings(1) # midrc | edges | rings(2)
     for points in preplacement(region, indices):
