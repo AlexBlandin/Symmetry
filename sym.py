@@ -12,8 +12,8 @@ def main():
     S, sum_S = set(), 0 # use multiset() for dict-derived multiset
     
     indices = tuple(i for i in range(-(N//2), N//2+1) if i != 0 or odd_N)
-    midrc = (0,) if odd_N else (1,-1) #  +  # cross/plus shaped "middle rows and columns"
-    edges = (indices[0], indices[-1]) # [ ] # like +/evens in that 4 corners have 4-orbit like 2x2 centroid
+    midrc = (0,) if odd_N else (1,-1) #  +  # midrc.branches(n) = {odd n: (n-1)(2n-1), even n: 2(n-1)(4n-5)
+    edges = (indices[0], indices[-1]) # [ ] # edges of board, branches=https://oeis.org/A014635 +1 offset
     rings = lambda r: (*indices[:r],*indices[-r:]) # [O] # r outermost rings, rings(1)=edges, Q27 had r=2
     # edges ~ even N midrc: each point has 8-orbit except edges' 4*1 corners and midrc's 2x2 centroid
     
