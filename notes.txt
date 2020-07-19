@@ -6,7 +6,8 @@ midrc_branches = lambda n: (n-1)*(2*n-1) if n%2 else 2*(n-1)*(4*n-5)
 edges/rings(1) lawless branches = https://oeis.org/A014635 but offset so a(1)=0
 edges_branches = lambda n: 2*(n-1)*(4*(n-1)-1)
 
-edges ~ even N midrc: each point has 8-orbit except edges' 4*1 corners and midrc's 2x2 centroid # todo: can this be moved down to lawful?
+edges ~ even N midrc: each point has 8-orbit except edges' 4*1 corners and midrc's 2x2 centroid
+this relation does not imply equal branches if Queens-legal branching
 
 midrc has two sequences where the "base" is the evens, and then the odds replace
  branches(n) = {odd n: (n-1)(2n-1), even n: 2(n-1)(4n-5)
@@ -20,3 +21,4 @@ even N = 2n(4n-1)           (https://oeis.org/A014635 offset from 0 to 1)
 
 LAWFUL/LEGAL:
 
+todo:
