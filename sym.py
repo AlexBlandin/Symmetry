@@ -5,11 +5,12 @@ from tqdm import tqdm
 
 def main():
   k = 2 # how many Queens to pre-place / branch on, we focus on k=2 (same as Q27)
-  MAX_N = 50 # how big the board we should search up to
-  table = [["N", "symmetries", "branches", "quotient"]]
-  for _N in tqdm(range(1,MAX_N+1), ascii=True):
+  MAX_N = 50 # how big the board we should search up to (k=6, N=10,11,12,13,14->2GB,4GB,8GB,14GB,24GB)
+  table = [["N", "symmetries", "branches", "quotient", "orbits"]]
+  for _N in tqdm(range(1,MAX_N+1), ascii=True): # can really start at 4 but oh well
     N, odd_N = _N, _N%2 # for N*N Board
-    S, sum_S = set(), 0 # use multiset() for dict-derived multiset
+    S, sum_S = multiset(), 0
+    orbits = multiset()
     
     indices = tuple(i for i in range(-(N//2), N//2+1) if i != 0 or odd_N)
     midrc = (0,) if odd_N else (1,-1) #  +  # midrc.branches(n) = {odd n: (n-1)(2n-1), even n: 2(n-1)(4n-5)
@@ -21,12 +22,13 @@ def main():
     for points in preplacement(region, indices, k):
       if len(points) == k and legal(points):
         syms = sym(points)
-        S += syms # use `S.update(syms)` if S=multiset()
+        S.update(syms)
         sum_S += len(syms)
     
     len_S = len(S)
     quotient = sum_S/len_S if len_S else 0
-    table.append([N, sum_S, len_S, quotient])
+    orbits.update(S.values())
+    table.append([N, sum_S, len_S, quotient, dict(orbits)])
   open("./data/test.txt", mode="w").write(tabulate(table, headers="firstrow", floatfmt=["d","d","d",".8f"]))
 
 def legal(points): # todo: Queens-legal # todo: how does this impact branches(n) (keep existing as base)
