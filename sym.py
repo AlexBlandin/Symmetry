@@ -35,7 +35,7 @@ def legal(points, LEGAL=True):
   if not LEGAL: return True
   for xy in points:
     for ab in points:
-      if xy!=ab:
+      if xy!=ab: # faster to check and then destructure
         x,y, a,b = *xy, *ab
         if x==a or y==b or x+y==a+b or x-y==a-b:
           return False
