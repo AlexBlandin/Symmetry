@@ -20,7 +20,6 @@ def main():
     # edges ~ even N midrc with 2 columns & 2 rows, each point with 8-orbits except edges' 4*1 corners and midrc's 2x2 centroid
     
     region = rings(1) # midrc | edges | rings(2)
-    len_s=0
     for points in preplacement(region, indices):
       if len(points) == k:
         syms = sym(points)
