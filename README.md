@@ -12,8 +12,8 @@
 - [tqdm 4.30.0+](https://pypi.org/project/tqdm/)
 
 Or, you can use a package manager such as [Poetry](https://github.com/python-poetry/poetry):
-1. `pip install poetry`
-2. `poetry install`
+1. `$ pip install poetry`
+2. `$ poetry install`
 
 ## Running
 
