@@ -15,7 +15,7 @@ def main():
     indices = tuple(i for i in range(-(N//2), N//2+1) if i != 0 or odd_N)
     midrc = (0,) if odd_N else (1,-1) #  +  
     edges = (indices[0], indices[-1]) # [ ] # edges of board
-    rings = lambda r: (*indices[:r],*indices[-r:]) # [O] # r outermost rings, rings(1)=edges, Q27 had r=2, max k = 2*r (that gives legal points)
+    rings = lambda r: (*indices[:r],*indices[-r:]) # [O] # Q27 did r=2, max k = 2*r (that gives legal points)
     
     region = rings(1) # midrc | edges | rings(2)
     for points in preplacement(region, indices, k):
