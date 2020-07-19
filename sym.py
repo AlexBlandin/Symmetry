@@ -45,9 +45,11 @@ def sym(points): # from one set generate the symmetries as a set of frozen sets
   r3 = frozenset((y,-x) for x,y in points); r4 = frozenset(points)
   return {rx,ry,rd,ra,r1,r2,r3,r4}
 
+def index2coord(x): return (x-1 if N%2==0 and x >= 1 else x) + N//2
+
 def board(s, N):
-  b, c2i = [[0]*N for _ in range(N)], lambda x: (x-1 if N%2==0 and x >= 1 else x) + N//2
-  for x,y in s: b[c2i(x)][c2i(y)]=1
+  b = [[0]*N for _ in range(N)]
+  for x,y in s: b[index2coord(x)][index2coord(y)]=1
   return "\n".join("".join(map(str,b[i])) for i in range(N))
 
 if __name__ == "__main__": main()
