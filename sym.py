@@ -8,7 +8,7 @@ def main():
   MAX_N = 50 # how big an N*N board we should cheack
   table = [["N", "symmetries", "branches", "quotient", "orbits"]]
   for N in tqdm(range(1,MAX_N+1), ascii=True): # we could start at 3
-    orbits, odd_N = multiset(), _N%2
+    orbits, odd_N = multiset(), N%2
     S, sum_S = multiset(), 0
     
     indices = tuple(i for i in range(-(N//2), N//2+1) if i != 0 or odd_N)
