@@ -53,7 +53,6 @@ def sym(points): # from one set generate the symmetries as a set of frozen sets
   return {rx,ry,rd,ra,r1,r2,r3,r4}
 
 def index_to_range(x): return (x-1 if N%2==0 and x >= 1 else x) + N//2
-
 def board(points, indices): return [[(x,y) in points for x in indices] for y in indices]
 
 if __name__ == "__main__": main()
