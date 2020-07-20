@@ -32,7 +32,7 @@ def main():
 def legal(points, LEGAL=True):
   "Whether a set of points are Queens-legal (disable with LEGAL=False)"
   if not LEGAL: return True
-  for xy in points:
+  for xy in points: # poly check instead of linear because simplicity and because k=2
     for ab in points:
       if xy!=ab: # faster to check and then destructure
         x,y, a,b = *xy, *ab
