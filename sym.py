@@ -7,10 +7,9 @@ def main():
   k = 2 # how many Queens to pre-place / branch on, we focus on k=2 (same as Q27)
   MAX_N = 50 # how big an N*N board we should cheack
   table = [["N", "symmetries", "branches", "quotient", "orbits"]]
-  for _N in tqdm(range(1,MAX_N+1), ascii=True): # we could start at 3
-    N, odd_N = _N, _N%2 # for N*N Board
+  for N in tqdm(range(1,MAX_N+1), ascii=True): # we could start at 3
+    orbits, odd_N = multiset(), _N%2
     S, sum_S = multiset(), 0
-    orbits = multiset()
     
     indices = tuple(i for i in range(-(N//2), N//2+1) if i != 0 or odd_N)
     midrc = (0,) if odd_N else (1,-1) #  +  # middle row/col
