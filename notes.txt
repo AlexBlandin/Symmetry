@@ -23,5 +23,7 @@ LAWFUL/LEGAL:
 
 todo:
 
+lawless (ignoring Queens-legal) is clearly the upperbound
 
 midrc odds gets perfect 8 because the only point with a 1-orbit (ie. less than an 8-orbit), the midpoint, is precluded by Queens no matter what (since it would need a second column/row, and there's none because it's the odd N case), so all others have 8 symmetry and therefore it's a perfect 8 quotient
+
