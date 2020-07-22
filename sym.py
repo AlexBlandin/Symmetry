@@ -19,7 +19,7 @@ def main():
     region = rings(1) # midrc | edges | rings(2)
     for points in preplacement(region, indices, k):
       if len(points) == k and legal(points, True):
-        syms = sym(points)
+        syms = sym(points) # todo: may need to consider 'internal' orbits from derived/continued board-states/placements for completion (separate multiset and stats)
         S.update(syms)
         sum_S += len(syms)
     
