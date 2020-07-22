@@ -32,9 +32,13 @@ midrc odds gets perfect 8 because the only point with a 1-orbit (ie. less than a
 rings(1) | 0 0 8 28 60  104 160 228 308  400  504  620  748  888  1040 1204 1380 1568 1768 1980 2204 2440
 rings(2) | 0 0 8 52 132 292 476 748 1044 1428 1836 2332 2852 3460 4092 4812 5556 6388 7244 8188 9156 10212
 
-midrc will probably need to be split into odd/even N subsequences again
-midrc odds branches(n) = https://oeis.org/A033996 a(n//2-1), evens seem to be harder (is there an offset/different to rings(1) I can do?)
-rings(1) branches(n) = https://oeis.org/A033580 a(n-2) (assuming 0 for preceeding)
+midrc is split into odd/even N subsequences again
+midrc odds branches(N) = https://oeis.org/A033996 a(N//2-1), evens = https://oeis.org/A033580 - https://oeis.org/A051062 so a1(N-2) - a2(N-2)  (N=4 28-0=28, N=6 104-8=96, N=8 228-24=204, etc)
+rings(1) branches(N) = https://oeis.org/A033580 a(N-2) (assuming 0 for preceeding)
 rings(2) will be harder and mostly for the sake of completion since it more closely represents what they were doing for Q27 (we don't consider it based on the "internal" placement "S-orbits" as they do)
+
+todo: check
+midrc branches(n) = {odd n: 4*(n//2 -1)*((n//2 -1)+1), else: 2*(n-2)*(3*n-6) - (16*n-24)
+rings(1) branches(n) = 2*(n-2)*(3*n-5)
 
 todo: consider derived "S-orbits"?

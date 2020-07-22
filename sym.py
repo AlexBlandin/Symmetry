@@ -6,7 +6,7 @@ from tqdm import tqdm
 def main():
   k = 2 # how many Queens to pre-place / branch on, we focus on k=2 (same as Q27)
   MAX_N = 50 # how big an N*N board we should cheack
-  table = [["N", "symmetries", "branches", "quotient", "orbits"]]
+  table = [["N", "symmetries", "branches", "quotient", "orbits"],[0,0,0,0.0,{}]]
   for N in tqdm(range(1,MAX_N+1), ascii=True): # we could start at 3
     orbits, odd_N = multiset(), N%2
     S, sum_S = multiset(), 0
