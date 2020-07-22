@@ -21,8 +21,6 @@ even N = 2n(4n-1)           (https://oeis.org/A014635 offset from 0 to 1)
 
 LAWFUL/LEGAL:
 
-todo:
-
 lawless (ignoring Queens-legal) is clearly the upperbound
 
 midrc odds gets perfect 8 because the only point with a 1-orbit (ie. less than an 8-orbit), the midpoint, is precluded by Queens no matter what (since it would need a second column/row, and there's none because it's the odd N case), so all others have 8 symmetry and therefore it's a perfect 8 quotient
@@ -38,8 +36,7 @@ rings(1) branches(N) = https://oeis.org/A033580 a(N-2)
 rings(2) will be harder and mostly for the sake of completion since it more closely represents what they were doing for Q27 (we don't consider it based on the "internal" placement "S-orbits" as they do)
 
 
-todo: check
-midrc branches(n) = {odd n: 4*(n//2 -1)*(n//2), else: 2*(n-2)*(3*n-6) - (16*n-24)
+midrc branches(n) = {odd n: 4*(n//2 -1)*(n//2), else: max(2*(n-2)*(3*n-5) - max(16*(n//2)-40, 0), 0)
 rings(1) branches(n) = 2*(n-2)*(3*n-5)
 
 todo: consider derived "S-orbits"?
