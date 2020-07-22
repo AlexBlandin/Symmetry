@@ -27,3 +27,11 @@ lawless (ignoring Queens-legal) is clearly the upperbound
 
 midrc odds gets perfect 8 because the only point with a 1-orbit (ie. less than an 8-orbit), the midpoint, is precluded by Queens no matter what (since it would need a second column/row, and there's none because it's the odd N case), so all others have 8 symmetry and therefore it's a perfect 8 quotient
 
+       N | 1 2 3 4  5   6   7   8   9    10   11   12   13   14   15   16   17   18   19   20   21   22    ...
+   midrc | 0 0 0 28 8   96  24  204 48   360  80   564  120  816  168  1116 224  1464 288  1860 360  2304 
+rings(1) | 0 0 8 28 60  104 160 228 308  400  504  620  748  888  1040 1204 1380 1568 1768 1980 2204 2440
+rings(2) | 0 0 8 52 132 292 476 748 1044 1428 1836 2332 2852 3460 4092 4812 5556 6388 7244 8188 9156 10212
+
+midrc will probably need to be split into odd/even N subsequences again
+rings(1) branches(n) = https://oeis.org/A033580 a(n-2) (assuming 0 for preceeding)
+rings(2) will be harder
