@@ -34,8 +34,9 @@ rings(2) | 0 0 8 52 132 292 476 748 1044 1428 1836 2332 2852 3460 4092 4812 5556
 
 midrc is split into odd/even N subsequences again
 midrc odds branches(N) = https://oeis.org/A033996 a(N//2-1), evens = https://oeis.org/A033580 - https://oeis.org/A051062 so a1(N-2) - a2(N-2)  (N=4 28-0=28, N=6 104-8=96, N=8 228-24=204, etc)
-rings(1) branches(N) = https://oeis.org/A033580 a(N-2) (assuming 0 for preceeding)
+rings(1) branches(N) = https://oeis.org/A033580 a(N-2)
 rings(2) will be harder and mostly for the sake of completion since it more closely represents what they were doing for Q27 (we don't consider it based on the "internal" placement "S-orbits" as they do)
+
 
 todo: check
 midrc branches(n) = {odd n: 4*(n//2 -1)*((n//2 -1)+1), else: 2*(n-2)*(3*n-6) - (16*n-24)
