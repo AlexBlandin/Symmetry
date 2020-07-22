@@ -39,7 +39,7 @@ rings(2) will be harder and mostly for the sake of completion since it more clos
 
 
 todo: check
-midrc branches(n) = {odd n: 4*(n//2 -1)*((n//2 -1)+1), else: 2*(n-2)*(3*n-6) - (16*n-24)
+midrc branches(n) = {odd n: 4*(n//2 -1)*(n//2), else: 2*(n-2)*(3*n-6) - (16*n-24)
 rings(1) branches(n) = 2*(n-2)*(3*n-5)
 
 todo: consider derived "S-orbits"?
