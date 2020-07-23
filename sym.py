@@ -1,13 +1,15 @@
 from itertools import chain, product, combinations
 from collections import Counter as multiset
-from sys import argv, getsizeof
-from tabulate import tabulate
-from tqdm import tqdm
 from humanize import naturalsize
+from tabulate import tabulate
+from psutil import Process
+from tqdm import tqdm
+from sys import argv
 
 def main():
   STRATEGY = argv[1] if len(argv)>1 else "midrc" # midrc | rings(1) | rings(2) | rings(3)
-  for k in range(1,{"midrc":4,"rings1":4,"rings2":8,"rings3":12}[STRATEGY]+1): # how many Queens to pre-place / branch on
+  mem = Process().memory_info
+  for k in range(6,{"midrc":4,"rings1":4,"rings2":8,"rings3":12}[STRATEGY]+1): # how many Queens to pre-place / branch on
     MAX_N = 50 if k==2 or STRATEGY in ["midrc","rings(1)"] else 20 # how big an N*N board we should check
     table = [["N", "symmetries", "branches", "quotient", "orbits"],[0,0,0,0.0,{}]]
     for N in tqdm(range(1,MAX_N+1), ascii=True): # we could start at 3
@@ -25,14 +27,13 @@ def main():
           syms = sym(points) # todo: may need to consider 'internal' orbits from derived/continued board-states/placements for completion (separate multiset and stats)
           S.update(syms)
           sum_S += len(syms)
-      
+      rss = mem().rss
       len_S = len(S)
       quotient = sum_S/len_S if len_S else 0
       orbits.update(S.values())
-      table.append([N, sum_S, len_S, quotient, dict(orbits)])
-      size_S = getsizeof(S)
-      if size_S >= 10_000_000_000: # exit out if we're using too much memory (currently 10GB)
-        print(f"SYMERR: Exitting to avoid OOM {naturalsize(getsizeof(S))}")
+      table.append([N, sum_S, len_S, quotient, dict(sorted(orbits.items(), key=lambda o:o[0], reverse=True))])
+      if rss >= 10_000_000_000: # exit out if we're using too much memory (currently 10GB)
+        print(f"Exitting to avoid OOM, used {naturalsize(rss)}")
         break
     open(f"./data/{STRATEGY}.k{k}.txt", mode="w").write(tabulate(table, headers="firstrow", floatfmt=["d","d","d",".8f"]))
 
