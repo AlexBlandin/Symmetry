@@ -4,31 +4,31 @@ from tabulate import tabulate
 from tqdm import tqdm
 
 def main():
-  k = 2 # how many Queens to pre-place / branch on, we focus on k=2 (same as Q27)
-  # for k in range(2,4+1):
-  MAX_N = 20 # how big an N*N board we should cheack
-  table = [["N", "symmetries", "branches", "quotient", "orbits"],[0,0,0,0.0,{}]]
-  for N in tqdm(range(1,MAX_N+1), ascii=True): # we could start at 3
-    orbits, odd_N = multiset(), N%2
-    S, sum_S = multiset(), 0
-    
-    indices = tuple(i for i in range(-(N//2), N//2+1) if i != 0 or odd_N)
-    midrc = (0,) if odd_N else (1,-1) #  +  # middle row/col
-    edges = (indices[0], indices[-1]) # [ ] # edges of board
-    rings = lambda r: (*indices[:r],*indices[-r:]) # [O] # Q27 did r=2, max k = 2*r (that gives legal points)
-    
-    region = midrc # midrc | edges | rings(2)
-    for points in preplacement(region, indices, k):
-      if len(points) == k and legal(points, True):
-        syms = sym(points) # todo: may need to consider 'internal' orbits from derived/continued board-states/placements for completion (separate multiset and stats)
-        S.update(syms)
-        sum_S += len(syms)
-    
-    len_S = len(S)
-    quotient = sum_S/len_S if len_S else 0
-    orbits.update(S.values())
-    table.append([N, sum_S, len_S, quotient, dict(orbits)])
-  open(f"./data/midrc.k{k}.txt", mode="w").write(tabulate(table, headers="firstrow", floatfmt=["d","d","d",".8f"]))
+  STRATEGY = "rings(2)" # midrc | rings(1) | rings(2) | rings(3)
+  for k in range(7,8+1): # how many Queens to pre-place / branch on # set to 8+1 for rings(2) and 12+1 for rings(3)
+    MAX_N = 14 if k == 7 else 12 # how big an N*N board we should cheack
+    table = [["N", "symmetries", "branches", "quotient", "orbits"],[0,0,0,0.0,{}]]
+    for N in tqdm(range(1,MAX_N+1), ascii=True): # we could start at 3
+      orbits, odd_N = multiset(), N%2
+      S, sum_S = multiset(), 0
+      
+      indices = tuple(i for i in range(-(N//2), N//2+1) if i != 0 or odd_N)
+      midrc = (0,) if odd_N else (1,-1) #  +  # middle row/col
+      edges = (indices[0], indices[-1]) # [ ] # edges of board = rings(1)
+      rings = lambda r: (*indices[:r],*indices[-r:]) # [O] # Q27 did r=2, max k = 2*r (that gives legal points)
+      
+      region = {"midrc":midrc,"rings(1)":edges,"rings(2)":rings(2),"rings(3)":rings(3)}[STRATEGY]
+      for points in preplacement(region, indices, k):
+        if len(points) == k and legal(points, True):
+          syms = sym(points) # todo: may need to consider 'internal' orbits from derived/continued board-states/placements for completion (separate multiset and stats)
+          S.update(syms)
+          sum_S += len(syms)
+      
+      len_S = len(S)
+      quotient = sum_S/len_S if len_S else 0
+      orbits.update(S.values())
+      table.append([N, sum_S, len_S, quotient, dict(orbits)])
+    open(f"./data/{STRATEGY}.k{k}.txt", mode="w").write(tabulate(table, headers="firstrow", floatfmt=["d","d","d",".8f"]))
 
 def legal(points, LEGAL=True):
   "Whether a set of points are Queens-legal (disable with LEGAL=False)"
