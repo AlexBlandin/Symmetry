@@ -5,7 +5,8 @@ from tqdm import tqdm
 
 def main():
   k = 2 # how many Queens to pre-place / branch on, we focus on k=2 (same as Q27)
-  MAX_N = 50 # how big an N*N board we should cheack
+  # for k in range(2,4+1):
+  MAX_N = 20 # how big an N*N board we should cheack
   table = [["N", "symmetries", "branches", "quotient", "orbits"],[0,0,0,0.0,{}]]
   for N in tqdm(range(1,MAX_N+1), ascii=True): # we could start at 3
     orbits, odd_N = multiset(), N%2
@@ -16,7 +17,7 @@ def main():
     edges = (indices[0], indices[-1]) # [ ] # edges of board
     rings = lambda r: (*indices[:r],*indices[-r:]) # [O] # Q27 did r=2, max k = 2*r (that gives legal points)
     
-    region = rings(1) # midrc | edges | rings(2)
+    region = midrc # midrc | edges | rings(2)
     for points in preplacement(region, indices, k):
       if len(points) == k and legal(points, True):
         syms = sym(points) # todo: may need to consider 'internal' orbits from derived/continued board-states/placements for completion (separate multiset and stats)
@@ -27,7 +28,7 @@ def main():
     quotient = sum_S/len_S if len_S else 0
     orbits.update(S.values())
     table.append([N, sum_S, len_S, quotient, dict(orbits)])
-  open(f"./data/test.txt", mode="w").write(tabulate(table, headers="firstrow", floatfmt=["d","d","d",".8f"]))
+  open(f"./data/midrc.k{k}.txt", mode="w").write(tabulate(table, headers="firstrow", floatfmt=["d","d","d",".8f"]))
 
 def legal(points, LEGAL=True):
   "Whether a set of points are Queens-legal (disable with LEGAL=False)"
