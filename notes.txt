@@ -36,7 +36,7 @@ rings(1) branches(N) = https://oeis.org/A033580 a(N-2)
 rings(2) will be harder and mostly for the sake of completion since it more closely represents what they were doing for Q27 (we don't consider it based on the "internal" placement "S-orbits" as they do)
 
 
-midrc branches(n) = {odd n: 4*(n//2 -1)*(n//2), else: max(2*(n-2)*(3*n-5) - max(16*(n//2)-40, 0), 0)
+midrc branches(n) = {odd n: (n-3)*(n-1), else: max(2*(n-2)*(3*n-5) - max(8*n-40, 0), 0)
 rings(1) branches(n) = {n<=1: 0, else: 2*(n-2)*(3*n-5)
 
 todo: consider derived "S-orbits"?
