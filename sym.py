@@ -9,7 +9,7 @@ from sys import argv
 def main():
   STRATEGY = argv[1] if len(argv)>1 else "midrc" # midrc | rings(1) | rings(2) | rings(3)
   mem = Process().memory_info
-  for k in range(6,{"midrc":4,"rings1":4,"rings2":8,"rings3":12}[STRATEGY]+1): # how many Queens to pre-place / branch on
+  for k in range(2,{"midrc":4,"rings1":4,"rings2":8,"rings3":12}[STRATEGY]+1): # how many Queens to pre-place / branch on
     MAX_N = 50 if k==2 or STRATEGY in ["midrc","rings(1)"] else 20 # how big an N*N board we should check
     table = [["N", "symmetries", "branches", "quotient", "orbits"],[0,0,0,0.0,{}]]
     for N in tqdm(range(1,MAX_N+1), ascii=True): # we could start at 3
