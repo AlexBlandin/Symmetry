@@ -15,4 +15,8 @@ Or, you can use a package manager such as [Poetry](https://github.com/python-poe
 
 ## Running
 
-`$ python3 sym.py` is all that's needed. Supports [PyPy3.6 v7.3.1+](https://www.pypy.org/).
+`$ python3 sym.py [midrc|rings1|rings2|rings3]`, i.e.
+- `$ python3 sym.py midrc`
+- `$ python3 sym.py rings1`
+
+Supports [PyPy3.6 v7.3.1+](https://www.pypy.org/).
