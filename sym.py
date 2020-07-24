@@ -32,7 +32,7 @@ def main():
     open(f"./data/{STRATEGY}.k{k}.txt", mode="w").write(tabulate(table, headers="firstrow", floatfmt=["d","d","d",".8f"]))
 
 def legal(points):
-  "Whether a set of points are Queens-legal (disable with LEGAL=False)"
+  "Whether a set of points are Queens-legal"
   for (x,y), (a,b) in combinations(points, 2):
     if x==a or y==b or x+y==a+b or x-y==a-b:
       return False
@@ -49,7 +49,7 @@ def sym(points): # from set of points generate the symmetries as a set of frozen
   r3 = frozenset((y,-x) for x,y in points); r4 = frozenset(points)
   return {rx,ry,rd,ra,r1,r2,r3,r4}
 
-def index_to_range(x): return (x-1 if N%2==0 and x >= 1 else x) + N//2
+def index_to_range(x,N): return (x-1 if N%2==0 and x >= 1 else x) + N//2
 def board(points, indices): return [[(x,y) in points for x in indices] for y in indices]
 
 if __name__ == "__main__": main()
