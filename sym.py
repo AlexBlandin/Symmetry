@@ -1,6 +1,5 @@
 from itertools import chain, product, combinations
 from collections import Counter as multiset
-from humanize import naturalsize
 from tabulate import tabulate
 from psutil import Process
 from tqdm import tqdm
@@ -8,50 +7,42 @@ from sys import argv
 
 def main():
   STRATEGY = argv[1] if len(argv)>1 else "midrc" # midrc | rings1 | rings2 | rings3
-  mem = Process().memory_info # rings2 k=6 N=14 uses 15.0 GB
-  for k in range(2,{"midrc":4,"rings1":4,"rings2":8,"rings3":12}[STRATEGY]+1): # how many Queens to pre-place / branch on
-    MAX_N = 50 if k==2 or STRATEGY in ["midrc","rings(1)"] else 20 # how big an N*N board we should check
+  r = 1 if STRATEGY not in ["rings2","rings3"] else {"rings2":2,"rings3":3}[STRATEGY]
+  for k in range(2,4*r+1): # how many Queens to pre-place / branch on
+    MAX_N = 50 if k==2 or STRATEGY in ["midrc","rings1"] else 30
     table = [["N", "symmetries", "branches", "quotient", "orbits"],[0,0,0,0.0,{}]]
     for N in tqdm(range(1,MAX_N+1), ascii=True): # we could start at 3
-      orbits, odd_N = multiset(), N%2
-      S, sum_S = multiset(), 0
-      
+      S, sum_S, odd_N = multiset(), 0, N%2
       indices = tuple(i for i in range(-(N//2), N//2+1) if i != 0 or odd_N)
-      midrc = (0,) if odd_N else (1,-1) #  +  # middle row/col
-      edges = (indices[0], indices[-1]) # [ ] # edges of board = rings(1)
-      rings = lambda r: (*indices[:r],*indices[-r:]) # [O] # Q27 did r=2, max k = 2*r (that gives legal points)
-      
-      region = {"midrc":midrc,"rings1":edges,"rings2":rings(2),"rings3":rings(3)}[STRATEGY]
+      midrc = (0,) if odd_N else (1,-1)    #  +  # middle row/col
+      rings = (*indices[:r],*indices[-r:]) # [ ] # r outermost rings ("coronal")
+      region = midrc if STRATEGY=="midrc" else rings
       for points in preplacement(region, indices, k):
-        if len(points) == k and legal(points, True):
+        if legal(points): # bypass for lawless
           syms = sym(points) # todo: may need to consider 'internal' orbits from derived/continued board-states/placements for completion (separate multiset and stats)
-          S.update(syms)
-          sum_S += len(syms)
-      rss = mem().rss
-      len_S = len(S)
-      quotient = sum_S/len_S if len_S else 0
-      orbits.update(S.values())
-      table.append([N, sum_S, len_S, quotient, dict(sorted(orbits.items(), key=lambda o:o[0], reverse=True))])
+          S.update(syms); sum_S += len(syms)
+      rss = Process().memory_info().rss # rings2 k=6 N=14 uses 15.0 GB
+      branches = len(S)
+      quotient = sum_S/branches if branches else 0
+      orbits = multiset(S.values())
+      table.append([N, sum_S, branches, quotient, dict(sorted(orbits.items(), key=lambda o:o[0], reverse=True))])
       if rss >= 10_000_000_000: # exit out if we're using too much memory (currently 10GB)
-        print(f"Exitting to avoid OOM, used {naturalsize(rss)}")
+        print(f"Exitting to avoid OOM, used {rss/1_000_000_000:.2f}GB")
         break
     open(f"./data/{STRATEGY}.k{k}.txt", mode="w").write(tabulate(table, headers="firstrow", floatfmt=["d","d","d",".8f"]))
 
-def legal(points, LEGAL=True):
+def legal(points):
   "Whether a set of points are Queens-legal (disable with LEGAL=False)"
-  if not LEGAL: return True
-  for xy, ab in combinations(points, 2): # poly check instead of linear because simplicity and because k=2
-    if xy!=ab: # faster to check and then destructure
-      x,y, a,b = *xy, *ab
-      if x==a or y==b or x+y==a+b or x-y==a-b:
-        return False
+  for (x,y), (a,b) in combinations(points, 2):
+    if x==a or y==b or x+y==a+b or x-y==a-b:
+      return False
   return True
 
 def preplacement(region, indices, k):
   points = set(chain(product(indices, region), product(region, indices)))
   return combinations(points, k)
 
-def sym(points): # from one set generate the symmetries as a set of frozen sets
+def sym(points): # from set of points generate the symmetries as a set of frozen sets
   rx = frozenset((-x,y) for x,y in points); ry = frozenset((x,-y) for x,y in points)
   rd = frozenset((y,x) for x,y in points); ra = frozenset((-x,-y) for x,y in points)
   r1 = frozenset((-y,x) for x,y in points); r2 = frozenset((-y,-x) for x,y in points)

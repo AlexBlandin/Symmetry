@@ -6,10 +6,9 @@
   - [pip 20.0.1+](https://pypi.org/project/pip/) is standard fare
   - [wheel 0.34.0+](https://pypi.org/project/wheel/) is standard fare
   - [setuptools 48.0.0+](https://pypi.org/project/setuptools/) is standard fare
-- [humanize 2.0.0+](https://pypi.org/project/humanize) for nice memory readouts
-- [psutil 5.0.0+](https://pypi.org/project/psutil) for nice OOM preemption
+- [psutil 5.0.0+](https://pypi.org/project/psutil) for nice OOM pre-empts
 - [tabulate 0.8.1+](https://pypi.org/project/tabulate/) for nice output
-- [tqdm 4.30.0+](https://pypi.org/project/tqdm/) for a nice progress bar
+- [tqdm 4.30.0+](https://pypi.org/project/tqdm/) for nice progress bars
 
 Or, you can use a package manager such as [Poetry](https://github.com/python-poetry/poetry):
 1. `$ pip install poetry`
