@@ -1,6 +1,24 @@
 
 
 
+midrc branches(odd N) = (n-1)(n-3) + 1
+this comes from the typical (n-1)*(n-1) product of the row*col (discounting the midpoint for -1), with then, assuming we are picking from the column, discounting for the two diagonally attacking points on the row (so n-1-2=n-3)
+  
+  A
+  B
+ab#ba
+  B
+  A
+
+here we see the conflicting squares when flipping between the two cases (row/column)
+
+
+
+OLD:
+OLD:
+OLD:
+
+
 LAWLESS:
 
 midrc lawless branches(N) = {odd N: (N-1)(2N-1), else: 2(N-1)(4N-5)
@@ -38,5 +56,3 @@ rings(2) will be harder and mostly for the sake of completion since it more clos
 
 midrc branches(n) = {odd n: (n-3)*(n-1), else: max(2*(n-2)*(3*n-5) - max(8*n-40, 0), 0)
 rings(1) branches(n) = {n<=1: 0, else: 2*(n-2)*(3*n-5)
-
-todo: consider derived "S-orbits"?
