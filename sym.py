@@ -21,11 +21,11 @@ def main():
     quotient = branches/reduced if reduced else 0
     orbits = dict(sorted(orbits.items(), key=lambda o:o[0], reverse=True))
     table.append([N, branches, reduced, quotient, orbits, fundamental])
-  open(f"./data/test2.txt", mode="w").write(tabulate(table, headers="firstrow", floatfmt=["d","d","d",".3f"]))
+  open(f"./data/test.txt", mode="w").write(tabulate(table, headers="firstrow", floatfmt=["d","d","d",".3f"]))
 
 def legal(branch):
-  (x,y), (a,b) = branch # means only (0,0) passes, use (x != a or a != b) to allow (+-1,+-1)^2
-  return not (branch!=((0,0),(0,0)) and (x==a or y==b or x+y==a+b or x-y==a-b))
+  (x,y), (a,b) = branch
+  return not (x != a or a != b) and (x==a or y==b or x+y==a+b or x-y==a-b))
 
 def sym(squares): # from set of squares generate the symmetries as a set of frozen sets
   rx = frozenset((-x,y) for x,y in squares); ry = frozenset((x,-y) for x,y in squares)

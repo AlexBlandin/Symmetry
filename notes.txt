@@ -34,7 +34,8 @@ babababa
    BA
 
 here we see the repeating pattern (lattice?)
-
+we do need to branch in the middle like the odds for completeness
+so I don't think we should discount the middle
 
 
 OLD:
