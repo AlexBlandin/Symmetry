@@ -1,52 +1,33 @@
-from itertools import chain, product, combinations
+from itertools import chain, product
 from collections import Counter as multiset
 from tabulate import tabulate
-from psutil import Process
-from time import sleep
 from tqdm import tqdm
-from sys import argv
-import gc
 
 def main():
-  STRATEGY = argv[1] if len(argv)>1 else "midrc" # midrc | rings1 | rings2 | rings3
-  r = 1 if STRATEGY not in ["rings2","rings3"] else {"rings2":2,"rings3":3}[STRATEGY]
-  for k in range(2,4*r+1): # how many Queens to pre-place / branch on
-    try:
-      MAX_N = 50 if k==2 or STRATEGY in ["midrc","rings1"] else 15 if k > 7 else 30
-      table = [["N", "symmetries", "branches", "quotient", "orbits"],[0,0,0,0.0,{}]]
-      for N in tqdm(range(1,MAX_N+1), ascii=True): # we could start at 3
-        if N < k:
-          table.append([N, 0, 0, 0.0, {}]); continue
-        S, sum_S, odd_N = multiset(), 0, N%2
-        indices = tuple(i for i in range(-(N//2), N//2+1) if i != 0 or odd_N)
-        midrc = (0,) if odd_N else (1,-1)    #  +  # middle row/col
-        rings = (*indices[:r],*indices[-r:]) # [ ] # r outermost rings ("coronal")
-        region = midrc if STRATEGY=="midrc" else rings
-        for points in preplacement(region, indices, k):
-          if legal(points): # bypass for lawless
-            syms = sym(points) # todo: may need to consider 'internal' orbits from derived/continued board-states/placements for completion (separate multiset and stats)
-            S.update(syms); sum_S += len(syms)
-        rss = Process().memory_info().rss # rings2 k=6 N=14 uses 15GB, rings3 k=7 N=10 uses GB and N=11 uses over 28GB
-        branches = len(S)
-        quotient = sum_S/branches if branches else 0
-        orbits = multiset(S.values())
-        table.append([N, sum_S, branches, quotient, dict(sorted(orbits.items(), key=lambda o:o[0], reverse=True))])
-        if rss >= 10_000_000_000: # exit out if we're using too much memory (currently set at 10GB)
-          del S; sleep(5); gc.collect(); sleep(5); print(f"Ending k = {k}, N = {N} to avoid OOM, measured {rss/1_000_000_000:.2f}GB")
-          break
-    except KeyboardInterrupt: pass
-    open(f"./data/{STRATEGY}.k{k}.txt", mode="w").write(tabulate(table, headers="firstrow", floatfmt=["d","d","d",".8f"]))
+  k, MAX_N = 2, 50
+  table = [["N", "branches", "fundamental", "quotient", "orbits"],[0,0,0,0.0,{}]]
+  for N in tqdm(range(1,MAX_N+1), ascii=True): # we could start at 3
+    if N < k:
+      table.append([N, 0, 0, 0.0, {}]); continue
+    S, odd_N = multiset(), N%2
+    indices = tuple(i for i in range(-(N//2), N//2+1) if i != 0 or odd_N)
+    midrc = (0,) if odd_N else (1,-1) #  +  # middle row/col
+    
+    for branch in product(product(indices, midrc), product(midrc, indices)):
+      if legal(branch):
+        syms = sym(branch)
+        S.update(syms)
+    
+    branches = len(S)
+    orbits = multiset(S.values())
+    fundamental = sum(v/k for vk in orbits.items())
+    quotient = branches/fundamental if fundamental else 0
+    table.append([N, branches, fundamental, quotient, dict(sorted(orbits.items(), key=lambda o:o[0], reverse=True))])
+  open(f"./data/test.txt", mode="w").write(tabulate(table, headers="firstrow", floatfmt=["d","d","d",".8f"]))
 
-def legal(points):
-  "Whether a set of points are Queens-legal"
-  for (x,y), (a,b) in combinations(points, 2):
-    if (x != a or a != b) and (x==a or y==b or x+y==a+b or x-y==a-b):
-      return False
-  return True
-
-def preplacement(region, indices, k):
-  points = set(chain(product(indices, region), product(region, indices)))
-  return combinations(points, k)
+def legal(branch):
+  (x,y), (a,b) = branch
+  return not ((x != a or a != b) and (x==a or y==b or x+y==a+b or x-y==a-b)):
 
 def sym(points): # from set of points generate the symmetries as a set of frozen sets
   rx = frozenset((-x,y) for x,y in points); ry = frozenset((x,-y) for x,y in points)

@@ -6,7 +6,6 @@
   - [pip 20.0.1+](https://pypi.org/project/pip/) is standard fare
   - [wheel 0.34.0+](https://pypi.org/project/wheel/) is standard fare
   - [setuptools 48.0.0+](https://pypi.org/project/setuptools/) is standard fare
-- [psutil 5.0.0+](https://pypi.org/project/psutil) for nice OOM pre-empts
 - [tabulate 0.8.1+](https://pypi.org/project/tabulate/) for nice output
 - [tqdm 4.30.0+](https://pypi.org/project/tqdm/) for nice progress bars
 
@@ -16,8 +15,4 @@ Or, you can use a package manager such as [Poetry](https://github.com/python-poe
 
 ## Running
 
-`$ python3 sym.py [midrc|rings1|rings2|rings3]`, i.e.
-- `$ python3 sym.py midrc`
-- `$ python3 sym.py rings1`
-
-Supports [PyPy3.6 v7.3.1+](https://www.pypy.org/).
+`$ python3 sym.py` is all you need to run it.Supports [PyPy3.6 v7.3.1+](https://www.pypy.org/).
