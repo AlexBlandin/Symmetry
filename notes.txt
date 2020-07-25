@@ -13,6 +13,29 @@ ab#ba
 here we see the conflicting squares when flipping between the two cases (row/column)
 
 
+n*(3n-2) row * (2*column - 2 (Q-legal) + row)
+simplified (ignore Q-legal) is 3n^2
+
+ 
+   AB
+   BA
+ ababab
+ bababa
+   AB
+   BA
+
+   AB
+   BA
+   AB
+abababab
+babababa
+   BA
+   AB
+   BA
+
+here we see the repeating pattern (lattice?)
+
+
 
 OLD:
 OLD:
