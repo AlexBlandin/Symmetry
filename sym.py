@@ -1,5 +1,5 @@
-from itertools import chain, product, combinations
 from collections import Counter as multiset
+from itertools import product
 from tabulate import tabulate
 
 def main():
@@ -11,7 +11,7 @@ def main():
     indices = tuple(i for i in range(-(N//2), N//2+1) if i != 0 or odd_N)
     midrc = (0,) if odd_N else (1,-1) #  +  # middle row/col
     
-    for branch in product(product(indices, midrc), product(midrc, indices)): # combinations(set(chain(product(indices, midrc), product(midrc, indices))), 2):
+    for branch in product(product(indices, midrc), product(midrc, indices)):
       if legal(branch):
         S.update(sym(branch))
     
