@@ -40,7 +40,7 @@ def main():
 def legal(points):
   "Whether a set of points are Queens-legal"
   for (x,y), (a,b) in combinations(points, 2):
-    if x==a or y==b or x+y==a+b or x-y==a-b:
+    if (x != a or a != b) and (x==a or y==b or x+y==a+b or x-y==a-b):
       return False
   return True
 
