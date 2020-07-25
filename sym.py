@@ -1,33 +1,35 @@
-from itertools import chain, product
+from itertools import chain, product, combinations
 from collections import Counter as multiset
 from tabulate import tabulate
-from tqdm import tqdm
 
 def main():
   k, MAX_N = 2, 50
-  table = [["N", "branches", "fundamental", "quotient", "orbits"],[0,0,0,0.0,{}]]
-  for N in tqdm(range(1,MAX_N+1), ascii=True): # we could start at 3
-    if N < k:
-      table.append([N, 0, 0, 0.0, {}]); continue
+  table = [["N", "branches", "orbits"]]
+  table = [["N", "branches", "fundamental", "quotient", "orbits", "broken"]]
+  for N in range(MAX_N+1):
     S, odd_N = multiset(), N%2
     indices = tuple(i for i in range(-(N//2), N//2+1) if i != 0 or odd_N)
     midrc = (0,) if odd_N else (1,-1) #  +  # middle row/col
     
-    for branch in product(product(indices, midrc), product(midrc, indices)):
+    for branch in product(product(indices, midrc), product(midrc, indices)): # combinations(set(chain(product(indices, midrc), product(midrc, indices))), 2):
       if legal(branch):
-        syms = sym(branch)
-        S.update(syms)
+        S.update(sym(branch))
+    
+    # branches = len(S)
+    # orbits = multiset(S.values())
+    # table.append([N, branches, dict(sorted(orbits.items(), key=lambda o:o[0], reverse=True))])
     
     branches = len(S)
     orbits = multiset(S.values())
-    fundamental = sum(v/k for vk in orbits.items())
+    broken = {k: v//k for k,v in orbits.items()}
+    fundamental = sum(broken.values())
     quotient = branches/fundamental if fundamental else 0
-    table.append([N, branches, fundamental, quotient, dict(sorted(orbits.items(), key=lambda o:o[0], reverse=True))])
-  open(f"./data/test.txt", mode="w").write(tabulate(table, headers="firstrow", floatfmt=["d","d","d",".8f"]))
+    table.append([N, branches, fundamental, quotient, dict(sorted(orbits.items(), key=lambda o:o[0], reverse=True)), broken])
+  open(f"./data/test.txt", mode="w").write(tabulate(table, headers="firstrow", floatfmt=["d","d","d",".3f"]))
 
 def legal(branch):
   (x,y), (a,b) = branch
-  return not ((x != a or a != b) and (x==a or y==b or x+y==a+b or x-y==a-b)):
+  return not ((x != a or a != b) and (x==a or y==b or x+y==a+b or x-y==a-b))
 
 def sym(points): # from set of points generate the symmetries as a set of frozen sets
   rx = frozenset((-x,y) for x,y in points); ry = frozenset((x,-y) for x,y in points)
