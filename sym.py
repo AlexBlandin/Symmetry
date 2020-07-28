@@ -13,7 +13,8 @@ def main():
     def board(squares): return "\n".join("".join("#" if (x,y) in squares else "-" for x in indices) for y in indices)
     def legal(branch):
       (x,y), (a,b) = branch
-      return (branch == ((0,0),(0,0))) or (x!=a and y!=b and offset(x)+offset(y)!=offset(a)+offset(b) and offset(x)-offset(y)!=offset(a)-offset(b))
+      ox,oy,oa,ob = offset(x),offset(y),offset(a),offset(b)
+      return (branch == ((0,0),(0,0))) or (x!=a and y!=b and ox+oy!=oa+ob and ox-oy!=oa-ob)
 
     for branch in product(product(indices, midrc), product(midrc, indices)) if odd_N else combinations(set(product(indices, midrc)) | set(product(midrc, indices)), 2):
       if legal(branch):
