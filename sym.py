@@ -11,12 +11,12 @@ def main():
     indices = tuple(i for i in range(-(N//2), N//2+1) if i != 0 or odd_N)
     def offset(x): return (x-1 if N%2==0 and x >= 1 else x) + N//2 + 1
     def board(squares): return "\n".join("".join("#" if (x,y) in squares else "-" for x in indices) for y in indices)
-    def legal(branch,N):
+    def legal(branch):
       (x,y), (a,b) = branch
       return (branch == ((0,0),(0,0))) or (x!=a and y!=b and offset(x)+offset(y)!=offset(a)+offset(b) and offset(x)-offset(y)!=offset(a)-offset(b))
 
     for branch in product(product(indices, midrc), product(midrc, indices)) if odd_N else combinations(set(product(indices, midrc)) | set(product(midrc, indices)), 2):
-      if legal(branch,N):
+      if legal(branch):
         S.update(sym(branch))
     
     branches, orbits = len(S), dict(sorted(multiset(S.values()).items(), key=lambda o:o[0], reverse=True)) # multiset(S.values()) sorted for printout
