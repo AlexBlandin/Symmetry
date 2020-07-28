@@ -1,5 +1,5 @@
 
-
+ODD N:
 
 midrc branches(odd N) = (n-1)(n-3) + 1
 this comes from the typical (n-1)*(n-1) product of the row*col (discounting the midpoint for -1), with then, assuming we are picking from the column, discounting for the two diagonally attacking points on the row (so n-1-2=n-3)
@@ -13,29 +13,53 @@ ab#ba
 here we see the conflicting squares when flipping between the two cases (row/column)
 
 
-n*(3n-2) row * (2*column - 2 (Q-legal) + row)
-simplified (ignore Q-legal) is 3n^2
+EVEN N:
 
- 
+conjectured formula (need to rederive fully to be sure)
+8(n-5)(n-4)(n-3) + 8(n-4)(n-4)(n-3) + 4(n-6)(n-5)(n-4)(n-4) + 4(n-3)(n-3)
+first term is "caps" of the "limbs" (a limb is a column/row between the edge of the board and the 2x2 "centroid", the cap is the square of the limb along the outermost edge of the board)
+second term is the "roots" of the limbs (the square of the limb directly adjacent to the centroid)
+third term is the remaining parts of the limbs
+fourth term is the centroid
+
+squares form limbs (1..8) and centroid (0)
+  12
+  12
+880033
+770044
+  65
+  65
+
+tracing out the diagonals
+
    AB
    BA
- ababab
- bababa
+ ab##ab
+ ba##ba
    AB
    BA
 
    AB
    BA
    AB
-abababab
-babababa
+aba##bab
+bab##aba
    BA
    AB
    BA
 
-here we see the repeating pattern (lattice?)
-we do need to branch in the middle like the odds for completeness
-so I don't think we should discount the middle
+here we see the repeating pattern
+we can do same as odd and separate the centroid (here a 2x2) which will always be a fixed amount and focus on the limbs
+
+older:
+assuming a point between top and centroid on one column (n)(n-3)(n-2)(n-2) +4, additional -2s on all since has diagonal eliminations on all others and -1 on adjacent column since horizontal elim too)
+
+assuming topmost point on a column (n)(n-2)(n-2)(n-1) +4, -2 diagonal elims on uppermost row, -1 diag -1 horiz on adjacent column, -1 diagonal on lowemost row (since other diag doesn't intersect)
+
+assuming lowermost point on a column directly above centroid (n)(n-2)(n-1)(n-2), -1 diag -1 horiz on adj col, -2 diag on lowermost row, -1 diag on uppermost row as other diag is centroid which we already discount
+
+
+
 
 
 OLD:
