@@ -9,7 +9,7 @@ def main():
     S, odd_N = multiset(), N%2
     midrc = (0,) if odd_N else (1,-1) # middle rows/cols
     indices = tuple(i for i in range(-(N//2), N//2+1) if i != 0 or odd_N)
-    def offset(x): return (x-1 if N%2==0 and x >= 1 else x) + N//2 + 1
+    def offset(x): return (x-1 if N%2==0 and x >= 1 else x) + N//2 # reverse the conversion from 0..N to -N//2..N//2
     def board(squares): return "\n".join("".join("#" if (x,y) in squares else "-" for x in indices) for y in indices)
     def legal(branch):
       (x,y), (a,b) = branch
