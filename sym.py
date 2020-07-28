@@ -19,13 +19,13 @@ def main():
       if legal(branch,N):
         S.update(sym(branch))
     
-    branches, orbits = len(S), multiset(S.values())
+    branches, orbits = len(S), dict(sorted(multiset(S.values()).items(), key=lambda o:o[0], reverse=True)) # multiset(S.values()) sorted for printout
     fundamental = {k: v//k for k,v in orbits.items()}
     reduced = sum(fundamental.values())
     quotient = branches/reduced if reduced else 0
-    orbits = dict(sorted(orbits.items(), key=lambda o:o[0], reverse=True))
+    
     table.append([N, branches, reduced, quotient, orbits, fundamental])
-  open(f"./data/test2.txt", mode="w").write(tabulate(table, headers="firstrow", floatfmt=["d","d","d",".3f"]))
+  open(f"./data/test.txt", mode="w").write(tabulate(table, headers="firstrow", floatfmt=["d","d","d",".3f"]))
 
 def sym(squares): # from set of squares generate the symmetries as a set of frozen sets
   rx = frozenset((-x,y) for x,y in squares); ry = frozenset((x,-y) for x,y in squares)
