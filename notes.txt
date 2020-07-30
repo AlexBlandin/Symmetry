@@ -15,11 +15,19 @@ here we see the nested diamond pattern and isolated central square
 
 EVEN N:
 
+branches(even N) = 4(6N-22) + 2(N-6)(3N-13) + 4(2N-6)  for N >= 3
+                 = 2(3N^2 - 15N + 22)
+                 = 6N^2 - 30N + 44
+
+                 = 2(N-2)(3N-5) - 8N + 24   (the below one expanded to remove the max())
+                 = 6N^2 - 22N + 20 - 8N + 24
+                 = 6N^2 - 30N + 44
+
 branches(even N) = 2(N-2)(3N-5) - max(0, 8N-24)
                  = 2(N-2)(3N-5) - 4N*sign(8N - 24) + 12*sign(8N - 24) - 4N + 12
                  = 6N^2 - 22N + 20 - 4N*sign(8N - 24) + 12*sign(8N - 24) - 4N + 12
                  = 6N^2 - 4N*sign(8N - 24) + 12*sign(8N - 24) - 26N + 32
-this is currently just conjectured but matches for all tested N
+equivalent for N>=3 (or equivalent in general if you remove the max(), as seen in between)
 
 build an intuitive formula if targeting the 8-orbits with then + (n-2)/2 for the 4-orbits?
 
@@ -71,7 +79,7 @@ fourth term is the centroid (linear, 2*2 squares gives 4*linear cases), for each
 
 
 4(6n-22) + 2(n-6)(3n-13) + 4(2n-6) matches.
-we get this by taking the limbs and halving them and removing the fundamental pair that overlaps on joining the caps and roots into a singular formula
+we get this by taking the limbs and accounting for the 4-orbits by halving them and removing the fundamental pair that overlaps on joining the caps and roots into a singular formula
 
 
 
