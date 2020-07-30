@@ -3,7 +3,7 @@ ODD N:
 
 branches(odd N) = (N-1)(N-3) + 1
 this comes from the typical (N-1)*(N-1) product of the row*col (discounting the midpoint for -1), with then, assuming we are picking from the column, discounting for the two diagonally attacking points on the row (so N-1-2=N-3), and then adding the central square as it cannot pair with any others in this case but must be included as a valid branch
-  
+
   A
   B
 ab#ba
@@ -17,18 +17,16 @@ EVEN N:
 
 branches(even N) = 2(N-2)(3N-5) - max(0, 8N-24)
                  = 2(N-2)(3N-5) - 4N*sign(8N - 24) + 12*sign(8N - 24) - 4N + 12
+                 = 6N^2 - 22N + 20 - 4N*sign(8N - 24) + 12*sign(8N - 24) - 4N + 12
                  = 6N^2 - 4N*sign(8N - 24) + 12*sign(8N - 24) - 26N + 32
 this is currently just conjectured but matches for all tested N
 
 build an intuitive formula if targeting the 8-orbits with then + (n-2)/2 for the 4-orbits?
 
+observe how the above (which overshoots with then a linear offset to put back on)
+is just a second-order polynomial (N^2) -- no higher because logically we're pairing points, so earlier cubic/quartic attempts are obv. wrong
 
-the one below is not correct but was me trying to build an intuitive formula
-8(n-5)(n-4)(n-3) + 8(n-4)(n-4)(n-3) + 4(n-6)(n-5)(n-4)(n-4) + 4(n-3)(n-3)
-first term is "caps" of the "limbs" (a limb is a column/row between the edge of the board and the 2x2 "centroid", the cap is the square of the limb along the outermost edge of the board)
-second term is the "roots" of the limbs (the square of the limb directly adjacent to the centroid)
-third term is the remaining parts of the limbs
-fourth term is the centroid
+
 
 squares form limbs (1..8) and centroid (0s)
   12
@@ -59,13 +57,22 @@ bab##aba
 here we see the repeating pattern
 we can do same as odd and separate the centroid (here a 2x2) which will always be a fixed amount and focus on the limbs
 
-older:
-assuming a point between top and centroid on one column (n)(n-3)(n-2)(n-2) +4, additional -2s on all since has diagonal eliminations on all others and -1 on adjacent column since horizontal elim too)
 
-assuming topmost point on a column (n)(n-2)(n-2)(n-1) +4, -2 diagonal elims on uppermost row, -1 diag -1 horiz on adjacent column, -1 diagonal on lowemost row (since other diag doesn't intersect)
 
-assuming lowermost point on a column directly above centroid (n)(n-2)(n-1)(n-2), -1 diag -1 horiz on adj col, -2 diag on lowermost row, -1 diag on uppermost row as other diag is centroid which we already discount
+this is not correct (doesn't account for 4-orbits) but an attempt at trying to build an intuitive formula
+8(n-5+n-4+n-3) + 8(n-4+n-4+n-3) + 2(n-6)(n-5+n-4+n-4) + 4(n-3+n-3)
+= 8(3n-12) + 8(3n-11) + 2(n-6)(3n-13) + 4(2n-6)
+= 8(6n-23) + 2(n-6)(3n-13) + 4(2n-6)
 
+first term is "caps" of the "limbs" (a limb is a column/row between the edge of the board and the 2x2 "centroid", the cap is the square of the limb along the outermost edge of the board) (linear, known 8 cases), for 8 caps (n-4+n-4+n-1), -2 diagonal elims on uppermost row, -1 diag -1 horiz on adjacent column, -1 diagonal on lowemost row (since other diag doesn't intersect)
+second term is the "roots" of the limbs (the square of the limb directly adjacent to the centroid) (linear, known 8 cases), for 8 roots (n-4+n-3+n-4), -1 diag -1 horiz on adj col, -2 diag on lowermost row, -1 diag on uppermost row as other diag is intersects centroid which was already discounted
+third term is the remaining parts of the limbs (polynomial component), for each square on limb not that is not cap or root (n-6) since discounting centroid then (n-5+n-2+n-4), additional -2s on all since has diagonal eliminations on all others and -1 on adjacent column for horizontal elim too
+fourth term is the centroid (linear, 2*2 squares gives 4*linear cases), for each of the 4 squares (n-3+n-3) as eliminates a row and column and then by diagonal eliminates another square in the centroid and then a root square
+
+differs from matched formula by 16n - 72 + max(0, 8 n - 24)
+             matched formula is 6n^2 - 22n + 20
+
+4(6n-22) + 2(n-6)(3n-13) + 4(2n-6) matches.
 
 REDUCED:
 
