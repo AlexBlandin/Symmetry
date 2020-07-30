@@ -1,9 +1,5 @@
-REDUCED:
 
-is approaching 8 due to a constant 1-orbit or linear 4-orbits vs polynomial 8-orbits
-seems to be the case looking at the data, where the growth in the polynomial dominates and the 8-orbits as a sub-problem would naturally have a quotient of 8 (since, again, 1 fundamental gives 8 inc. self) so the quotient tends approaches 8 as the constant/linear term becomes insignificant (odd N approaches asymptotically faster since constant vs polynomial)
-evens 4-orbits (starting at N=2) goes 0,1,2,3,4,5,6,7,8,9,10,... (N=2's 0 comes from its empty F multiset)
-odds 1-orbit is always 1, since it's the midpoint
+quotient approaches 8 due to the polynomial 8-orbits vs constant 1-orbit or linear 4-orbits
 
 
 ODD N:
@@ -20,7 +16,7 @@ ab#ba
 here we see the nested diamond pattern (so each branch is a pair of two different size diamonds, which is why we always get full 8-orbits) and isolated central square
 
 reduced(odd N) = (N-1)(N-3)/8 + 1
-we get this from the normal 8-orbits / 8 (exact since 8-orbits naturally have 1 fundamental branch giving rise to 8 branches including itself) plus the normal 1-orbit (midpoint)
+we get this from the normal 8-orbits / 8 (exact since 8-orbits naturally have 1 fundamental branch giving rise to 8 branches including itself) plus the midpoint 1-orbit (so only 1)
 
 
 
@@ -85,7 +81,8 @@ now take the limbs and account for the 4-orbits by halving them and removing the
 which is correct.
 
 
-the evens 4-orbits are (n-2)/2 (n-2 as not centroid /2 as 180 rotate is identity) as below:
+evens fundamental 4-orbits is 0,0,1,2,3,4,5,6,7,8,9,10,... (N=0 and N=2 having 0 is absence)
+the fundamental evens 4-orbits formula is (n-2)/2 (n-2 as not centroid /2 as 180 rotate is identity) as below:
 
 ----
 ---#
