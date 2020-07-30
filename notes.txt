@@ -19,7 +19,8 @@ for N
 max(2*(n-2)*(3*n-5) - max(8*n-24, 0), 0)
 this is conjectured but matches for all tested N
 
-not the actual formula just a first step
+
+the one below is not correct but just a first step
 8(n-5)(n-4)(n-3) + 8(n-4)(n-4)(n-3) + 4(n-6)(n-5)(n-4)(n-4) + 4(n-3)(n-3)
 first term is "caps" of the "limbs" (a limb is a column/row between the edge of the board and the 2x2 "centroid", the cap is the square of the limb along the outermost edge of the board)
 second term is the "roots" of the limbs (the square of the limb directly adjacent to the centroid)

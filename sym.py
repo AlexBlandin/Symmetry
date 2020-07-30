@@ -30,7 +30,7 @@ def main():
     
     expected = 0 if N==0 else (N-1)*(N-3)+1 if odd_N else max(2*(N-2)*(3*N-5) - max(8*N-24, 0), 0)
     if branches == expected:
-      pass # we could do something more severe than print a warning
+      pass # we could do something more severe than print a warning but don't
     else:
       print(f"\r\nWarning: N = {N} expected {expected} branches, got {branches}")
     table.append([N, branches, reduced, quotient, orbits, fundamental])
