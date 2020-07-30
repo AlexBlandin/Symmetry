@@ -1,5 +1,11 @@
 
 quotient is asymptotically 8 as we have a polynomial number of 8-orbits vs a constant number of 1-orbit or a linear number of 4-orbits
+and letting wa solve for the limit also gives 8
+https://www.wolframalpha.com/input/?i=limit+of+n+to+infinity+for+%28%28n-1%29%28n-3%29%2B1%29%2F%28%28n-1%29%28n-3%29%2F8%2B1%29
+https://www.wolframalpha.com/input/?i=limit+of+n+to+infinity+for+%286n%5E2+-+30n+%2B+44%29%2F%28n%283n-14%29%2F4+%2B+5%29
+
+quotient(N) = (N%2)((N-1)(N-3)+1)/((N-1)(N-3)/8+1) + (1-(N%2))(6N^2 - 30N + 44)/(N(3N-14)/4 + 5)
+https://www.wolframalpha.com/input/?i=%28n%252%29%28%28n-1%29%28n-3%29%2B1%29%2F%28%28n-1%29%28n-3%29%2F8%2B1%29+%2B+%281-%28n%252%29%29%286n%5E2+-+30n+%2B+44%29%2F%28n%283n-14%29%2F4+%2B+5%29
 
 ODD N:
 
