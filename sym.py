@@ -31,7 +31,7 @@ def main():
     quotient = branches/reduced if reduced else 0
     
     err = []
-    expected = 0 if N==0 else (N-1)*(N-3)+1 if odd_N else 2*(N-2)*(3*N-5) - max(8*N-24, 0)
+    expected = (N-1)*(N-3)+1 if odd_N else 6*N*N - 30*N + 44 if N > 3 else 0
     if branches != expected: err.append(f"expected {expected} branches")
     expected = (N-1)*(N-3)//8+1 if odd_N else reduced # todo: even N case
     if reduced != expected: err.append(f"expected {expected} reduced")

@@ -19,24 +19,20 @@ branches(even N) = 4(6N-22) + 2(N-6)(3N-13) + 4(2N-6)  for N >= 3
                  = 2(3N^2 - 15N + 22)
                  = 6N^2 - 30N + 44
 
+branches(even N) = 2(N-2)(3N-5) - max(0, 8N-24)  for N >= 0
+                 = 2(N-2)(3N-5) - 4N*sign(8N - 24) + 12*sign(8N - 24) - 4N + 12
+                 = 6N^2 - 22N + 20 - 4N*sign(8N - 24) + 12*sign(8N - 24) - 4N + 12
+                 = 6N^2 - 4N*sign(8N - 24) + 12*sign(8N - 24) - 26N + 32
+
+equivalent in general if you remove the max(), as seen here:
                  = 2(N-2)(3N-5) - 8N + 24   (the below one expanded to remove the max())
                  = 6N^2 - 22N + 20 - 8N + 24
                  = 6N^2 - 30N + 44
 
-branches(even N) = 2(N-2)(3N-5) - max(0, 8N-24)
-                 = 2(N-2)(3N-5) - 4N*sign(8N - 24) + 12*sign(8N - 24) - 4N + 12
-                 = 6N^2 - 22N + 20 - 4N*sign(8N - 24) + 12*sign(8N - 24) - 4N + 12
-                 = 6N^2 - 4N*sign(8N - 24) + 12*sign(8N - 24) - 26N + 32
-equivalent for N>=3 (or equivalent in general if you remove the max(), as seen in between)
-
-build an intuitive formula if targeting the 8-orbits with then + (n-2)/2 for the 4-orbits?
-
-observe how the above (which overshoots with then a linear offset to put back on)
-is just a second-order polynomial (N^2) -- no higher because logically we're pairing points, so earlier cubic/quartic attempts are obv. wrong
-
-
+so we have an intuitive formula if targeting the 8-orbits accounting for the (n-2)/2 4-orbits
 
 squares form limbs (1..8) and centroid (0s)
+
   12
   12
 880033
@@ -62,12 +58,9 @@ bab##aba
    AB
    BA
 
-here we see the repeating pattern
-we can do same as odd and separate the centroid (here a 2x2) which will always be a fixed amount and focus on the limbs
+here we see the repeating patterns but they're not as clean as the odds (obviously)
 
-
-
-this is not correct (doesn't account for 4-orbits) but an attempt at trying to build an intuitive formula
+without accounting for the 4-orbits, we can start to put together a nice and intuitive formula
 8(n-5+n-4+n-3) + 8(n-4+n-4+n-3) + 4(n-6)(n-5+n-4+n-4) + 4(n-3+n-3)
 = 8(3n-12) + 8(3n-11) + 4(n-6)(3n-13) + 4(2n-6)
 = 8(6n-23) + 4(n-6)(3n-13) + 4(2n-6)
@@ -78,8 +71,9 @@ third term is the remaining parts of the limbs (polynomial component), for each 
 fourth term is the centroid (linear, 2*2 squares gives 4*linear cases), for each of the 4 squares (n-3+n-3) as eliminates a row and column and then by diagonal eliminates another square in the centroid and then a root square
 
 
-4(6n-22) + 2(n-6)(3n-13) + 4(2n-6) matches.
-we get this by taking the limbs and accounting for the 4-orbits by halving them and removing the fundamental pair that overlaps on joining the caps and roots into a singular formula
+take the limbs and account for the 4-orbits by halving them and removing the fundamental pair that overlaps on joining the caps and roots into a singular formula and you get:
+4(6n-22) + 2(n-6)(3n-13) + 4(2n-6)
+which is correct.
 
 
 
