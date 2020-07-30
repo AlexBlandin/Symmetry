@@ -2,7 +2,7 @@
 ODD N:
 
 midrc branches(odd N) = (n-1)(n-3) + 1
-this comes from the typical (n-1)*(n-1) product of the row*col (discounting the midpoint for -1), with then, assuming we are picking from the column, discounting for the two diagonally attacking points on the row (so n-1-2=n-3)
+this comes from the typical (n-1)*(n-1) product of the row*col (discounting the midpoint for -1), with then, assuming we are picking from the column, discounting for the two diagonally attacking points on the row (so n-1-2=n-3), and then adding the central square as it cannot pair with any others in this case but must be included as a valid branch
   
   A
   B
@@ -10,10 +10,14 @@ ab#ba
   B
   A
 
-here we see the conflicting squares when flipping between the two cases (row/column)
+here we see the nested diamond pattern and isolated central square
 
 
 EVEN N:
+
+for N
+max(2*(n-2)*(3*n-5) - max(8*n-24, 0), 0)
+this is conjectured but matches for all tested N
 
 not the actual formula just a first step
 8(n-5)(n-4)(n-3) + 8(n-4)(n-4)(n-3) + 4(n-6)(n-5)(n-4)(n-4) + 4(n-3)(n-3)
@@ -22,7 +26,7 @@ second term is the "roots" of the limbs (the square of the limb directly adjacen
 third term is the remaining parts of the limbs
 fourth term is the centroid
 
-squares form limbs (1..8) and centroid (0)
+squares form limbs (1..8) and centroid (0s)
   12
   12
 880033

@@ -3,7 +3,7 @@ from itertools import product, combinations
 from tabulate import tabulate
 
 def main():
-  k, MAX_N = 2, 50
+  k, MAX_N = 2, 100
   table = [["N", "branches", "reduced", "quotient", "orbits", "fundamental"]]
   for N in range(MAX_N+1):
     B, F, odd_N = multiset(), set(), N%2
@@ -28,6 +28,11 @@ def main():
     reduced = sum(fundamental.values())
     quotient = branches/reduced if reduced else 0
     
+    expected = 0 if N==0 else (N-1)*(N-3)+1 if odd_N else max(2*(N-2)*(3*N-5) - max(8*N-24, 0), 0)
+    if branches == expected:
+      pass # we could do something more severe than print a warning
+    else:
+      print(f"\r\nWarning: N = {N} expected {expected} branches, got {branches}")
     table.append([N, branches, reduced, quotient, orbits, fundamental])
   open(f"./data/test.txt", mode="w").write(tabulate(table, headers="firstrow", floatfmt=["d","d","d",".3f"]))
 
