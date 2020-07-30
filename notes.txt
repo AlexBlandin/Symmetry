@@ -16,6 +16,8 @@ here we see the nested diamond pattern and isolated central square
 EVEN N:
 
 branches(even N) = 2(N-2)(3N-5) - max(0, 8N-24)
+                 = 2(N-2)(3N-5) - 4N*sign(8N - 24) + 12*sign(8N - 24) - 4N + 12
+                 = 6N^2 - 4N*sign(8N - 24) + 12*sign(8N - 24) - 26N + 32
 this is currently just conjectured but matches for all tested N
 
 
@@ -66,11 +68,11 @@ assuming lowermost point on a column directly above centroid (n)(n-2)(n-1)(n-2),
 REDUCED:
 
 reduced(odd N) = (N-1)(N-3)/8 + 1
-we get this from the normal 8-orbits / 8 (exact since always a multiple of 8 for odd N) plus the normal 1-orbit (midpoint)
+we get this from the normal 8-orbits / 8 (exact since 8-orbits naturally have 1 fundamental branch giving rise to 8 branches including itself) plus the normal 1-orbit (midpoint)
 
 
-is approaching 8 due to a constant (singular) 1-orbit or linear 4-orbits vs polynomial 8-orbits?
-seems to be the case looking at the data
+is approaching 8 due to a constant 1-orbit or linear 4-orbits vs polynomial 8-orbits
+seems to be the case looking at the data, where the growth in the polynomial dominates and the 8-orbits as a sub-problem would naturally have a quotient of 8 (since, again, 1 fundamental gives 8 inc. self) so the quotient tends approaches 8 as the constant/linear term becomes insignificant (odd N approaches asymptotically faster since constant vs polynomial)
 evens 4-orbits (starting at N=2) goes 0,1,2,3,4,5,6,7,8,9,10,... (N=2's 0 comes from its empty F multiset)
 odds 1-orbit is always 1, since it's the midpoint
 
