@@ -15,8 +15,9 @@ here we see the nested diamond pattern and isolated central square
 
 EVEN N:
 
-for N
-max(2*(n-2)*(3*n-5) - max(8*n-24, 0), 0)
+midrc branches(even N) = 2(n-2)(3n-5) - max(0, 8n-24)
+
+as python: 2*(n-2)*(3*n-5) - max(8*n-24, 0)
 this is conjectured but matches for all tested N
 
 
