@@ -1,8 +1,8 @@
 
 ODD N:
 
-midrc branches(odd N) = (n-1)(n-3) + 1
-this comes from the typical (n-1)*(n-1) product of the row*col (discounting the midpoint for -1), with then, assuming we are picking from the column, discounting for the two diagonally attacking points on the row (so n-1-2=n-3), and then adding the central square as it cannot pair with any others in this case but must be included as a valid branch
+branches(odd N) = (N-1)(N-3) + 1
+this comes from the typical (N-1)*(N-1) product of the row*col (discounting the midpoint for -1), with then, assuming we are picking from the column, discounting for the two diagonally attacking points on the row (so N-1-2=N-3), and then adding the central square as it cannot pair with any others in this case but must be included as a valid branch
   
   A
   B
@@ -15,13 +15,11 @@ here we see the nested diamond pattern and isolated central square
 
 EVEN N:
 
-midrc branches(even N) = 2(n-2)(3n-5) - max(0, 8n-24)
-
-as python: 2*(n-2)*(3*n-5) - max(8*n-24, 0)
-this is conjectured but matches for all tested N
+branches(even N) = 2(N-2)(3N-5) - max(0, 8N-24)
+this is currently just conjectured but matches for all tested N
 
 
-the one below is not correct but just a first step
+the one below is not correct but was me trying to build an intuitive formula
 8(n-5)(n-4)(n-3) + 8(n-4)(n-4)(n-3) + 4(n-6)(n-5)(n-4)(n-4) + 4(n-3)(n-3)
 first term is "caps" of the "limbs" (a limb is a column/row between the edge of the board and the 2x2 "centroid", the cap is the square of the limb along the outermost edge of the board)
 second term is the "roots" of the limbs (the square of the limb directly adjacent to the centroid)
@@ -65,6 +63,59 @@ assuming topmost point on a column (n)(n-2)(n-2)(n-1) +4, -2 diagonal elims on u
 assuming lowermost point on a column directly above centroid (n)(n-2)(n-1)(n-2), -1 diag -1 horiz on adj col, -2 diag on lowermost row, -1 diag on uppermost row as other diag is centroid which we already discount
 
 
+REDUCED:
+
+reduced(odd N) = (N-1)(N-3)/8 + 1
+we get this from the normal 8-orbits / 8 (exact since always a multiple of 8 for odd N) plus the normal 1-orbit (midpoint)
+
+
+is approaching 8 due to a constant (singular) 1-orbit or linear 4-orbits vs polynomial 8-orbits?
+seems to be the case looking at the data
+evens 4-orbits (starting at N=2) goes 0,1,2,3,4,5,6,7,8,9,10,... (N=2's 0 comes from its empty F multiset)
+odds 1-orbit is always 1, since it's the midpoint
+
+still need to get an idea for the polynomial, but that should just be branches'/8 (branches' having discounted for the non-8 orbits)
+
+the evens 4-orbits are as below:
+
+----
+---#
+#---
+----
+
+------ ------ 
+------ ------
+----#- -----#
+-#---- #-----
+------ ------
+------ ------
+
+-------- -------- --------
+-------- -------- --------
+-------- -------- --------
+-----#-- ------#- -------#
+--#----- -#------ #-------
+-------- -------- --------
+-------- -------- --------
+-------- -------- --------
+
+---------- ---------- ---------- ----------
+---------- ---------- ---------- ----------
+---------- ---------- ---------- ----------
+---------- ---------- ---------- ----------
+------#--- -------#-- --------#- ---------#
+---#------ --#------- -#-------- #---------
+---------- ---------- ---------- ----------
+---------- ---------- ---------- ----------
+---------- ---------- ---------- ----------
+---------- ---------- ---------- ----------
+
+
+
+
+
+
+
 
 
 
@@ -87,7 +138,7 @@ midrc has two sequences where the "base" is the evens, and then the odds replace
  odd N = 2(n-2)(4(n-2)+1)   (https://oeis.org/A033585 offset from 0 to 1)
 0   10    36     78     136     210     300      406
 even N = 2n(4n-1)           (https://oeis.org/A014635 offset from 0 to 1)
-- 6 -- 66 -- 190 -- 378 --- 630 --- 946 --- 1326 ---
+_ 6 __ 66 __ 190 __ 378 ___ 630 ___ 946 ___ 1326 ___
 (dropped so can see where odd replaces even)
 
 

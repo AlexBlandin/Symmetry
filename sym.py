@@ -22,6 +22,9 @@ def main():
         c = len(s)
         B.update({b:c for b in s})
         F.add(branch)
+        # if not odd_N and c==4:
+        #   print(board(branch))
+        #   print()
     
     branches, orbits = len(B), dict(sorted(multiset(B.values()).items(), key=lambda o:o[0], reverse=True))
     fundamental = {k: v//k for k,v in orbits.items()}
