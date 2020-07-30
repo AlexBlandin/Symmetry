@@ -20,6 +20,8 @@ branches(even N) = 2(N-2)(3N-5) - max(0, 8N-24)
                  = 6N^2 - 4N*sign(8N - 24) + 12*sign(8N - 24) - 26N + 32
 this is currently just conjectured but matches for all tested N
 
+build an intuitive formula if targeting the 8-orbits with then + (n-2)/2 for the 4-orbits?
+
 
 the one below is not correct but was me trying to build an intuitive formula
 8(n-5)(n-4)(n-3) + 8(n-4)(n-4)(n-3) + 4(n-6)(n-5)(n-4)(n-4) + 4(n-3)(n-3)
