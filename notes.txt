@@ -92,7 +92,8 @@ since we've now transformed the 4-orbits such that we can divide the entire form
 (4(6n-22) + 2(n-6)(3n-13) + 4(2n-6) + 4(n-2)/2)/8
 (2(6n-22) + (n-6)(3n-13) + 2(2n-6) + (n-2))/4
 
-evens fundamental 4-orbits is 0,0,1,2,3,4,5,6,7,8,9,10,... (N=0 and N=2 having 0 is absence)
+
+to understand the 4-orbits, the evens fundamental 4-orbits contribution is 0,0,1,2,3,4,5,6,7,8,9,10,... (N=0 and N=2 having 0 is absence)
 the fundamental evens 4-orbits formula is (n-2)/2 (n-2 as not centroid /2 as 180 rotate is identity) as below:
 
 ----
