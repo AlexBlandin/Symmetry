@@ -33,7 +33,7 @@ def main():
     err = []
     expected = (N-1)*(N-3)+1 if odd_N else 6*N*N - 30*N + 44 if N > 3 else 0
     if branches != expected: err.append(f"expected {expected} branches")
-    expected = (N-1)*(N-3)//8+1 if odd_N else (2*(6*N-22) + (N-6)*(3*N-13) + 2*(2*N-6) + (N-2))/4 if N > 3 else 0
+    expected = (N-1)*(N-3)//8+1 if odd_N else N*(3*N-14)//4 + 5 if N > 3 else 0
     if reduced != expected: err.append(f"expected {expected} reduced")
     expected = (N-2)//2
     if not odd_N and N >= 4 and fundamental[4] != expected: err.append(f"expected {expected} 4-fundamentals")
