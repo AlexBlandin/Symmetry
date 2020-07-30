@@ -78,7 +78,7 @@ odds 1-orbit is always 1, since it's the midpoint
 
 still need to get an idea for the polynomial, but that should just be branches'/8 (branches' having discounted for the non-8 orbits)
 
-the evens 4-orbits are as below:
+the evens 4-orbits are (n-2)/2 (n-2 as not centroid /2 as 180 rotate is identity) as below:
 
 ----
 ---#

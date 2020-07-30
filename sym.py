@@ -4,16 +4,16 @@ from tabulate import tabulate
 
 def main():
   k, MAX_N = 2, 100
-  table = [["N", "branches", "reduced", "quotient", "orbits", "fundamental"]]
+  table = [["N", "branches", "reduced", "quotient", "orbits", "fundamental", "err"]]
   for N in range(MAX_N+1):
     B, F, odd_N = multiset(), set(), N%2
     midrc = (0,) if odd_N else (1,-1) # middle rows/cols
     indices = tuple(i for i in range(-(N//2), N//2+1) if i != 0 or odd_N)
-    def offset(x): return (x-1 if N%2==0 and x >= 1 else x) + N//2 # reverse the conversion from 0..N-1 to -N//2..N//2
+    def index(x): return (x-1 if N%2==0 and x >= 1 else x) + N//2 # reverse the conversion from 0..N-1 to -N//2..N//2
     def board(squares): return "\n".join("".join("#" if (x,y) in squares else "-" for x in indices) for y in indices)
     def legal(branch):
       (x,y), (a,b) = branch
-      ox, oy, oa, ob = offset(x), offset(y), offset(a), offset(b) # return to 0..N-1 range
+      ox, oy, oa, ob = index(x), index(y), index(a), index(b) # return to 0..N-1 range
       return (branch == ((0,0),(0,0))) or (x!=a and y!=b and ox+oy!=oa+ob and ox-oy!=oa-ob)
 
     for branch in product(product(indices, midrc), product(midrc, indices)) if odd_N else combinations(set(product(indices, midrc)) | set(product(midrc, indices)), 2):
@@ -25,18 +25,25 @@ def main():
         # if not odd_N and c==4:
         #   print(board(branch))
         #   print()
-    
     branches, orbits = len(B), dict(sorted(multiset(B.values()).items(), key=lambda o:o[0], reverse=True))
     fundamental = {k: v//k for k,v in orbits.items()}
     reduced = sum(fundamental.values())
     quotient = branches/reduced if reduced else 0
     
+    err = []
     expected = 0 if N==0 else (N-1)*(N-3)+1 if odd_N else 2*(N-2)*(3*N-5) - max(8*N-24, 0)
-    if branches == expected:
-      pass # we could do something more severe than print a warning but don't
-    else:
-      print(f"\r\nWarning: N = {N} expected {expected} branches, got {branches}")
-    table.append([N, branches, reduced, quotient, orbits, fundamental])
+    if branches != expected: err.append(f"expected {expected} branches")
+    expected = (N-1)*(N-3)//8+1 if odd_N else reduced # todo: even N case
+    if reduced != expected: err.append(f"expected {expected} reduced")
+    expected = (N-2)//2
+    if not odd_N and N >= 4 and fundamental[4] != expected: err.append(f"expected {expected} 4-fundamentals")
+    if len(err): err = ", ".join(err)
+    table.append([N, branches, reduced, quotient, orbits, fundamental] + [err]*(len(err)>0))
+  for row in table:
+    if len(row)>6:
+      break
+  else:
+    table[0] = ["N", "branches", "reduced", "quotient", "orbits", "fundamental"]
   open(f"./data/test.txt", mode="w").write(tabulate(table, headers="firstrow", floatfmt=["d","d","d",".3f"]))
 
 def sym(squares): # from set of squares generate the symmetries as a set of frozen sets
