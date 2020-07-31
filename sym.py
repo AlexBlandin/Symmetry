@@ -39,12 +39,10 @@ def main():
     quotient = ob/sb if sb else 0
     
     err = []
-    # expected = (N-1)*(N-3)+1 if odd_N else ob # 6*N*N - 30*N + 44 if N > 3 else 0
-    # if ob != expected: err.append(f"expected {expected} ob")
-    # expected = (N-1)*(N-3)//8+1 if odd_N else sb # N*(3*N-14)//4 + 5 if N > 3 else 0
-    # if sb != expected: err.append(f"expected {expected} sb")
-    # expected = (N-2)//2
-    # if not odd_N and N >= 4 and fundamental[4] != expected: err.append(f"expected {expected} 4-fundamentals")
+    expected = (N-1)*(N-3)+1 if odd_N else [0,0,0,0,0,0,0,0,206,0, 844,0, 2642,0, 6656,0, 14326,0, 27476,0, 48314][N] if 8 <= N <= 20 else ob # 6*N*N - 30*N + 44 if N > 3 else 0
+    if ob != expected: err.append(f"expected {expected} ob")
+    expected = (N-1)*(N-3)//8+1 if odd_N else [0,0,0,0,0,0,0,0,30,0, 113,0, 342][N] if 8 <= N <= 12 else sb # N*(3*N-14)//4 + 5 if N > 3 else 0
+    if sb != expected: err.append(f"expected {expected} sb")
     if len(err): err = ", ".join(err)
     table.append([N, ob, sb, quotient, orbits, fundamental] + [err]*(len(err)>0))
   for row in table:
