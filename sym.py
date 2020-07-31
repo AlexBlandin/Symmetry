@@ -4,7 +4,7 @@ from tabulate import tabulate
 
 def main():
   k, MAX_N = 2, 20
-  table = [["N", "branches", "reduced", "quotient", "orbits", "fundamental", "err"]]
+  table = [["N", "ob(N)", "sb(N)", "quotient", "orbits", "fundamental", "err"]]
   for N in range(MAX_N+1):
     B, F, odd_N = multiset(), set(), N%2
     indices = tuple(range(1,N+1))
@@ -51,7 +51,7 @@ def main():
     if len(row)>6:
       break
   else:
-    table[0] = ["N", "branches", "reduced", "quotient", "orbits", "fundamental"]
+    table[0] = table[0][:-1]
   open(f"./data/test.txt", mode="w").write(tabulate(table, headers="firstrow", floatfmt=["d","d","d",".3f"]))
 
 if __name__ == "__main__": main()
