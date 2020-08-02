@@ -15,6 +15,18 @@ def main():
       return { frozenset(squares), frozenset((N-x+1,y) for x,y in squares), frozenset((x,N-y+1) for x,y in squares), frozenset((N-x+1,N-y+1) for x,y in squares),
                frozenset(), } # todo: since fs((y,x) for x,y in squares) is wrong I need to figure out the alternative
 
+    # temp: 
+    branch = frozenset(((1, 4), (4, 2))) if odd_N else frozenset(((1, 4), (3, 5), (4, 2), (5, 6)))
+    s = sym(branch)
+    print(N, tuple(branch))
+    bd = [[], [], [], [], [], [], [], []]
+    for b in s:
+      for i,line in enumerate(board(b)):
+        bd[i].append(line)
+    print("\n".join(" ".join(line) for line in bd))
+    print()
+    exit()
+
     for branch in map(frozenset, product(product(indices,midrc),product(midrc,indices)) if odd_N else product(product(indices,midrc[:1]),product(indices,midrc[1:]),product(midrc[:1],indices),product(midrc[1:],indices))):
       if branch not in B and legal(branch):
         s = sym(branch)
