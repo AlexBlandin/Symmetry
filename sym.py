@@ -26,7 +26,7 @@ def main():
     # branch = (frozenset(((1, 4), (4, 2))) if odd_N else frozenset(((1, 4), (3, 5), (4, 2), (5, 6)))) if indices == tuple(range(1,N+1)) else (frozenset(((0, -2), (-3, 0))) if odd_N else frozenset(((-4, -1), (1, -4), (-1, -3), (-3, 1))))
     # s = sym(branch)
     # print(N, tuple(branch))
-    # bd = [[], [], [], [], [], [], [], []]
+    # bd = [[] for _ in range(N)]
     # for b in s:
     #   for i,line in enumerate(board(b)):
     #     bd[i].append(line)
@@ -42,7 +42,7 @@ def main():
         F.add(branch)
         # temp:
         # print(N, tuple(branch))
-        # bd = [[], [], [], [], [], [], [], []]
+        # bd = [[] for _ in range(N)]
         # for b in s:
         #   for i,line in enumerate(board(b)):
         #     bd[i].append(line)
