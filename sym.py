@@ -10,8 +10,8 @@ def main():
     indices = tuple(i for i in range(-(N//2), N//2+1) if i != 0 or odd_N) # tuple(range(1,N+1))
     midrc = tuple(indices[(N-1)//2 : N//2+1]) # middle rows/cols
     def board(squares): return ["".join("#" if (x,y) in squares else "-" if (x,y) in product(indices,midrc) or (x,y) in product(midrc,indices) else " " for x in indices) for y in indices]
-    def legal(branch): return all(((x,y) == (a,b)) or (x!=a and y!=b and x+y!=a+b and x-y!=a-b) for (x,y), (a,b) in combinations(branch,2))
-    def sym(squares): # from set of squares generate the symmetries as a set of frozen sets # todo: I switched to 1..N and this is all completely wrong
+    def legal(branch): return all(((x,y) == (a,b)) or (x!=a and y!=b and x+y!=a+b and x-y!=a-b) for (x,y), (a,b) in combinations(branch,2)) # todo: is that right for offset indices?
+    def sym(squares): # from set of squares generate the symmetries as a set of frozen sets
       if indices == tuple(range(1,N+1)):
         return { frozenset(squares), frozenset((N-x+1,y) for x,y in squares), frozenset((x,N-y+1) for x,y in squares), frozenset((N-x+1,N-y+1) for x,y in squares),
                frozenset(), } # todo: since fs((y,x) for x,y in squares) is wrong I need to figure out the alternative
@@ -21,7 +21,7 @@ def main():
         r1 = frozenset((-y,x) for x,y in squares); r2 = frozenset((-y,-x) for x,y in squares)
         r3 = frozenset((y,-x) for x,y in squares); r4 = frozenset(squares)
         return {rx,ry,rd,ra,r1,r2,r3,r4}
-
+    
     # temp: 
     # branch = (frozenset(((1, 4), (4, 2))) if odd_N else frozenset(((1, 4), (3, 5), (4, 2), (5, 6)))) if indices == tuple(range(1,N+1)) else (frozenset(((0, -2), (-3, 0))) if odd_N else frozenset(((-4, -1), (1, -4), (-1, -3), (-3, 1))))
     # s = sym(branch)
@@ -35,7 +35,7 @@ def main():
     # exit()
 
     for branch in map(frozenset, product(product(indices,midrc),product(midrc,indices)) if odd_N else product(product(indices,midrc[:1]),product(indices,midrc[1:]),product(midrc[:1],indices),product(midrc[1:],indices))):
-      if branch not in B and legal(branch):
+      if branch not in B and (odd_N or len(branch)==4) and legal(branch):
         s = sym(branch)
         c = len(s)
         B.update({b:c for b in s})
@@ -60,6 +60,7 @@ def main():
     if ob != expected: err.append(f"expected {expected} ob")
     expected = (N-1)*(N-3)//8+1 if odd_N else [0,0,0,0,0,0,0,0,30,0, 113,0, 342][N] if 8 <= N <= 12 else sb # N*(3*N-14)//4 + 5 if N > 3 else 0
     if sb != expected: err.append(f"expected {expected} sb")
+    if sb != len(F): err.append(f"F implies {len(F)} sb")
     if len(err): err = ", ".join(err)
     table.append([N, ob, sb, quotient, orbits, fundamental] + [err]*(len(err)>0))
   for row in table:
