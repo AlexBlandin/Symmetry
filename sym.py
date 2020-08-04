@@ -9,8 +9,10 @@ def main():
     B, F, odd_N = multiset(), set(), N%2
     indices = tuple(i for i in range(-(N//2), N//2+1) if i != 0 or odd_N) # tuple(range(1,N+1))
     midrc = tuple(indices[(N-1)//2 : N//2+1]) # middle rows/cols
+    intersection = frozenset(product(midrc, midrc))
     def board(squares): return ["".join("#" if (x,y) in squares else "-" if (x,y) in product(indices,midrc) or (x,y) in product(midrc,indices) else " " for x in indices) for y in indices]
-    def legal(branch): return all(((x,y) == (a,b)) or (x!=a and y!=b and x+y!=a+b and x-y!=a-b) for (x,y), (a,b) in combinations(branch,2)) # todo: is that right for offset indices?
+    def legal(branch): return (len(branch) == (2 if odd_N else 4) or (len(branch) == (1 if odd_N else 3) and any(square in intersection for square in branch))) \
+                              and all((x,y)==(a,b) or (x!=a and y!=b and x+y!=a+b and x-y!=a-b) for (x,y),(a,b) in combinations(branch,2))
     def sym(squares): # from set of squares generate the symmetries as a set of frozen sets
       if indices == tuple(range(1,N+1)):
         return { frozenset(squares), frozenset((N-x+1,y) for x,y in squares), frozenset((x,N-y+1) for x,y in squares), frozenset((N-x+1,N-y+1) for x,y in squares),
@@ -34,21 +36,12 @@ def main():
     # print()
     # exit()
 
-    for branch in map(frozenset, product(product(indices,midrc),product(midrc,indices)) if odd_N else product(product(indices,midrc[:1]),product(indices,midrc[1:]),product(midrc[:1],indices),product(midrc[1:],indices))): # combinations(set(product(indices,midrc))|set(product(midrc,indices)), 4) is giving the same result but slower, don't bother for now
-      if branch not in B and (odd_N or len(branch)==4) and legal(branch):
+    for branch in map(frozenset, product(product(indices,midrc),product(midrc,indices)) if odd_N else product(product(indices,midrc[:1]),product(indices,midrc[1:]),product(midrc[:1],indices),product(midrc[1:],indices))):
+      if branch not in B and legal(branch):
         s = sym(branch)
         c = len(s)
         B.update({b:c for b in s})
         F.add(branch)
-        # temp:
-        # print(N, tuple(branch))
-        # bd = [[] for _ in range(N)]
-        # for b in s:
-        #   for i,line in enumerate(board(b)):
-        #     bd[i].append(line)
-        # print("\n".join(" ".join(line) for line in bd))
-        # print()
-        # exit()
     
     ob, orbits = len(B), dict(sorted(multiset(B.values()).items(), key=lambda o:o[0], reverse=True))
     fundamental = {k: v//k for k,v in orbits.items()}
