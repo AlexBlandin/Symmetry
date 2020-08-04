@@ -34,7 +34,7 @@ def main():
     # print()
     # exit()
 
-    for branch in map(frozenset, product(product(indices,midrc),product(midrc,indices)) if odd_N else product(product(indices,midrc[:1]),product(indices,midrc[1:]),product(midrc[:1],indices),product(midrc[1:],indices))):
+    for branch in map(frozenset, product(product(indices,midrc),product(midrc,indices)) if odd_N else product(product(indices,midrc[:1]),product(indices,midrc[1:]),product(midrc[:1],indices),product(midrc[1:],indices))): # combinations(set(product(indices,midrc))|set(product(midrc,indices)), 4) is giving the same result but slower, don't bother for now
       if branch not in B and (odd_N or len(branch)==4) and legal(branch):
         s = sym(branch)
         c = len(s)
