@@ -37,8 +37,7 @@ for N in range(MIN_N, MAX_N+1):
     print(N, tuple(branch))
     bd = [[] for _ in range(N)]
     for b in symmetries(branch):
-      for i, line in enumerate(board(b)):
-        bd[i].append(line)
+      for i, line in enumerate(board(b)): bd[i].append(line)
     print("\n".join(" ".join(line) for line in bd))
     print()
   
