@@ -9,7 +9,7 @@ def main():
 
   table = [["N", "ob(N)", "sb(N)", "quotient", "orbits", "fundamental", "err"]]
   for N in range(MIN_N, MAX_N+1):
-    B, F, odd_N = multiset(), set(), N%2
+    branches, reduced, odd_N = multiset(), set(), N%2
 
     # Identify the middle rows and columns of the board, based on either natural coordinate-indices or planar
     indices = tuple(i for i in range(-(N//2), N//2+1) if i != 0 or odd_N) if PLANAR else tuple(range(1,N+1))
@@ -17,9 +17,9 @@ def main():
     intersection = frozenset(product(midrc, midrc))
     
     # Key Functions
-    def legal(branch): return (len(branch) == (2 if odd_N else 4) or
-                              (len(branch) == (1 if odd_N else 3) and len(branch & intersection))) \
-                              and all((x,y)==(a,b) or (x!=a and y!=b and x+y!=a+b and x-y!=a-b) for (x,y),(a,b) in combinations(branch,2))
+    def legal(branch): return ((len(branch) == (2 if odd_N else 4) or
+                              (len(branch) == (1 if odd_N else 3) and len(branch & intersection))) and
+                              all((x,y)==(a,b) or (x!=a and y!=b and x+y!=a+b and x-y!=a-b) for (x,y),(a,b) in combinations(branch,2)))
     def symmetries(squares): # from set of squares generate the symmetries as a set of frozen sets
       return {
         frozenset((-x,y) for x,y in squares), frozenset((x,-y) for x,y in squares), frozenset((y,x) for x,y in squares), frozenset((-x,-y) for x,y in squares),
@@ -51,14 +51,14 @@ def main():
     rows = (product(indices,midrc),) if odd_N else (product(indices,midrc[:1]), product(indices,midrc[1:]))
     cols = (product(midrc,indices),) if odd_N else (product(midrc[:1],indices), product(midrc[1:],indices))
     for branch in map(frozenset, product(*rows, *cols)):
-      if branch not in B and legal(branch):
+      if branch not in branches and legal(branch):
         s = symmetries(branch)
         c = len(s)
-        B.update({b:c for b in s})
-        F.add(branch)
+        branches.update({b:c for b in s})
+        reduced.add(branch)
     
     # Compute ob(N), sb(N), and assorted stats
-    ob, orbits = len(B), dict(sorted(multiset(B.values()).items(), key=lambda o:o[0], reverse=True))
+    ob, orbits = len(branches), dict(sorted(multiset(branches.values()).items(), key=lambda o:o[0], reverse=True))
     fundamental = {k: v//k for k,v in orbits.items()}
     sb = sum(fundamental.values())
     quotient = ob/sb if sb else 0
@@ -69,7 +69,7 @@ def main():
     if ob != expected: err.append(f"expected {expected} ob")
     expected = (N-1)*(N-3)//8+1 if odd_N else [0,0,0,0,0,0,0,0,30,0, 113,0, 342][N] if 8 <= N <= 12 else sb # N*(3*N-14)//4 + 5 if N > 3 else 0
     if sb != expected: err.append(f"expected {expected} sb")
-    if sb != len(F): err.append(f"F implies {len(F)} sb")
+    if sb != len(reduced): err.append(f"reduced implies {len(reduced)} sb")
     if len(err): err = ", ".join(err)
     table.append([N, ob, sb, quotient, orbits, fundamental] + [err]*bool(len(err)))
   
