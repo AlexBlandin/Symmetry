@@ -61,7 +61,7 @@ for N in range(MIN_N, MAX_N+1):
   sb = sum(fundamental.values())
   quotient = ob/sb if sb else 0
   
-  # Error handling
+  # Error logging
   err = []
   expected = (N-1)*(N-3)+1 if odd_N else [0,0,0,0,0,0,0,0,206,0, 844,0, 2642,0, 6656,0, 14326,0, 27476,0, 48314][N] if 8 <= N <= 20 else ob # 6*N*N - 30*N + 44 if N > 3 else 0
   if ob != expected: err.append(f"expected {expected} ob")
@@ -74,5 +74,5 @@ for N in range(MIN_N, MAX_N+1):
 # Discard err column if there were no errors
 if all(len(row)==len(table[0])-1 for row in table[1:]): table[0] = table[0][:-1]
 
-# Log out
+# Write out results
 open(f"./data/test.txt", mode="w").write(tabulate(table, headers="firstrow", floatfmt=["d","d","d",".3f"]))
