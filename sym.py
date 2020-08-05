@@ -3,9 +3,9 @@ from itertools import product, combinations
 from tabulate import tabulate
 
 def main():
-  k, MAX_N = 2, 20
+  k, MIN_N, MAX_N = 2, 8, 20
   table = [["N", "ob(N)", "sb(N)", "quotient", "orbits", "fundamental", "err"]]
-  for N in range(8, MAX_N+1):
+  for N in range(MIN_N, MAX_N+1):
     B, F, odd_N = multiset(), set(), N%2
     indices = tuple(i for i in range(-(N//2), N//2+1) if i != 0 or odd_N) # tuple(range(1,N+1))
     midrc = tuple(indices[(N-1)//2 : N//2+1]) # middle rows/cols
