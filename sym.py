@@ -17,18 +17,16 @@ def main():
     def legal(branch): return (len(branch) == (2 if odd_N else 4) or (len(branch) == (1 if odd_N else 3) and any(square in intersection for square in branch))) \
                               and all((x,y)==(a,b) or (x!=a and y!=b and x+y!=a+b and x-y!=a-b) for (x,y),(a,b) in combinations(branch,2))
     def sym(squares): # from set of squares generate the symmetries as a set of frozen sets
-      if not PLANAR:
-        return { frozenset(squares), frozenset((N-x+1,y) for x,y in squares), frozenset((x,N-y+1) for x,y in squares), frozenset((N-x+1,N-y+1) for x,y in squares),
-               frozenset(), } # todo: since fs((y,x) for x,y in squares) is wrong I need to figure out the alternative
-      else:
-        rx = frozenset((-x,y) for x,y in squares); ry = frozenset((x,-y) for x,y in squares)
-        rd = frozenset((y,x) for x,y in squares);  ra = frozenset((-x,-y) for x,y in squares)
-        r1 = frozenset((-y,x) for x,y in squares); r2 = frozenset((-y,-x) for x,y in squares)
-        r3 = frozenset((y,-x) for x,y in squares); r4 = frozenset(squares)
-        return {rx,ry,rd,ra,r1,r2,r3,r4}
+      return {
+        frozenset((-x,y) for x,y in squares),frozenset((x,-y) for x,y in squares),frozenset((y,x) for x,y in squares),frozenset((-x,-y) for x,y in squares),
+        frozenset((-y,x) for x,y in squares),frozenset((-y,-x) for x,y in squares),frozenset((y,-x) for x,y in squares),frozenset(squares),
+      } if PLANAR else {
+        frozenset(squares), frozenset((N-x+1,y) for x,y in squares), frozenset((x,N-y+1) for x,y in squares), frozenset((N-x+1,N-y+1) for x,y in squares),
+        frozenset(), # todo: since fs((y,x) for x,y in squares) is wrong I need to figure out the alternative
+      }
     
     # temp: 
-    # branch = (frozenset(((1, 4), (4, 2))) if odd_N else frozenset(((1, 4), (3, 5), (4, 2), (5, 6)))) if not PLANAR else (frozenset(((0, -2), (-3, 0))) if odd_N else frozenset(((-4, -1), (1, -4), (-1, -3), (-3, 1))))
+    # branch = (frozenset(((0, -2), (-3, 0))) if odd_N else frozenset(((-4, -1), (1, -4), (-1, -3), (-3, 1)))) if PLANAR else (frozenset(((1, 4), (4, 2))) if odd_N else frozenset(((1, 4), (3, 5), (4, 2), (5, 6))))
     # s = sym(branch)
     # print(N, tuple(branch))
     # bd = [[] for _ in range(N)]
