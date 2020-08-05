@@ -9,7 +9,7 @@ PLANAR = True
 table = [["N", "ob(N)", "sb(N)", "quotient", "orbits", "fundamental", "err"]]
 for N in range(MIN_N, MAX_N+1):
   branches, reduced, odd_N = multiset(), set(), N%2
-  
+
   # Identify the middle rows and columns of the board, based on either natural coordinate-indices or planar
   indices = tuple(i for i in range(-(N//2), N//2+1) if i != 0 or odd_N) if PLANAR else tuple(range(1,N+1))
   midrc = tuple(indices[(N-1)//2 : N//2+1]) # middle rows/cols
@@ -41,7 +41,7 @@ for N in range(MIN_N, MAX_N+1):
         bd[i].append(line)
     print("\n".join(" ".join(line) for line in bd))
     print()
-
+  
   # temp: 
   # printout((((0, -2), (-3, 0)) if odd_N else ((-4, -1), (1, -4), (-1, -3), (-3, 1))) if PLANAR else (((1, 4), (4, 2)) if odd_N else ((1, 4), (3, 5), (4, 2), (5, 6))))
   # exit()
