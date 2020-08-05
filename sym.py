@@ -3,8 +3,10 @@ from itertools import product, combinations
 from tabulate import tabulate
 
 def main():
-  k, MIN_N, MAX_N = 2, 8, 20
+  # Configure
+  MIN_N, MAX_N = 8, 20
   PLANAR = True
+
   table = [["N", "ob(N)", "sb(N)", "quotient", "orbits", "fundamental", "err"]]
   for N in range(MIN_N, MAX_N+1):
     B, F, odd_N = multiset(), set(), N%2
