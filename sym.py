@@ -18,8 +18,8 @@ def main():
                               and all((x,y)==(a,b) or (x!=a and y!=b and x+y!=a+b and x-y!=a-b) for (x,y),(a,b) in combinations(branch,2))
     def sym(squares): # from set of squares generate the symmetries as a set of frozen sets
       return {
-        frozenset((-x,y) for x,y in squares),frozenset((x,-y) for x,y in squares),frozenset((y,x) for x,y in squares),frozenset((-x,-y) for x,y in squares),
-        frozenset((-y,x) for x,y in squares),frozenset((-y,-x) for x,y in squares),frozenset((y,-x) for x,y in squares),frozenset(squares),
+        frozenset((-x,y) for x,y in squares), frozenset((x,-y) for x,y in squares),  frozenset((y,x) for x,y in squares),  frozenset((-x,-y) for x,y in squares),
+        frozenset((-y,x) for x,y in squares), frozenset((-y,-x) for x,y in squares), frozenset((y,-x) for x,y in squares), frozenset(squares),
       } if PLANAR else {
         frozenset(squares), frozenset((N-x+1,y) for x,y in squares), frozenset((x,N-y+1) for x,y in squares), frozenset((N-x+1,N-y+1) for x,y in squares),
         frozenset(), # todo: since fs((y,x) for x,y in squares) is wrong I need to figure out the alternative
