@@ -75,5 +75,5 @@ for N in range(MIN_N, MAX_N+1):
 # Discard err column if there were no errors
 if all(len(row)==len(table[0])-1 for row in table[1:]): table[0] = table[0][:-1]
 
-# Log
+# Log out
 open(f"./data/test.txt", mode="w").write(tabulate(table, headers="firstrow", floatfmt=["d","d","d",".3f"]))
