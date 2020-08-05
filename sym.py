@@ -36,7 +36,9 @@ def main():
     # print()
     # exit()
 
-    for branch in map(frozenset, product(product(indices,midrc),product(midrc,indices)) if odd_N else product(product(indices,midrc[:1]),product(indices,midrc[1:]),product(midrc[:1],indices),product(midrc[1:],indices))):
+    rows = (product(indices,midrc),) if odd_N else (product(indices,midrc[:1]), product(indices,midrc[1:]))
+    cols = (product(midrc,indices),) if odd_N else (product(midrc[:1],indices), product(midrc[1:],indices))
+    for branch in map(frozenset, product(*rows, *cols)):
       if branch not in B and legal(branch):
         s = sym(branch)
         c = len(s)
