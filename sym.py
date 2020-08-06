@@ -1,5 +1,5 @@
-from collections import Counter as multiset
 from itertools import product, combinations, starmap
+from collections import Counter as multiset
 from tabulate import tabulate
 
 # Configure
