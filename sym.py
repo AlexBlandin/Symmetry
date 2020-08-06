@@ -4,14 +4,13 @@ from tabulate import tabulate
 
 # Configure
 MIN_N, MAX_N = 8, 20
-PLANAR = False
 
 table = [["N", "ob(N)", "sb(N)", "quotient", "branch lengths", "orbits", "fundamental", "err"]]
 for N in range(MIN_N, MAX_N+1):
   branches, broken, lengths, odd_N = multiset(), set(), multiset(), N%2
   
-  # Identify the middle rows and columns of the board, based on either natural coordinate-indices or planar
-  indices = tuple(i for i in range(-(N//2), N//2+1) if i != 0 or odd_N) if PLANAR else tuple(range(1,N+1))
+  # Identify the middle rows and columns of the board, based on natural 1..N coordinate-indices
+  indices = tuple(range(1,N+1))
   middle = tuple(indices[(N-1)//2 : N//2+1]) # middle/median indices (single if odd_n else pair)
   intersection = frozenset(product(middle, middle))
   rows = (product(indices, middle),) if odd_N else (product(indices, middle[:1]), product(indices, middle[1:]))
@@ -28,9 +27,6 @@ for N in range(MIN_N, MAX_N+1):
     def mirrors(squares): return starmap(mirror, squares)
     def rotates(squares): return starmap(rotate, squares)
     return {
-      frozenset((-x,y) for x,y in squares), frozenset((x,-y) for x,y in squares), frozenset((y,x) for x,y in squares), frozenset((-x,-y) for x,y in squares),
-      frozenset((-y,x) for x,y in squares), frozenset((-y,-x) for x,y in squares), frozenset((y,-x) for x,y in squares), frozenset(squares),
-    } if PLANAR else {
       frozenset(mirrors(squares)), frozenset(mirrors(rotates(squares))), frozenset(mirrors(rotates(rotates(squares)))), frozenset(mirrors(rotates(rotates(rotates(squares))))),
       frozenset(rotates(squares)), frozenset(rotates(rotates(squares))), frozenset(rotates(rotates(rotates(squares)))), frozenset(squares),
     }
@@ -47,10 +43,6 @@ for N in range(MIN_N, MAX_N+1):
       for i, line in enumerate(board(b)): bd[i].append(line)
     print("\n".join(" ".join(line) for line in bd))
     print()
-  
-  # temp: 
-  # printout((((0, -2), (-3, 0)) if odd_N else ((-4, -1), (1, -4), (-1, -3), (-3, 1))) if PLANAR else (((1, 4), (4, 2)) if odd_N else ((1, 4), (3, 5), (4, 2), (5, 6))))
-  # exit()
   
   # Split over branches
   for branch in map(frozenset, product(*rows, *cols)):
