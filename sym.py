@@ -7,7 +7,7 @@ MIN_N, MAX_N = 8, 20
 
 table = [["N", "ob(N)", "sb(N)", "quotient", "branch lengths", "orbits", "fundamental", "err"]]
 for N in range(MIN_N, MAX_N+1):
-  branches, broken, lengths, odd_N = multiset(), set(), multiset(), N%2
+  ob_branches, sb_branches, lengths, odd_N = multiset(), set(), multiset(), N%2
   
   # Identify the middle rows and columns of the board, based on natural 1..N coordinate-indices
   indices = tuple(range(1,N+1))
@@ -39,15 +39,15 @@ for N in range(MIN_N, MAX_N+1):
   
   # Split over branches
   for branch in map(frozenset, product(*rows, *cols)):
-    if branch not in branches and legal(branch):
+    if branch not in ob_branches and legal(branch):
       s = symmetries(branch)
       c = len(s)
-      branches.update({b:c for b in s})
-      broken.add(branch)
+      ob_branches.update({b:c for b in s})
+      sb_branches.add(branch)
       lengths.update([len(branch)])
 
   # Compute ob(N), sb(N), and assorted stats
-  ob, orbits = len(branches), dict(sorted(multiset(branches.values()).items(), key=lambda o:o[0],reverse=True))
+  ob, orbits = len(ob_branches), dict(sorted(multiset(ob_branches.values()).items(), key=lambda o:o[0],reverse=True))
   fundamental = {k: v//k for k,v in orbits.items()}
   sb = sum(fundamental.values())
   quotient = ob/sb if sb else 0
@@ -59,10 +59,10 @@ for N in range(MIN_N, MAX_N+1):
   if ob != expected: err.append(f"expected {expected} ob")
   expected = (N-1)*(N-3)//8+1 if odd_N else [0,0,0,0,0,0,0,0,30,0, 113,0, 342][N] if 8 <= N <= 12 else sb # N*(3*N-14)//4 + 5 if N > 3 else 0
   if sb != expected: err.append(f"expected {expected} sb")
-  if sb != len(broken): err.append(f"broken implies {len(broken)} sb")
+  if sb != len(sb_branches): err.append(f"sb_branches implies {len(sb_branches)} sb")
   if len(err): err = ", ".join(err)
   table.append([N, ob, sb, quotient, lengths, orbits, fundamental] + [err]*bool(len(err)))
-  open(f"./data/branches{N:02d}.txt", mode="w").write("\n".join(sorted(sorted(str(branch) for branch in map(set, broken)), key=lambda branch: len(branch))))
+  open(f"./data/branches{N:02d}.txt", mode="w").write("\n".join(sorted(sorted(str(branch) for branch in map(set, sb_branches)), key=lambda branch: len(branch))))
 
 # Discard err column if there were no errors
 if all(len(row)==len(table[0])-1 for row in table[1:]): table[0] = table[0][:-1]
