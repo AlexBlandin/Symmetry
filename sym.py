@@ -12,12 +12,12 @@ for N in range(MIN_N, MAX_N+1):
   
   # Identify the middle rows and columns of the board, based on either natural coordinate-indices or planar
   indices = tuple(i for i in range(-(N//2), N//2+1) if i != 0 or odd_N) if PLANAR else tuple(range(1,N+1))
-  middle = tuple(indices[(N-1)//2 : N//2+1]) # middle indices (single if odd_n else pair)
+  middle = tuple(indices[(N-1)//2 : N//2+1]) # middle/median indices (single if odd_n else pair)
   intersection = frozenset(product(middle, middle))
   rows = (product(indices, middle),) if odd_N else (product(indices, middle[:1]), product(indices, middle[1:]))
   cols = (product(middle, indices),) if odd_N else (product(middle[:1], indices), product(middle[1:], indices))
   numrc = len(rows) + len(cols)
-  
+
   # Key Functions
   def legal(branch): return ((len(branch) == numrc or
                             (len(branch) == numrc-1 and len(branch & intersection))) and
