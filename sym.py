@@ -54,7 +54,7 @@ for N in range(MIN_N, MAX_N+1):
       s = symmetries(branch)
       c = len(s)
       branches.update({b:c for b in s})
-      reduced.add(branch)
+      reduced.add(branch) # todo: do something with, perhaps print out to a file
   
   # Compute ob(N), sb(N), and assorted stats
   ob, orbits = len(branches), dict(sorted(multiset(branches.values()).items(), key=lambda o:o[0],reverse=True))
