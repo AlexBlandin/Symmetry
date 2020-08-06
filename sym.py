@@ -30,11 +30,9 @@ for N in range(MIN_N, MAX_N+1):
   # Display & Debugging
   def board(squares): return ["".join("#" if (x,y) in squares else
                                       "-" if (x,y) in product(indices,middle) or (x,y) in product(middle,indices) else
-                                      " "
-                                      for x in indices) for y in indices]
+                                      " " for x in indices) for y in indices]
   def printout(branch):
-    print(N, tuple(branch))
-    bd = [[] for _ in range(N)]
+    print(N, tuple(branch)); bd = [[] for _ in range(N)]
     for b in symmetries(branch):
       for i, line in enumerate(board(b)): bd[i].append(line)
     print("\n".join(" ".join(line) for line in bd));print()
@@ -64,10 +62,7 @@ for N in range(MIN_N, MAX_N+1):
   if sb != len(broken): err.append(f"broken implies {len(broken)} sb")
   if len(err): err = ", ".join(err)
   table.append([N, ob, sb, quotient, lengths, orbits, fundamental] + [err]*bool(len(err)))
-  
-  # todo: turn into output for verify.py
-  # from pprint import pp
-  # pp(sorted(broken))
+  open(f"./data/branches{N:02d}.txt", mode="w").write("\n".join(sorted(sorted(str(branch) for branch in map(set, broken)), key=lambda branch: len(branch))))
 
 # Discard err column if there were no errors
 if all(len(row)==len(table[0])-1 for row in table[1:]): table[0] = table[0][:-1]
