@@ -21,7 +21,7 @@ for N in range(MIN_N, MAX_N+1):
   # Key Functions
   def legal(branch): return ((len(branch) == numrc or
                             (len(branch) == numrc-1 and len(branch & intersection))) and
-                            all((x,y)==(a,b) or (x!=a and y!=b and x+y!=a+b and x-y!=a-b) for (x,y),(a,b) in combinations(branch,2)))
+                            all((x,y)==(a,b) or (x!=a and y!=b and x+y!=a+b and x-y!=a-b) for (x,y),(a,b) in combinations(branch, 2)))
   def symmetries(squares):
     return {
       frozenset((-x,y) for x,y in squares), frozenset((x,-y) for x,y in squares), frozenset((y,x) for x,y in squares), frozenset((-x,-y) for x,y in squares),
