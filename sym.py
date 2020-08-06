@@ -1,10 +1,10 @@
 from collections import Counter as multiset
-from itertools import product, combinations
+from itertools import product, combinations, starmap
 from tabulate import tabulate
 
 # Configure
 MIN_N, MAX_N = 8, 20
-PLANAR = True
+PLANAR = False
 
 table = [["N", "ob(N)", "sb(N)", "quotient", "branch lengths", "orbits", "fundamental", "err"]]
 for N in range(MIN_N, MAX_N+1):
@@ -23,12 +23,16 @@ for N in range(MIN_N, MAX_N+1):
                             (len(branch) == numrc-1 and len(branch & intersection))) and
                             all((x,y)==(a,b) or (x!=a and y!=b and x+y!=a+b and x-y!=a-b) for (x,y),(a,b) in combinations(branch, 2)))
   def symmetries(squares):
+    def mirror(x,y): return(N-x+1,y)
+    def rotate(x,y): return(N-y+1,x)
+    def mirrors(squares): return starmap(mirror, squares)
+    def rotates(squares): return starmap(rotate, squares)
     return {
       frozenset((-x,y) for x,y in squares), frozenset((x,-y) for x,y in squares), frozenset((y,x) for x,y in squares), frozenset((-x,-y) for x,y in squares),
       frozenset((-y,x) for x,y in squares), frozenset((-y,-x) for x,y in squares), frozenset((y,-x) for x,y in squares), frozenset(squares),
     } if PLANAR else {
-      frozenset(squares), frozenset((N-x+1,y) for x,y in squares), frozenset((x,N-y+1) for x,y in squares), frozenset((N-x+1,N-y+1) for x,y in squares),
-      frozenset(), # todo: since fs((y,x) for x,y in squares) is wrong I need to figure out the alternative
+      frozenset(mirrors(squares)), frozenset(mirrors(rotates(squares))), frozenset(mirrors(rotates(rotates(squares)))), frozenset(mirrors(rotates(rotates(rotates(squares))))),
+      frozenset(rotates(squares)), frozenset(rotates(rotates(squares))), frozenset(rotates(rotates(rotates(squares)))), frozenset(squares),
     }
   
   # Display & Debugging
