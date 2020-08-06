@@ -14,10 +14,13 @@ for N in range(MIN_N, MAX_N+1):
   indices = tuple(i for i in range(-(N//2), N//2+1) if i != 0 or odd_N) if PLANAR else tuple(range(1,N+1))
   midrc = tuple(indices[(N-1)//2 : N//2+1]) # middle rows/cols
   intersection = frozenset(product(midrc, midrc))
+  rows = (product(indices,midrc),) if odd_N else (product(indices,midrc[:1]), product(indices,midrc[1:]))
+  cols = (product(midrc,indices),) if odd_N else (product(midrc[:1],indices), product(midrc[1:],indices))
+  numrc = len(rows) + len(cols)
   
   # Key Functions
-  def legal(branch): return ((len(branch) == (2 if odd_N else 4) or
-                            (len(branch) == (1 if odd_N else 3) and len(branch & intersection))) and
+  def legal(branch): return ((len(branch) == numrc or
+                            (len(branch) == numrc-1 and len(branch & intersection))) and
                             all((x,y)==(a,b) or (x!=a and y!=b and x+y!=a+b and x-y!=a-b) for (x,y),(a,b) in combinations(branch,2)))
   def symmetries(squares): # from set of squares generate the symmetries as a set of frozen sets
     return {
@@ -46,8 +49,6 @@ for N in range(MIN_N, MAX_N+1):
   # exit()
   
   # Split over branches
-  rows = (product(indices,midrc),) if odd_N else (product(indices,midrc[:1]), product(indices,midrc[1:]))
-  cols = (product(midrc,indices),) if odd_N else (product(midrc[:1],indices), product(midrc[1:],indices))
   for branch in map(frozenset, product(*rows, *cols)):
     if branch not in branches and legal(branch):
       s = symmetries(branch)
