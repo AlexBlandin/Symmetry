@@ -6,9 +6,9 @@ from tabulate import tabulate
 MIN_N, MAX_N = 8, 20
 PLANAR = True
 
-table = [["N", "ob(N)", "sb(N)", "quotient", "orbits", "fundamental", "err"]]
+table = [["N", "ob(N)", "sb(N)", "quotient", "branch lengths", "orbits", "fundamental", "err"]]
 for N in range(MIN_N, MAX_N+1):
-  branches, reduced, odd_N = multiset(), set(), N%2
+  branches, broken, lengths, odd_N = multiset(), set(), multiset(), N%2
   
   # Identify the middle rows and columns of the board, based on either natural coordinate-indices or planar
   indices = tuple(i for i in range(-(N//2), N//2+1) if i != 0 or odd_N) if PLANAR else tuple(range(1,N+1))
@@ -54,23 +54,31 @@ for N in range(MIN_N, MAX_N+1):
       s = symmetries(branch)
       c = len(s)
       branches.update({b:c for b in s})
-      reduced.add(branch) # todo: do something with, perhaps print out to a file
-  
+      broken.add(branch) # todo: do something with, perhaps print out to a file
+      # printout(branch)
+      lengths.update([len(branch)])
+  # exit()
+
   # Compute ob(N), sb(N), and assorted stats
   ob, orbits = len(branches), dict(sorted(multiset(branches.values()).items(), key=lambda o:o[0],reverse=True))
   fundamental = {k: v//k for k,v in orbits.items()}
   sb = sum(fundamental.values())
   quotient = ob/sb if sb else 0
+  lengths = dict(lengths)
   
+  # from pprint import pp
+  # pp(sorted(broken))
+  # exit()
+
   # Error logging
   err = []
   expected = (N-1)*(N-3)+1 if odd_N else [0,0,0,0,0,0,0,0,206,0, 844,0, 2642,0, 6656,0, 14326,0, 27476,0, 48314][N] if 8 <= N <= 20 else ob # 6*N*N - 30*N + 44 if N > 3 else 0
   if ob != expected: err.append(f"expected {expected} ob")
   expected = (N-1)*(N-3)//8+1 if odd_N else [0,0,0,0,0,0,0,0,30,0, 113,0, 342][N] if 8 <= N <= 12 else sb # N*(3*N-14)//4 + 5 if N > 3 else 0
   if sb != expected: err.append(f"expected {expected} sb")
-  if sb != len(reduced): err.append(f"reduced implies {len(reduced)} sb")
+  if sb != len(broken): err.append(f"broken implies {len(broken)} sb")
   if len(err): err = ", ".join(err)
-  table.append([N, ob, sb, quotient, orbits, fundamental] + [err]*bool(len(err)))
+  table.append([N, ob, sb, quotient, lengths, orbits, fundamental] + [err]*bool(len(err)))
 
 # Discard err column if there were no errors
 if all(len(row)==len(table[0])-1 for row in table[1:]): table[0] = table[0][:-1]
