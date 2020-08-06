@@ -23,5 +23,5 @@ for f in Path("./data/").glob("branches*.txt"):
         r = set(zip(r.fixed[::2], r.fixed[1::2]))
     branches.add(frozenset(r))
     m.update({len(r):1})
-  print(f"{f}: sb = {sb}, lengths = {d}. {'sb seems correct' if len(branches)==sb else 'sb appears inconsistent'}. {'lengths seem correct' if dict(m)==d else 'lengths seem inconsistent'}.")
+  print(f"{f}: sb = {sb}, lengths = {d}. sb seems {'consistent' if len(branches)==sb else 'inconsistent'}. lengths seem {'consistent' if dict(m)==d else 'inconsistent'}.")
   
