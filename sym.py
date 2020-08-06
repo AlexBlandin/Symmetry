@@ -3,7 +3,7 @@ from collections import Counter as multiset
 from tabulate import tabulate
 
 # Configure
-MIN_N, MAX_N = 8, 30
+MIN_N, MAX_N = 8, 20
 
 table = [["N", "ob(N)", "sb(N)", "quotient", "branch lengths", "orbits", "fundamental", "err"]]
 for N in range(MIN_N, MAX_N+1):
@@ -22,14 +22,10 @@ for N in range(MIN_N, MAX_N+1):
                             (len(branch) == numrc-1 and len(branch & intersection))) and
                             all((x,y)==(a,b) or (x!=a and y!=b and x+y!=a+b and x-y!=a-b) for (x,y),(a,b) in combinations(branch, 2)))
   def symmetries(squares):
-    def mirror(x,y): return(N-x+1,y)
-    def rotate(x,y): return(N-y+1,x)
-    def mirrors(squares): return starmap(mirror, squares)
-    def rotates(squares): return starmap(rotate, squares)
-    return {
-      frozenset(mirrors(squares)), frozenset(mirrors(rotates(squares))), frozenset(mirrors(rotates(rotates(squares)))), frozenset(mirrors(rotates(rotates(rotates(squares))))),
-      frozenset(rotates(squares)), frozenset(rotates(rotates(squares))), frozenset(rotates(rotates(rotates(squares)))), frozenset(squares),
-    }
+    mirror, rotate = lambda x,y: (N-x+1, y), lambda x,y: (N-y+1, x)
+    mirrors, rotates = lambda squares: starmap(mirror, squares), lambda squares: starmap(rotate, squares)
+    return { frozenset(mirrors(squares)), frozenset(mirrors(rotates(squares))), frozenset(mirrors(rotates(rotates(squares)))), frozenset(mirrors(rotates(rotates(rotates(squares))))),
+             frozenset(rotates(squares)), frozenset(rotates(rotates(squares))), frozenset(rotates(rotates(rotates(squares)))), frozenset(squares) }
   
   # Display & Debugging
   def board(squares): return ["".join("#" if (x,y) in squares else
@@ -41,8 +37,7 @@ for N in range(MIN_N, MAX_N+1):
     bd = [[] for _ in range(N)]
     for b in symmetries(branch):
       for i, line in enumerate(board(b)): bd[i].append(line)
-    print("\n".join(" ".join(line) for line in bd))
-    print()
+    print("\n".join(" ".join(line) for line in bd));print()
   
   # Split over branches
   for branch in map(frozenset, product(*rows, *cols)):
@@ -50,10 +45,8 @@ for N in range(MIN_N, MAX_N+1):
       s = symmetries(branch)
       c = len(s)
       branches.update({b:c for b in s})
-      broken.add(branch) # todo: do something with, perhaps print out to a file
-      # printout(branch)
+      broken.add(branch)
       lengths.update([len(branch)])
-  # exit()
 
   # Compute ob(N), sb(N), and assorted stats
   ob, orbits = len(branches), dict(sorted(multiset(branches.values()).items(), key=lambda o:o[0],reverse=True))
@@ -61,10 +54,6 @@ for N in range(MIN_N, MAX_N+1):
   sb = sum(fundamental.values())
   quotient = ob/sb if sb else 0
   lengths = dict(lengths)
-  
-  # from pprint import pp
-  # pp(sorted(broken))
-  # exit()
 
   # Error logging
   err = []
@@ -75,6 +64,10 @@ for N in range(MIN_N, MAX_N+1):
   if sb != len(broken): err.append(f"broken implies {len(broken)} sb")
   if len(err): err = ", ".join(err)
   table.append([N, ob, sb, quotient, lengths, orbits, fundamental] + [err]*bool(len(err)))
+  
+  # todo: turn into output for verify.py
+  # from pprint import pp
+  # pp(sorted(broken))
 
 # Discard err column if there were no errors
 if all(len(row)==len(table[0])-1 for row in table[1:]): table[0] = table[0][:-1]
