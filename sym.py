@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 from itertools import product, combinations, starmap
 from collections import Counter as multiset
 from tabulate import tabulate
@@ -62,7 +63,7 @@ for N in range(MIN_N, MAX_N+1):
   if sb != len(sb_branches): err.append(f"sb_branches implies {len(sb_branches)} sb")
   if len(err): err = ", ".join(err)
   table.append([N, ob, sb, quotient, lengths, orbits, fundamental] + [err]*bool(len(err)))
-  open(f"./data/branches{N:02d}.txt", mode="w").write("\n".join(sorted(sorted(str(branch) for branch in map(set, sb_branches)), key=lambda branch: len(branch))))
+  open(f"./data/branches{N:02d}.txt", mode="w").write("\n".join([f"{sb} {lengths}"]+sorted(sorted(str(branch) for branch in map(set, sb_branches)), key=lambda branch: len(branch))))
 
 # Discard err column if there were no errors
 if all(len(row)==len(table[0])-1 for row in table[1:]): table[0] = table[0][:-1]
