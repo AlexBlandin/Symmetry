@@ -27,10 +27,7 @@ for f in Path("./data/").glob("branches*.txt"):
     m[len(branch)] += 1
     board = [[False]*N for _ in range(N)]
     for x,y in branch: board[y-1][x-1]=True
-    # print("\n".join(["".join(map(str,range(N+1)))]+[str(x)+"".join("#" if col else "-" for col in row) for x,row in enumerate(board,1)]))
-    # print(branch)
-    # exit()
-    boardT = list(map(list, zip(*board))) # standard Python transpose trick
+    boardT = list(map(list, zip(*board))) # transpose trick
     for i, row in enumerate(board, 1):
       if len([col for col in row if col]) > 1:
         print(f"{f}: AMO-inconsistent in row {1}, branch: {branch}"); qcons=False
