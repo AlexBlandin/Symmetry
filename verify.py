@@ -1,27 +1,13 @@
 #!/usr/bin/env python3
 from itertools import product
 from pathlib import Path
-from parse import *
-
-TRUST_INPUT = False
 
 report = []
 for f in Path("./data/").glob("branches*.txt"):
-  branches, m, qcons = set(), {}, True
-  lines = open(f).readlines()
-  N, sb, *d = parse("{:d} {:d} {{{:d}:{:d},{:d}:{:d}}}", lines[0]).fixed
-  d = dict(zip(d[::2],d[1::2]))
+  lines, branches, m, qcons = open(f).readlines(), set(), {}, True
+  N, sb, d = list(map(eval, lines[0].split(maxsplit=2)))
   for s in lines[1:]:
-    branch = {}
-    if TRUST_INPUT:
-      branch = eval(s)
-    else:
-      branch = parse("{{({:d},{:d}), ({:d},{:d}), ({:d},{:d}), ({:d},{:d})}}", s)
-      if branch is None: branch = parse("{{({:d},{:d}), ({:d},{:d}), ({:d},{:d})}}", s)
-      if branch is None: branch = parse("{{({:d},{:d}), ({:d},{:d})}}", s)
-      if branch is None: branch = parse("{{({:d},{:d})}}", s)
-      if branch:
-        branch = set(zip(branch.fixed[::2], branch.fixed[1::2]))
+    branch = eval(s)
     branches.add(frozenset(branch))
     if len(branch) not in m: m[len(branch)] = 0
     m[len(branch)] += 1
@@ -46,7 +32,7 @@ for f in Path("./data/").glob("branches*.txt"):
   report.append(f"{f}: N = {N}, sb = {sb}, lengths = {d}. Queens seem {'consistent' if qcons else 'inconsistent'}. sb seems {'consistent' if len(branches)==sb else 'inconsistent'}. lengths seem {'consistent' if m==d else 'inconsistent'}.")
 open("./data/report.txt", mode="w").write("\n".join(report))
 
-# # Because python can do this in 4 lines.
+# # Because python can do this in 4 lines thanks to eval.
 # from pathlib import Path
 # for f, lines in map(lambda f: (f, open(f).readlines()), Path("./data/").glob("branches*.txt")):
 #   branches, N, sb, d = {frozenset(eval(s)) for s in lines[1:]}, *list(map(eval, lines[0].split(maxsplit=2)))
