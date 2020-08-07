@@ -29,7 +29,7 @@ for f in Path("./data/").glob("branches*.txt"):
           print(f"{f}: AMO-inconsistent in diag {x-y}, branch: {branch}"); qcons=False
         diag.add(x+y); adia.add(x-y)
     
-  report.append(f"{f}: N = {N}, sb = {sb}, lengths = {d}. Queens seem {'consistent' if qcons else 'inconsistent'}. sb seems {'consistent' if len(branches)==sb else 'inconsistent'}. lengths seem {'consistent' if m==d else 'inconsistent'}.")
+  report.append(f"{f}: N = {N}, sb = {sb}, lengths = {d}, Queens seem {'consistent' if qcons else 'inconsistent'}, sb seems {'consistent' if len(branches)==sb else 'inconsistent'}, lengths seem {'consistent' if m==d else 'inconsistent'}")
 open("./data/report.txt", mode="w").write("\n".join(report))
 
 # # Because python can do this in 4 lines thanks to eval.
