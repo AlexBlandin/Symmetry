@@ -56,9 +56,9 @@ for N in range(MIN_N, MAX_N+1):
 
   # Error logging
   err = []
-  expected = (N-1)*(N-3)+1 if odd_N else [0,0,0,0,0,0,0,0,206,0, 844,0, 2642,0, 6656,0, 14326,0, 27476,0, 48314][N] if 8 <= N <= 20 else ob # 6*N*N - 30*N + 44 if N > 3 else 0
+  expected = (N-1)*(N-3)+1 if odd_N else N**4-22*N**3+201*N**2-883*N+1574 if N >= 8 else ob
   if ob != expected: err.append(f"expected {expected} ob")
-  expected = (N-1)*(N-3)//8+1 if odd_N else [0,0,0,0,0,0,0,0,30,0, 113,0, 342][N] if 8 <= N <= 12 else sb # N*(3*N-14)//4 + 5 if N > 3 else 0
+  expected = (N-1)*(N-3)//8+1 if odd_N else (N**4-22*N**3+202*N**2-888*N+1584)//8 if N >= 8 else sb
   if sb != expected: err.append(f"expected {expected} sb")
   if sb != len(sb_branches): err.append(f"sb_branches implies {len(sb_branches)} sb")
   if len(err): err = ", ".join(err)
