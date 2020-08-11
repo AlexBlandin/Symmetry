@@ -2,10 +2,10 @@
 from itertools import product
 from pathlib import Path
 
-report = []
+report, green = [""], True
 for f in Path("./data/").glob("branches*.txt"):
   lines, branches, m, qcons = open(f).readlines(), set(), {}, True
-  N, sb, d = list(map(eval, lines[0].split(maxsplit=2)))
+  N, sb, d = map(eval, lines[0].split(maxsplit=2))
   for s in lines[1:]:
     branch = eval(s)
     branches.add(frozenset(branch))
@@ -13,7 +13,7 @@ for f in Path("./data/").glob("branches*.txt"):
     m[len(branch)] += 1
     board = [[False]*N for _ in range(N)]
     for x,y in branch: board[y-1][x-1]=True
-    boardT = list(map(list, zip(*board))) # transpose trick
+    *boardT, = map(list, zip(*board)) # transpose trick
     for i, row in enumerate(board, 1):
       if len([col for col in row if col]) > 1:
         print(f"{f}: AMO-inconsistent in row {1}, branch: {branch}"); qcons=False
@@ -28,8 +28,9 @@ for f in Path("./data/").glob("branches*.txt"):
         if (x-y) in adia:
           print(f"{f}: AMO-inconsistent in diag {x-y}, branch: {branch}"); qcons=False
         diag.add(x+y); adia.add(x-y)
-    
+  green = green and qcons and len(branches)==sb and m==d
   report.append(f"{f}: N = {N}, sb = {sb}, lengths = {d}, Queens seem {'consistent' if qcons else 'inconsistent'}, sb seems {'consistent' if len(branches)==sb else 'inconsistent'}, lengths seem {'consistent' if m==d else 'inconsistent'}")
+report[0] = "All green." if green else "Inconsistency detected."
 open("./data/report.txt", mode="w").write("\n".join(report))
 
 # # Because python can do this in 4 lines thanks to eval.

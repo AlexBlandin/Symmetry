@@ -37,6 +37,18 @@ we derive the reduced formula from the number of 8-orbits / 8 (since 8-orbits ha
 
 EVEN N:
 
+oeis superseeker guessed from even N 8..20:
+sb(n=N-7 (so N=8->n=1)) = a(n) = 2n^4 + 2n^3 + 11n^2 + 6n + 9.
+ofsetting so they're on the evens (n=N/2-3) gives (n^4 - 22n^3 + 202n^2 - 888n + 1584)/8
+which matches maxima's (n^4-22*n^3+202*n^2-888*n+1584)/8
+The next few terms are 9977, 15534, 23169.
+as calculated:
+22 | 9977
+24 | 15534
+26 | 23169
+so okay, we have a simple polynomial for the evens>8, though it becomes more complex through the lens of the board itself
+
+
 branches(even N) = 2(N-6)(3N-13) + 4(6N-22) + 4(2N-6)  for N >= 3
                  = 6N^2 - 30N + 44
 
