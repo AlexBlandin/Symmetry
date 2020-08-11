@@ -61,6 +61,7 @@ for N in range(MIN_N, MAX_N+1):
   expected = (N-1)*(N-3)//8+1 if odd_N else (N**4-22*N**3+202*N**2-888*N+1584)//8 if N >= 8 else sb
   if sb != expected: err.append(f"expected {expected} sb")
   if sb != len(sb_branches): err.append(f"sb_branches implies {len(sb_branches)} sb")
+  if sb != sum(lengths.values()): err.append(f"lengths implies {sum(lengths.values())} sb")
   if len(err): err = ", ".join(err)
   table.append([N, ob, sb, quotient, lengths, orbits, fundamental] + [err]*bool(len(err)))
   open(f"./data/branches{N:02d}.txt", mode="w").write("\n".join([f"{N} {sb} {lengths}"]+sorted(sorted(str(branch) for branch in map(set, sb_branches)), key=lambda branch: len(branch))))
