@@ -25,8 +25,9 @@ for N in range(MIN_N, MAX_N+1):
   def symmetries(squares):
     mirror, rotate = lambda x,y: (N-x+1, y), lambda x,y: (N-y+1, x)
     mirrors, rotates = lambda squares: starmap(mirror, squares), lambda squares: starmap(rotate, squares)
-    return { frozenset(mirrors(squares)), frozenset(mirrors(rotates(squares))), frozenset(mirrors(rotates(rotates(squares)))), frozenset(mirrors(rotates(rotates(rotates(squares))))),
-             frozenset(rotates(squares)), frozenset(rotates(rotates(squares))), frozenset(rotates(rotates(rotates(squares)))), frozenset(squares) }
+    return { frozenset(squares), frozenset(mirrors(squares)), frozenset(mirrors(rotates(squares))),
+             frozenset(mirrors(rotates(rotates(squares)))), frozenset(mirrors(rotates(rotates(rotates(squares))))),
+             frozenset(rotates(squares)), frozenset(rotates(rotates(squares))), frozenset(rotates(rotates(rotates(squares)))) }
   
   # Display & Debugging
   def board(squares): return ["".join("#" if (x,y) in squares else
@@ -64,7 +65,8 @@ for N in range(MIN_N, MAX_N+1):
   if sb != sum(lengths.values()): err.append(f"lengths implies {sum(lengths.values())} sb")
   if len(err): err = ", ".join(err)
   table.append([N, ob, sb, quotient, lengths, orbits, fundamental] + [err]*bool(len(err)))
-  open(f"./data/branches{N:02d}.txt", mode="w").write("\n".join([f"{N} {sb} {lengths}"]+sorted(sorted(str(branch) for branch in map(set, sb_branches)), key=lambda branch: len(branch))))
+  sorted_sb_branches = sorted(sorted(str(branch) for branch in map(set, sb_branches)), key=lambda branch: len(branch))
+  open(f"./data/branches{N:02d}.txt", mode="w").write("\n".join([f"{N} {sb} {lengths}"]+sorted_sb_branches))
 
 # Discard err column if there were no errors
 if all(len(row)==len(table[0])-1 for row in table[1:]): table[0] = table[0][:-1]
