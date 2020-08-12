@@ -4,7 +4,7 @@ from collections import Counter as multiset
 from tabulate import tabulate
 
 # Configure
-MIN_N, MAX_N = 1, 26
+MIN_N, MAX_N = 1, 50
 
 table = [["N", "ob(N)", "sb(N)", "quotient", "branch lengths", "orbits", "fundamental", "err"]]
 for N in range(MIN_N, MAX_N+1):
