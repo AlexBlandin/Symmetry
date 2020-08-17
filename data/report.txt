@@ -1,51 +1,51 @@
 All green.
-data/branches01.txt: N = 1, sb = 1, lengths = {1: 1}, Queens seem consistent, sb seems consistent, lengths seem consistent
-data/branches02.txt: N = 2, sb = 0, lengths = {}, Queens seem consistent, sb seems consistent, lengths seem consistent
-data/branches03.txt: N = 3, sb = 1, lengths = {1: 1}, Queens seem consistent, sb seems consistent, lengths seem consistent
-data/branches04.txt: N = 4, sb = 1, lengths = {4: 1}, Queens seem consistent, sb seems consistent, lengths seem consistent
-data/branches05.txt: N = 5, sb = 2, lengths = {2: 1, 1: 1}, Queens seem consistent, sb seems consistent, lengths seem consistent
-data/branches06.txt: N = 6, sb = 6, lengths = {3: 3, 4: 3}, Queens seem consistent, sb seems consistent, lengths seem consistent
-data/branches07.txt: N = 7, sb = 4, lengths = {2: 3, 1: 1}, Queens seem consistent, sb seems consistent, lengths seem consistent
-data/branches08.txt: N = 8, sb = 30, lengths = {4: 21, 3: 9}, Queens seem consistent, sb seems consistent, lengths seem consistent
-data/branches09.txt: N = 9, sb = 7, lengths = {2: 6, 1: 1}, Queens seem consistent, sb seems consistent, lengths seem consistent
-data/branches10.txt: N = 10, sb = 113, lengths = {4: 94, 3: 19}, Queens seem consistent, sb seems consistent, lengths seem consistent
-data/branches11.txt: N = 11, sb = 11, lengths = {2: 10, 1: 1}, Queens seem consistent, sb seems consistent, lengths seem consistent
-data/branches12.txt: N = 12, sb = 342, lengths = {4: 309, 3: 33}, Queens seem consistent, sb seems consistent, lengths seem consistent
-data/branches13.txt: N = 13, sb = 16, lengths = {2: 15, 1: 1}, Queens seem consistent, sb seems consistent, lengths seem consistent
-data/branches14.txt: N = 14, sb = 849, lengths = {4: 798, 3: 51}, Queens seem consistent, sb seems consistent, lengths seem consistent
-data/branches15.txt: N = 15, sb = 22, lengths = {2: 21, 1: 1}, Queens seem consistent, sb seems consistent, lengths seem consistent
-data/branches16.txt: N = 16, sb = 1814, lengths = {4: 1741, 3: 73}, Queens seem consistent, sb seems consistent, lengths seem consistent
-data/branches17.txt: N = 17, sb = 29, lengths = {2: 28, 1: 1}, Queens seem consistent, sb seems consistent, lengths seem consistent
-data/branches18.txt: N = 18, sb = 3465, lengths = {4: 3366, 3: 99}, Queens seem consistent, sb seems consistent, lengths seem consistent
-data/branches19.txt: N = 19, sb = 37, lengths = {2: 36, 1: 1}, Queens seem consistent, sb seems consistent, lengths seem consistent
-data/branches20.txt: N = 20, sb = 6078, lengths = {4: 5949, 3: 129}, Queens seem consistent, sb seems consistent, lengths seem consistent
-data/branches21.txt: N = 21, sb = 46, lengths = {2: 45, 1: 1}, Queens seem consistent, sb seems consistent, lengths seem consistent
-data/branches22.txt: N = 22, sb = 9977, lengths = {4: 9814, 3: 163}, Queens seem consistent, sb seems consistent, lengths seem consistent
-data/branches23.txt: N = 23, sb = 56, lengths = {2: 55, 1: 1}, Queens seem consistent, sb seems consistent, lengths seem consistent
-data/branches24.txt: N = 24, sb = 15534, lengths = {4: 15333, 3: 201}, Queens seem consistent, sb seems consistent, lengths seem consistent
-data/branches25.txt: N = 25, sb = 67, lengths = {2: 66, 1: 1}, Queens seem consistent, sb seems consistent, lengths seem consistent
-data/branches26.txt: N = 26, sb = 23169, lengths = {4: 22926, 3: 243}, Queens seem consistent, sb seems consistent, lengths seem consistent
-data/branches27.txt: N = 27, sb = 79, lengths = {2: 78, 1: 1}, Queens seem consistent, sb seems consistent, lengths seem consistent
-data/branches28.txt: N = 28, sb = 33350, lengths = {4: 33061, 3: 289}, Queens seem consistent, sb seems consistent, lengths seem consistent
-data/branches29.txt: N = 29, sb = 92, lengths = {2: 91, 1: 1}, Queens seem consistent, sb seems consistent, lengths seem consistent
-data/branches30.txt: N = 30, sb = 46593, lengths = {4: 46254, 3: 339}, Queens seem consistent, sb seems consistent, lengths seem consistent
-data/branches31.txt: N = 31, sb = 106, lengths = {2: 105, 1: 1}, Queens seem consistent, sb seems consistent, lengths seem consistent
-data/branches32.txt: N = 32, sb = 63462, lengths = {4: 63069, 3: 393}, Queens seem consistent, sb seems consistent, lengths seem consistent
-data/branches33.txt: N = 33, sb = 121, lengths = {2: 120, 1: 1}, Queens seem consistent, sb seems consistent, lengths seem consistent
-data/branches34.txt: N = 34, sb = 84569, lengths = {4: 84118, 3: 451}, Queens seem consistent, sb seems consistent, lengths seem consistent
-data/branches35.txt: N = 35, sb = 137, lengths = {2: 136, 1: 1}, Queens seem consistent, sb seems consistent, lengths seem consistent
-data/branches36.txt: N = 36, sb = 110574, lengths = {4: 110061, 3: 513}, Queens seem consistent, sb seems consistent, lengths seem consistent
-data/branches37.txt: N = 37, sb = 154, lengths = {2: 153, 1: 1}, Queens seem consistent, sb seems consistent, lengths seem consistent
-data/branches38.txt: N = 38, sb = 142185, lengths = {4: 141606, 3: 579}, Queens seem consistent, sb seems consistent, lengths seem consistent
-data/branches39.txt: N = 39, sb = 172, lengths = {2: 171, 1: 1}, Queens seem consistent, sb seems consistent, lengths seem consistent
-data/branches40.txt: N = 40, sb = 180158, lengths = {4: 179509, 3: 649}, Queens seem consistent, sb seems consistent, lengths seem consistent
-data/branches41.txt: N = 41, sb = 191, lengths = {2: 190, 1: 1}, Queens seem consistent, sb seems consistent, lengths seem consistent
-data/branches42.txt: N = 42, sb = 225297, lengths = {4: 224574, 3: 723}, Queens seem consistent, sb seems consistent, lengths seem consistent
-data/branches43.txt: N = 43, sb = 211, lengths = {2: 210, 1: 1}, Queens seem consistent, sb seems consistent, lengths seem consistent
-data/branches44.txt: N = 44, sb = 278454, lengths = {4: 277653, 3: 801}, Queens seem consistent, sb seems consistent, lengths seem consistent
-data/branches45.txt: N = 45, sb = 232, lengths = {2: 231, 1: 1}, Queens seem consistent, sb seems consistent, lengths seem consistent
-data/branches46.txt: N = 46, sb = 340529, lengths = {4: 339646, 3: 883}, Queens seem consistent, sb seems consistent, lengths seem consistent
-data/branches47.txt: N = 47, sb = 254, lengths = {2: 253, 1: 1}, Queens seem consistent, sb seems consistent, lengths seem consistent
-data/branches48.txt: N = 48, sb = 412470, lengths = {4: 411501, 3: 969}, Queens seem consistent, sb seems consistent, lengths seem consistent
-data/branches49.txt: N = 49, sb = 277, lengths = {2: 276, 1: 1}, Queens seem consistent, sb seems consistent, lengths seem consistent
-data/branches50.txt: N = 50, sb = 495273, lengths = {4: 494214, 3: 1059}, Queens seem consistent, sb seems consistent, lengths seem consistent
+data\branches01.txt: N = 1, sb = 1, lengths = {1: 1}, Queens seem consistent, sb seems consistent, lengths seem consistent
+data\branches02.txt: N = 2, sb = 0, lengths = {}, Queens seem consistent, sb seems consistent, lengths seem consistent
+data\branches03.txt: N = 3, sb = 1, lengths = {1: 1}, Queens seem consistent, sb seems consistent, lengths seem consistent
+data\branches04.txt: N = 4, sb = 1, lengths = {4: 1}, Queens seem consistent, sb seems consistent, lengths seem consistent
+data\branches05.txt: N = 5, sb = 2, lengths = {2: 1, 1: 1}, Queens seem consistent, sb seems consistent, lengths seem consistent
+data\branches06.txt: N = 6, sb = 6, lengths = {3: 3, 4: 3}, Queens seem consistent, sb seems consistent, lengths seem consistent
+data\branches07.txt: N = 7, sb = 4, lengths = {2: 3, 1: 1}, Queens seem consistent, sb seems consistent, lengths seem consistent
+data\branches08.txt: N = 8, sb = 30, lengths = {4: 21, 3: 9}, Queens seem consistent, sb seems consistent, lengths seem consistent
+data\branches09.txt: N = 9, sb = 7, lengths = {2: 6, 1: 1}, Queens seem consistent, sb seems consistent, lengths seem consistent
+data\branches10.txt: N = 10, sb = 113, lengths = {4: 94, 3: 19}, Queens seem consistent, sb seems consistent, lengths seem consistent
+data\branches11.txt: N = 11, sb = 11, lengths = {2: 10, 1: 1}, Queens seem consistent, sb seems consistent, lengths seem consistent
+data\branches12.txt: N = 12, sb = 342, lengths = {4: 309, 3: 33}, Queens seem consistent, sb seems consistent, lengths seem consistent
+data\branches13.txt: N = 13, sb = 16, lengths = {2: 15, 1: 1}, Queens seem consistent, sb seems consistent, lengths seem consistent
+data\branches14.txt: N = 14, sb = 849, lengths = {4: 798, 3: 51}, Queens seem consistent, sb seems consistent, lengths seem consistent
+data\branches15.txt: N = 15, sb = 22, lengths = {2: 21, 1: 1}, Queens seem consistent, sb seems consistent, lengths seem consistent
+data\branches16.txt: N = 16, sb = 1814, lengths = {4: 1741, 3: 73}, Queens seem consistent, sb seems consistent, lengths seem consistent
+data\branches17.txt: N = 17, sb = 29, lengths = {2: 28, 1: 1}, Queens seem consistent, sb seems consistent, lengths seem consistent
+data\branches18.txt: N = 18, sb = 3465, lengths = {4: 3366, 3: 99}, Queens seem consistent, sb seems consistent, lengths seem consistent
+data\branches19.txt: N = 19, sb = 37, lengths = {2: 36, 1: 1}, Queens seem consistent, sb seems consistent, lengths seem consistent
+data\branches20.txt: N = 20, sb = 6078, lengths = {4: 5949, 3: 129}, Queens seem consistent, sb seems consistent, lengths seem consistent
+data\branches21.txt: N = 21, sb = 46, lengths = {2: 45, 1: 1}, Queens seem consistent, sb seems consistent, lengths seem consistent
+data\branches22.txt: N = 22, sb = 9977, lengths = {4: 9814, 3: 163}, Queens seem consistent, sb seems consistent, lengths seem consistent
+data\branches23.txt: N = 23, sb = 56, lengths = {2: 55, 1: 1}, Queens seem consistent, sb seems consistent, lengths seem consistent
+data\branches24.txt: N = 24, sb = 15534, lengths = {4: 15333, 3: 201}, Queens seem consistent, sb seems consistent, lengths seem consistent
+data\branches25.txt: N = 25, sb = 67, lengths = {2: 66, 1: 1}, Queens seem consistent, sb seems consistent, lengths seem consistent
+data\branches26.txt: N = 26, sb = 23169, lengths = {4: 22926, 3: 243}, Queens seem consistent, sb seems consistent, lengths seem consistent
+data\branches27.txt: N = 27, sb = 79, lengths = {2: 78, 1: 1}, Queens seem consistent, sb seems consistent, lengths seem consistent
+data\branches28.txt: N = 28, sb = 33350, lengths = {4: 33061, 3: 289}, Queens seem consistent, sb seems consistent, lengths seem consistent
+data\branches29.txt: N = 29, sb = 92, lengths = {2: 91, 1: 1}, Queens seem consistent, sb seems consistent, lengths seem consistent
+data\branches30.txt: N = 30, sb = 46593, lengths = {4: 46254, 3: 339}, Queens seem consistent, sb seems consistent, lengths seem consistent
+data\branches31.txt: N = 31, sb = 106, lengths = {2: 105, 1: 1}, Queens seem consistent, sb seems consistent, lengths seem consistent
+data\branches32.txt: N = 32, sb = 63462, lengths = {4: 63069, 3: 393}, Queens seem consistent, sb seems consistent, lengths seem consistent
+data\branches33.txt: N = 33, sb = 121, lengths = {2: 120, 1: 1}, Queens seem consistent, sb seems consistent, lengths seem consistent
+data\branches34.txt: N = 34, sb = 84569, lengths = {4: 84118, 3: 451}, Queens seem consistent, sb seems consistent, lengths seem consistent
+data\branches35.txt: N = 35, sb = 137, lengths = {2: 136, 1: 1}, Queens seem consistent, sb seems consistent, lengths seem consistent
+data\branches36.txt: N = 36, sb = 110574, lengths = {4: 110061, 3: 513}, Queens seem consistent, sb seems consistent, lengths seem consistent
+data\branches37.txt: N = 37, sb = 154, lengths = {2: 153, 1: 1}, Queens seem consistent, sb seems consistent, lengths seem consistent
+data\branches38.txt: N = 38, sb = 142185, lengths = {4: 141606, 3: 579}, Queens seem consistent, sb seems consistent, lengths seem consistent
+data\branches39.txt: N = 39, sb = 172, lengths = {2: 171, 1: 1}, Queens seem consistent, sb seems consistent, lengths seem consistent
+data\branches40.txt: N = 40, sb = 180158, lengths = {4: 179509, 3: 649}, Queens seem consistent, sb seems consistent, lengths seem consistent
+data\branches41.txt: N = 41, sb = 191, lengths = {2: 190, 1: 1}, Queens seem consistent, sb seems consistent, lengths seem consistent
+data\branches42.txt: N = 42, sb = 225297, lengths = {4: 224574, 3: 723}, Queens seem consistent, sb seems consistent, lengths seem consistent
+data\branches43.txt: N = 43, sb = 211, lengths = {2: 210, 1: 1}, Queens seem consistent, sb seems consistent, lengths seem consistent
+data\branches44.txt: N = 44, sb = 278454, lengths = {4: 277653, 3: 801}, Queens seem consistent, sb seems consistent, lengths seem consistent
+data\branches45.txt: N = 45, sb = 232, lengths = {2: 231, 1: 1}, Queens seem consistent, sb seems consistent, lengths seem consistent
+data\branches46.txt: N = 46, sb = 340529, lengths = {4: 339646, 3: 883}, Queens seem consistent, sb seems consistent, lengths seem consistent
+data\branches47.txt: N = 47, sb = 254, lengths = {2: 253, 1: 1}, Queens seem consistent, sb seems consistent, lengths seem consistent
+data\branches48.txt: N = 48, sb = 412470, lengths = {4: 411501, 3: 969}, Queens seem consistent, sb seems consistent, lengths seem consistent
+data\branches49.txt: N = 49, sb = 277, lengths = {2: 276, 1: 1}, Queens seem consistent, sb seems consistent, lengths seem consistent
+data\branches50.txt: N = 50, sb = 495273, lengths = {4: 494214, 3: 1059}, Queens seem consistent, sb seems consistent, lengths seem consistent

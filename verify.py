@@ -32,9 +32,3 @@ for f in Path("./data/").glob("branches*.txt"):
   report.append(f"{f}: N = {N}, sb = {sb}, lengths = {d}, Queens seem {'consistent' if qcons else 'inconsistent'}, sb seems {'consistent' if len(branches)==sb else 'inconsistent'}, lengths seem {'consistent' if m==d else 'inconsistent'}")
 report[0] = "All green." if green else "Inconsistency detected."
 open("./data/report.txt", mode="w").write("\n".join(report))
-
-# # Because python can do this in 4 lines thanks to eval.
-# from pathlib import Path
-# for f, lines in map(lambda f: (f, open(f).readlines()), Path("./data/").glob("branches*.txt")):
-#   branches, N, sb, d = {frozenset(eval(s)) for s in lines[1:]}, *list(map(eval, lines[0].split(maxsplit=2)))
-#   print(f"{f}: sb = {sb}, lengths = {d}. sb seems {'consistent' if len(branches)==sb else 'inconsistent'}. lengths seem {'consistent' if {i:len(list(filter(lambda b:len(b)==i,branches))) for i in range(1,5) if len(list(filter(lambda b:len(b)==i,branches)))}==d else 'inconsistent'}.")

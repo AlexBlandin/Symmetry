@@ -4,11 +4,10 @@ from collections import Counter as multiset
 from tabulate import tabulate
 
 # Configure
-MIN_N, MAX_N = 1, 50
-
+MIN_N, MAX_N = 1, 20
 table = [["N", "ob(N)", "sb(N)", "quotient", "branch lengths", "orbits", "fundamental", "err"]]
-for N in range(MIN_N, MAX_N+1):
-  ob_branches, sb_branches, lengths, odd_N = multiset(), set(), multiset(), N%2
+for N, odd_N in [(N, N%2) for N in range(MIN_N, MAX_N+1)]:
+  ob_branches, sb_branches, lengths = multiset(), set(), multiset()
   
   # Identify the middle rows and columns of the board, based on natural 1..N coordinate-indices
   indices = tuple(range(1,N+1))
@@ -69,7 +68,11 @@ for N in range(MIN_N, MAX_N+1):
   open(f"./data/branches{N:02d}.txt", mode="w").write("\n".join([f"{N} {sb} {lengths}"]+sorted_sb_branches))
 
 # Discard err column if there were no errors
-if all(len(row)==len(table[0])-1 for row in table[1:]): table[0] = table[0][:-1]
+if all(len(row)==len(table[0])-1 for row in table[1:]):
+  table[0] = table[0][:-1]
+  print("All green.")
+else:
+  print("Errors detected.")
 
 # Write out results
 open(f"./data/test.txt", mode="w").write(tabulate(table, headers="firstrow", floatfmt=["d","d","d",".3f"]))
