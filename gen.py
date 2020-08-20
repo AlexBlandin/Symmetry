@@ -34,8 +34,6 @@ for N, odd_N in [(N, N%2) for N in range(MIN_N, MAX_N+1)]:
       sb_branches.add(branch)
   
   dob_branches, dsb_branches = set(), set()
-  indices = tuple(range(1,N+1))
-  middle = tuple(indices[(N-1)//2 : N//2+1])
   for adia in range(middle[0]+1, 2*middle[0]): # we're following diag (try adia?) (middle[0],1) and (1,middle[0]) to the intersection
     # (x,y) is a square with x,y in 1..N, diag in 2..2N, adia in 1-N..N-1
     # diag = x+y, fixed x (cols) -> y = diag-x, fixed y (rows) -> x = diag-y
