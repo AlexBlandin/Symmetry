@@ -42,11 +42,24 @@ for N, odd_N in [(N, N%2) for N in range(MIN_N, MAX_N+1)]:
                                       "-" if (x,y) in product(indices,middle) or (x,y) in product(middle,indices) else
                                       " " for x in indices) for y in indices]
   
-  for branch in map(frozenset, product(*rows, *cols)):
-    if branch not in ob_branches and legal(branch):
-      s = symmetries(branch)
-      ob_branches |= s
-      sb_branches.add(tuple(sorted(map(sorted,s))[0])) # always get lexographically first branch
+  def include(branch):
+    global ob_branches, sb_branches
+    s = symmetries(branch)
+    ob_branches |= s
+    sb_branches.add(tuple(sorted(map(sorted,s))[0])) # always get lexographically first branch
+
+  if odd_N:
+    for a in range(1, middle[0]-1):
+      for b in range(a+1, middle[0]):
+        branch = ((a,middle[0]),(middle[0],b))
+        assert(branch not in ob_branches) # i.e. we only generate branches that have not been generated before
+        include(branch)
+    branch = ((middle[0],middle[0]),)
+    include(branch)
+  else:
+    for branch in map(frozenset, product(*rows, *cols)):
+      if branch not in ob_branches and legal(branch):
+        include(branch)
   
   root_branches = { branch for branch in sb_branches if (1,middle[0]) in branch }
   other_branches = sb_branches - root_branches
