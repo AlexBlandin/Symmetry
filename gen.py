@@ -27,29 +27,41 @@ for N, odd_N in [(N, N%2) for N in range(MIN_N, MAX_N+1)]:
              frozenset(mirrors(rotates(rotates(squares)))), frozenset(mirrors(rotates(rotates(rotates(squares))))),
              frozenset(rotates(squares)), frozenset(rotates(rotates(squares))), frozenset(rotates(rotates(rotates(squares)))) }
   
-  # Base
-  for branch in map(frozenset, product(*rows, *cols)):
-    if branch not in ob_branches and legal(branch):
-      ob_branches |= symmetries(branch)
-      sb_branches.add(branch)
+  def include(branch):
+    global ob_branches, sb_branches
+    ob_branches |= symmetries(branch)
+    sb_branches.add(branch)
+
+  if odd_N: # Odd N is solved, so we don't check and have no reason to break
+    mid = middle[0] # the intersection of row and column
+    for a in range(1, mid-1):
+      for b in range(a+1, mid):
+        branch = ((a,mid),(mid,b))
+        include(branch)
+    branch = ((mid,mid),)
+    include(branch)
+  else:
+    for branch in map(frozenset, product(*rows, *cols)):
+      if branch not in ob_branches and legal(branch):
+        include(branch)
   
-  dob_branches, dsb_branches = set(), set()
-  for adia in range(middle[0]+1, 2*middle[0]): # we're following diag (middle[0],1) and (1,middle[0]) to the intersection
-    # (x,y) is a square with x,y in 1..N, diag in 2..2N, adia in 1-N..N-1
-    # diag = x+y, fixed x (cols) -> y = diag-x, fixed y (rows) -> x = diag-y
-    # adia = x-y, fixed x (cols) -> y = x-adia, fixed y (rows) -> x = adia+y
-    
-    # diag  adia
-    # 2345  0123 (above 0 are +ve)
-    # 3456  1012 (below 0 are -ve)
-    # 4567  2101 (can use adia for outermost iter?)
-    # 5678  3210 (with diag being quick for inner?)
-    # diag in 2,3,4,5,6,7,8
-    # adia in 3,2,1,0,1,2,3 (-ve left of 0)
-    pass
+    dob_branches, dsb_branches = set(), set()
+    for adia in range(middle[0]+1, 2*middle[0]): # we're following diag (middle[0],1) and (1,middle[0]) to the intersection
+      # (x,y) is a square with x,y in 1..N, diag in 2..2N, adia in 1-N..N-1
+      # diag = x+y, fixed x (cols) -> y = diag-x, fixed y (rows) -> x = diag-y
+      # adia = x-y, fixed x (cols) -> y = x-adia, fixed y (rows) -> x = adia+y
+      
+      # diag  adia
+      # 2345  0123 (above 0 are +ve)
+      # 3456  1012 (below 0 are -ve)
+      # 4567  2101 (can use adia for outermost iter?)
+      # 5678  3210 (with diag being quick for inner?)
+      # diag in 2,3,4,5,6,7,8
+      # adia in 3,2,1,0,1,2,3 (-ve left of 0)
+      pass
   
-  if (len(ob_branches), len(sb_branches)) != (len(dob_branches), len(dsb_branches)):
-    print(f"{N} doesn't match, (ob, sb) are {(len(ob_branches), len(sb_branches))} != {(len(dob_branches), len(dsb_branches))}")
-    break
+    if (len(ob_branches), len(sb_branches)) != (len(dob_branches), len(dsb_branches)):
+      print(f"{N} doesn't match, (ob, sb) are {(len(ob_branches), len(sb_branches))} != {(len(dob_branches), len(dsb_branches))}")
+      break
 else:
   print("All green.")
