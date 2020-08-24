@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 from itertools import product, combinations, starmap
+from math import log10, ceil
 
 """
 Since the cases for the even N are rather hard to figure out, why not have this assist me?
@@ -49,13 +50,15 @@ for N, odd_N in [(N, N%2) for N in range(MIN_N, MAX_N+1)]:
   
   root_branches = { branch for branch in sb_branches if (1,middle[0]) in branch }
   other_branches = sb_branches - root_branches
-  print("N:", N, "sb:", len(sb_branches), "root:", len(root_branches), "other:", len(other_branches))
-
+  sb = len(sb_branches)
+  print(f"N: {N} sb: {sb}")
+  zeroes = ceil(log10(sb))
   with open(f"data/cases{N:02}.txt",mode="w") as o:
-    for branch in sorted(sb_branches):
-      o.write(", ".join(map(str,sorted(branch))));o.write("\n")
+    for i, (branch, s) in enumerate(map(lambda branch: (branch, symmetries(branch)), sorted(sb_branches)), 1):
+      o.write(f"Branch {str(i).zfill(zeroes)}, {len(s)} orbits, i.e. ")
+      o.write("{ ");o.write(", ".join(map(str,sorted(branch))));o.write(" }\n")
       bd = [[] for _ in range(N)]
-      for b in sorted(map(sorted,symmetries(branch))):
+      for b in sorted(map(sorted,s)):
         for i, line in enumerate(board(b)): bd[i].append(line)
       o.write("\n".join(" ".join(line) for line in bd));o.write("\n")
       o.write("\n")
