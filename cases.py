@@ -11,8 +11,8 @@ and, if it could do the derivation and point out what came from where that'd be 
 
 """
 the diagonal scan gives sb(odd N) perfectly,
-we can effectively simplify to first point is all points on a column until you reach the middle (exclusive)
-with then all points on the row with a greater diagonal until the middle (exclusive)
+we can effectively simplify to first point (x,y) is all points on a row until you are adjacent to the middle (inclusive)
+with then all points (i,j) on the column with a greater diagonal (i+k>x+y) until the middle (exclusive)
 with then the middle point as the final piece
 """
 
@@ -51,9 +51,12 @@ for N, odd_N in [(N, N%2) for N in range(MIN_N, MAX_N+1)]:
   other_branches = sb_branches - root_branches
   print("N:", N, "sb:", len(sb_branches), "root:", len(root_branches), "other:", len(other_branches))
 
-  # with open(f"data/cases{N:02}.txt",mode="w") as o:
-  #   for branch in sorted(sb_branches):
-  #     o.write(", ".join(map(str,sorted(branch))));o.write("\n")
-  #     o.write("\n".join(board(branch)));o.write("\n")
-  #     o.write("\n")
+  with open(f"data/cases{N:02}.txt",mode="w") as o:
+    for branch in sorted(sb_branches):
+      o.write(", ".join(map(str,sorted(branch))));o.write("\n")
+      bd = [[] for _ in range(N)]
+      for b in sorted(map(sorted,symmetries(branch))):
+        for i, line in enumerate(board(b)): bd[i].append(line)
+      o.write("\n".join(" ".join(line) for line in bd));o.write("\n")
+      o.write("\n")
   
