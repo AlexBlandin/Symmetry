@@ -3,7 +3,7 @@ from itertools import product
 from pathlib import Path
 
 report, green = [""], True
-for f in Path("./data/").glob("branches*.txt"):
+for f in Path("./data/verify/").glob("branches*.txt"):
   lines, branches, m, qcons = open(f).readlines(), set(), {}, True
   N, sb, d = map(eval, lines[0].split(maxsplit=2))
   for s in lines[1:]:

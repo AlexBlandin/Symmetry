@@ -1,0 +1,59 @@
+#!/usr/bin/env python3
+from itertools import product, combinations, starmap
+
+"""
+Since the cases for the even N are rather hard to figure out, why not have this assist me?
+
+probably need to do it somewhat differently and build up iteratively to keep it simple
+and, if it could do the derivation and point out what came from where that'd be grand!
+
+"""
+
+"""
+the diagonal scan gives sb(odd N) perfectly,
+we can effectively simplify to first point is all points on a column until you reach the middle (exclusive)
+with then all points on the row with a greater diagonal until the middle (exclusive)
+with then the middle point as the final piece
+"""
+
+MIN_N, MAX_N = 6, 20
+for N, odd_N in [(N, N%2) for N in range(MIN_N, MAX_N+1)]:
+  ob_branches, sb_branches = set(), set()
+  
+  indices = tuple(range(1,N+1))
+  middle = tuple(indices[(N-1)//2 : N//2+1])
+  intersection = frozenset(product(middle, middle))
+  rows = (product(indices, middle),) if odd_N else (product(indices, middle[:1]), product(indices, middle[1:]))
+  cols = (product(middle, indices),) if odd_N else (product(middle[:1], indices), product(middle[1:], indices))
+  numrc = len(rows) + len(cols)
+
+  def legal(branch): return ((len(branch) == numrc or
+                            (len(branch) == numrc-1 and len(branch & intersection))) and
+                            all((x,y)==(a,b) or (x!=a and y!=b and x+y!=a+b and x-y!=a-b) for (x,y),(a,b) in combinations(branch, 2)))
+  def symmetries(squares):
+    mirror, rotate = lambda x,y: (N-x+1, y), lambda x,y: (N-y+1, x)
+    mirrors, rotates = lambda squares: starmap(mirror, squares), lambda squares: starmap(rotate, squares)
+    return { frozenset(squares), frozenset(mirrors(squares)), frozenset(mirrors(rotates(squares))),
+             frozenset(mirrors(rotates(rotates(squares)))), frozenset(mirrors(rotates(rotates(rotates(squares))))),
+             frozenset(rotates(squares)), frozenset(rotates(rotates(squares))), frozenset(rotates(rotates(rotates(squares)))) }
+  
+  def board(squares): return ["".join("#" if (x,y) in squares else
+                                      "-" if (x,y) in product(indices,middle) or (x,y) in product(middle,indices) else
+                                      " " for x in indices) for y in indices]
+  
+  for branch in map(frozenset, product(*rows, *cols)):
+    if branch not in ob_branches and legal(branch):
+      s = symmetries(branch)
+      ob_branches |= s
+      sb_branches.add(tuple(sorted(map(sorted,s))[0])) # always get lexographically first branch
+  
+  root_branches = { branch for branch in sb_branches if (1,middle[0]) in branch }
+  other_branches = sb_branches - root_branches
+  print("N:", N, "sb:", len(sb_branches), "root:", len(root_branches), "other:", len(other_branches))
+
+  # with open(f"data/cases{N:02}.txt",mode="w") as o:
+  #   for branch in sorted(sb_branches):
+  #     o.write(", ".join(map(str,sorted(branch))));o.write("\n")
+  #     o.write("\n".join(board(branch)));o.write("\n")
+  #     o.write("\n")
+  

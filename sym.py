@@ -65,7 +65,7 @@ for N, odd_N in [(N, N%2) for N in range(MIN_N, MAX_N+1)]:
   if len(err): err = ", ".join(err)
   table.append([N, ob, sb, quotient, lengths, orbits, fundamental] + [err]*bool(len(err)))
   sorted_sb_branches = sorted(sorted(str(branch) for branch in map(set, sb_branches)), key=lambda branch: len(branch))
-  open(f"./data/branches{N:02d}.txt", mode="w").write("\n".join([f"{N} {sb} {lengths}"]+sorted_sb_branches))
+  open(f"./data/verify/branches{N:02d}.txt", mode="w").write("\n".join([f"{N} {sb} {lengths}"]+sorted_sb_branches))
 
 # Discard err column if there were no errors
 if all(len(row)==len(table[0])-1 for row in table[1:]):
