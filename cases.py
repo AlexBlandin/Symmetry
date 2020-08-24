@@ -17,7 +17,7 @@ with then all points (i,j) on the column with a greater diagonal (i+k>x+y) until
 with then the middle point as the final piece
 """
 
-MIN_N, MAX_N = 6, 20
+MIN_N, MAX_N = 1, 20
 for N, odd_N in [(N, N%2) for N in range(MIN_N, MAX_N+1)]:
   ob_branches, sb_branches = set(), set()
   
@@ -49,12 +49,12 @@ for N, odd_N in [(N, N%2) for N in range(MIN_N, MAX_N+1)]:
     sb_branches.add(tuple(sorted(map(sorted,s))[0])) # always get lexographically first branch
 
   if odd_N:
-    for a in range(1, middle[0]-1):
-      for b in range(a+1, middle[0]):
-        branch = ((a,middle[0]),(middle[0],b))
-        assert(branch not in ob_branches) # i.e. we only generate branches that have not been generated before
+    mid = middle[0] # the intersection of row and column
+    for a in range(1, mid-1):
+      for b in range(a+1, mid):
+        branch = ((a,mid),(mid,b))
         include(branch)
-    branch = ((middle[0],middle[0]),)
+    branch = ((mid,mid),)
     include(branch)
   else:
     for branch in map(frozenset, product(*rows, *cols)):
@@ -65,7 +65,7 @@ for N, odd_N in [(N, N%2) for N in range(MIN_N, MAX_N+1)]:
   other_branches = sb_branches - root_branches
   sb = len(sb_branches)
   print(f"N: {N} sb: {sb}")
-  zeroes = ceil(log10(sb))
+  zeroes = 1 if N < 3 else ceil(log10(sb))
   with open(f"data/cases{N:02}.txt",mode="w") as o:
     for i, (branch, s) in enumerate(map(lambda branch: (branch, symmetries(branch)), sorted(sb_branches)), 1):
       o.write(f"Branch {str(i).zfill(zeroes)}, {len(s)} orbits, i.e. ")
