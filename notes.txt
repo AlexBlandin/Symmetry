@@ -1,4 +1,9 @@
 
+SB(odd N) = { { {(a,m), (m,b)} | a < b < m } | 1 <= a < m } U { {(m,m)} } given a,b in 1..N and m=floor(N/2)
+
+
+
+
 quotient is asymptotically 8 as we have a polynomial number of 8-orbits vs a constant number of 1-orbit or a linear number of 4-orbits
 and letting wa solve for the limit also gives 8
 https://www.wolframalpha.com/input/?i=limit+of+n+to+infinity+for+%28%28n-1%29%28n-3%29%2B1%29%2F%28%28n-1%29%28n-3%29%2F8%2B1%29
