@@ -34,7 +34,7 @@ for N, odd_N in [(N, N%2) for N in range(MIN_N, MAX_N+1)]:
 
   if odd_N: # Odd N is solved, so we don't check and have no reason to break
     mid = middle[0] # the intersection of row and column
-    for a in range(1, mid-1):
+    for a in range(1, mid): # can use mid-1 to avoid a gndn loop but it's clearer not to
       for b in range(a+1, mid):
         branch = ((a,mid),(mid,b))
         include(branch)
