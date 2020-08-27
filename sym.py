@@ -4,7 +4,7 @@ from collections import Counter as multiset
 from tabulate import tabulate
 
 # Configure
-MIN_N, MAX_N = 1, 100
+MIN_N, MAX_N = 1, 50
 table = [["N", "ob(N)", "sb(N)", "quotient", "branch lengths", "orbits", "fundamental", "err"]]
 for N, odd_N in [(N, N%2) for N in range(MIN_N, MAX_N+1)]:
   ob_branches, sb_branches, lengths = multiset(), set(), multiset()
@@ -44,11 +44,17 @@ for N, odd_N in [(N, N%2) for N in range(MIN_N, MAX_N+1)]:
     for a in range(1, mid-1): # First Queen
       for b in range(a+1, mid): # Second Queen
         branch = ((a,mid),(mid,b))
-        ob_branches |= symmetries(branch)
+        s = symmetries(branch)
+        c = len(s)
+        ob_branches.update({b:c for b in s})
         sb_branches.add(branch)
+        lengths.update([len(branch)])
     branch = ((mid,mid),) # Intersection (1-orbit case)
-    ob_branches |= symmetries(branch)
+    s = symmetries(branch)
+    c = len(s)
+    ob_branches.update({b:c for b in s})
     sb_branches.add(branch)
+    lengths.update([len(branch)])
   else:
     for branch in map(frozenset, product(*rows, *cols)):
       if branch not in ob_branches and legal(branch):
@@ -86,4 +92,4 @@ else:
   print("Errors detected.")
 
 # Write out results
-open(f"./data/test.txt", mode="w").write(tabulate(table, headers="firstrow", floatfmt=["d","d","d",".3f"]))
+open(f"./data/results.txt", mode="w").write(tabulate(table, headers="firstrow", floatfmt=["d","d","d",".3f"]))
