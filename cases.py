@@ -66,7 +66,7 @@ for N, odd_N in [(N, N%2) for N in range(MIN_N, MAX_N+1)]:
   sb = len(sb_branches)
   print(f"N: {N} sb: {sb}")
   zeroes = 1 if N < 3 else ceil(log10(sb))
-  with open(f"data/cases{N:02}.txt",mode="w") as o:
+  with open(f"data/cases{N:02}..txt",mode="w") as o:
     for i, (branch, s) in enumerate(map(lambda branch: (branch, symmetries(branch)), sorted(sb_branches)), 1):
       o.write(f"Branch {str(i).zfill(zeroes)}, {len(s)} orbits, i.e. ")
       o.write("{ ");o.write(", ".join(map(str,sorted(branch))));o.write(" }\n")
