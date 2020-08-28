@@ -17,7 +17,7 @@ the 8-way symmetry can be observed in that we generate the outer Queen on the le
 for even N the argument is as follows
 we have a diagonal "scanline" from which we select our first Queen, this now defines the orbit-pattern we are constrained to (a "flat-tip diamond" of squares a certain distance from the edge), we now have a second, nested, scanline that continues to select the second Queen, both the first and second scanlines continue until they are adjacent to an intersection, the third and fourth Queens are picked by two further nested scanlines that carries on until they scan to the edge of the orbit-pattern defined by the first Queen, with the fourth scanline being ignored iff the third Queen is on an intersection
 ??? does this require something to handle symmetry across the scanline?
-can we have the first Queen always be on, say, the row? second onwards can follow from the scanlines, but can we also use the remaining row/columns directly?
+the first Queen can be simplified to just use the upper-most row from the scanline. second onwards must use all other legal squares on the scanlines for to do what we want
 so, the multiplicities are as such: 4 and 2 orbits have their fixed windmill patterns (the 2 orbits is where they're all on the orbital pattern, ie are all a distance d from the edge, the 4 orbits are where the rows are a distance d1 from the edge and the columns a distance d2 from the edge (with a dual where the columns are flipped horizontally and the rows are not))
 ALL ELSE HAS AN 8 ORBIT, INTERSECTION OR NO (makes sense because whilst intersection only has 4 points to move into the other two have 8, so it must still be 8 overall)
 
