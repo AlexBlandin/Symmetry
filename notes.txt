@@ -1,5 +1,5 @@
 
-SB(odd N) = { { {(a,m), (m,b)} | a < b < m } | 1 <= a < m } U { {(m,m)} } given a,b in 1..N and m=floor(N/2)
+SB(odd N) = { { {(a,m), (m,b)} | a < b < m } | 1 <= a < m } U { {(m,m)} } given a,b in 1..N and m=(N-1)/2  (m is integral as odd N)
 
 as nested loops
 
@@ -20,19 +20,20 @@ we have a diagonal "scanline" from which we select our first Queen, this now def
 the first Queen can be simplified to just use the upper-most row from the scanline. second onwards must use all other legal squares on the scanlines for to do what we want
 so, the multiplicities are as such: 4 and 2 orbits have their fixed windmill patterns (the 2 orbits is where they're all on the orbital pattern, ie are all a distance d from the edge, the 4 orbits are where the rows are a distance d1 from the edge and the columns a distance d2 from the edge (with a dual where the columns are flipped horizontally and the rows are not))
 ALL ELSE HAS AN 8 ORBIT, INTERSECTION OR NO (makes sense because whilst intersection only has 4 points to move into the other two have 8, so it must still be 8 overall)
-scanlines work as a nice image, the maths is then equivalent to being no less than equidistant from the edge as the first Queen (further is towards intersection, as intended)
+scanlines work as a nice image, the maths is then equivalent to being no less than equidistant from the edge as the first Queen (further is towards intersection, as intended) 
+coord are in 1..N, so opposite to ord a in coord (a,b) is N-a+1, so that gives bounds
+scanlines are in 2..2N, so for scanline a+b then opposite is 2N-(a+b)+2, bounds scanline
+trying to get it to construct linearly (rather than rely on set and deduplication) is the hard part (or knowing that it'll do it properly)
 
-{a',b',c'} U {d' if c not in I}
-  1 <= a < intersection
-    a < b < intersection
-      b < c < limit
-        c < d < limit if c not in I
-where a,b,c,d in 1..N,
-      ' is the function scanline->coordinate,
-      intersection is the nearest intersection,
-      I is the set of intersection squares, and
-      limit is the boundary set by the orbit-pattern for a
 
+{a',b',c'} U {d' if c' not in I}
+  1+floor((N-1)/2) <= a < N
+    a < b < 2N-a+2
+      b < c < 2N-a+2
+        c < d < 2N-a+2 if c' not in I
+where a,b,c,d in 2..2N,
+      ' is the function scanline->coordinate (a+b scanline, coord infers column/row), and
+      I is the set of intersection squares
 
 
 quotient is asymptotically 8 as we have a polynomial number of 8-orbits vs a constant number of 1-orbit or a linear number of 4-orbits
