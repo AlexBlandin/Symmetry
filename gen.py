@@ -70,7 +70,16 @@ for N, odd_N in [(N, N%2) for N in range(MIN_N, MAX_N+1)]:
       # 67890123 
       # 78901234 
       # 89012345 
-      # 90123456 
+      # 90123456
+
+      #    56    (mod 10, just midrc)
+      #    67    
+      #    78    
+      # 56789012 
+      # 67890123 
+      #    01    
+      #    12    
+      #    23     
       pass
   
     if (len(ob_branches), len(sb_branches)) != (len(dob_branches), len(dsb_branches)):
