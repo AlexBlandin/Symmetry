@@ -62,6 +62,15 @@ for N, odd_N in [(N, N%2) for N in range(MIN_N, MAX_N+1)]:
       # 5678  3210 (with diag being quick for inner?)
       # diag in 2,3,4,5,6,7,8
       # adia in 3,2,1,0,1,2,3 (-ve left of 0)
+
+      # 23456789 (mod 10 for compactness)
+      # 34567890 
+      # 45678901 
+      # 56789012 
+      # 67890123 
+      # 78901234 
+      # 89012345 
+      # 90123456 
       pass
   
     if (len(ob_branches), len(sb_branches)) != (len(dob_branches), len(dsb_branches)):

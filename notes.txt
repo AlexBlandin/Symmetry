@@ -27,7 +27,7 @@ trying to get it to construct linearly (rather than rely on set and deduplicatio
 
 
 {a',b',c'} U {d' if c' not in I}
-  1+floor((N-1)/2) <= a < N
+  1+N/2 <= a < N
     a < b < 2N-a+2
       b < c < 2N-a+2
         c < d < 2N-a+2 if c' not in I
