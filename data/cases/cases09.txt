@@ -1,3 +1,4 @@
+N: 9 sb: 7 lengths: {2: 6, 1: 1} orbits: {8: 6, 1: 1}
 Branch 1, 8 orbits, 2 Queens, i.e. { (1, 5), (5, 2) }
     |         |         #         |         #         |         |         |    
     #         |         |         |         |         #         |         |    

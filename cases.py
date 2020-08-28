@@ -68,11 +68,12 @@ for N, odd_N in [(N, N%2) for N in range(MIN_N, MAX_N+1)]:
   sb = len(sb_branches)
   *lens, = map(len, sb_branches)
   *orbs, = map(len, map(symmetries, sb_branches))
-  lengths = {i: lengths.count(i) for i in [1,2,3,4] if lengths.count(i)}
-  print(f"N: {N} sb: {sb} lengths: {lengths} orbits: {orbs}")
+  lengths = {i: lens.count(i) for i in [4,3,2,1] if lens.count(i)}
+  orbits = {i: orbs.count(i) for i in [8,4,2,1] if orbs.count(i)}
+  print(f"N: {N} sb: {sb} lengths: {lengths} orbits: {orbits}")
   zeroes = 1 if N < 3 else ceil(log10(sb))
   with open(f"data/cases/cases{N:02}.txt",mode="w") as o:
-    o.write(f"{N} {sb} {lengths}\n")
+    o.write(f"N: {N} sb: {sb} lengths: {lengths} orbits: {orbits}\n")
     for i, (branch, s) in enumerate(map(lambda branch: (branch, symmetries(branch)), sorted(sb_branches)), 1):
       o.write(f"Branch {str(i).zfill(zeroes)}, {len(s)} orbits, {len(branch)} Queens, i.e. ")
       o.write("{ ");o.write(", ".join(map(str,sorted(branch))));o.write(" }\n")

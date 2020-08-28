@@ -1,3 +1,4 @@
+N: 4 sb: 1 lengths: {4: 1} orbits: {2: 1}
 Branch 1, 2 orbits, 4 Queens, i.e. { (1, 2), (2, 4), (3, 1), (4, 3) }
  |#   #| 
 #++- -++#
