@@ -20,6 +20,7 @@ we have a diagonal "scanline" from which we select our first Queen, this now def
 the first Queen can be simplified to just use the upper-most row from the scanline. second onwards must use all other legal squares on the scanlines for to do what we want
 so, the multiplicities are as such: 4 and 2 orbits have their fixed windmill patterns (the 2 orbits is where they're all on the orbital pattern, ie are all a distance d from the edge, the 4 orbits are where the rows are a distance d1 from the edge and the columns a distance d2 from the edge (with a dual where the columns are flipped horizontally and the rows are not))
 ALL ELSE HAS AN 8 ORBIT, INTERSECTION OR NO (makes sense because whilst intersection only has 4 points to move into the other two have 8, so it must still be 8 overall)
+scanlines work as a nice image, the maths is then equivalent to being no less than equidistant from the edge as the first Queen (further is towards intersection, as intended)
 
 {a',b',c'} U {d' if c not in I}
   1 <= a < intersection

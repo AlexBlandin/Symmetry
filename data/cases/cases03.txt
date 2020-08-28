@@ -1,0 +1,5 @@
+Branch 1, 1 orbits, 1 Queens, i.e. { (2, 2) }
+ | 
+-#-
+ | 
+

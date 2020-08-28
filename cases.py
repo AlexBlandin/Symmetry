@@ -39,7 +39,9 @@ for N, odd_N in [(N, N%2) for N in range(MIN_N, MAX_N+1)]:
              frozenset(rotates(squares)), frozenset(rotates(rotates(squares))), frozenset(rotates(rotates(rotates(squares)))) }
   
   def board(squares): return ["".join("#" if (x,y) in squares else
-                                      "-" if (x,y) in product(indices,middle) or (x,y) in product(middle,indices) else
+                                      "+" if (x,y) in intersection else
+                                      "-" if (x,y) in product(indices,middle) else
+                                      "|" if (x,y) in product(middle,indices) else
                                       " " for x in indices) for y in indices]
   
   def include(branch):
@@ -64,11 +66,15 @@ for N, odd_N in [(N, N%2) for N in range(MIN_N, MAX_N+1)]:
   root_branches = { branch for branch in sb_branches if (1,middle[0]) in branch }
   other_branches = sb_branches - root_branches
   sb = len(sb_branches)
-  print(f"N: {N} sb: {sb}")
+  *lens, = map(len, sb_branches)
+  *orbs, = map(len, map(symmetries, sb_branches))
+  lengths = {i: lengths.count(i) for i in [1,2,3,4] if lengths.count(i)}
+  print(f"N: {N} sb: {sb} lengths: {lengths} orbits: {orbs}")
   zeroes = 1 if N < 3 else ceil(log10(sb))
-  with open(f"data/cases{N:02}..txt",mode="w") as o:
+  with open(f"data/cases/cases{N:02}.txt",mode="w") as o:
+    o.write(f"{N} {sb} {lengths}\n")
     for i, (branch, s) in enumerate(map(lambda branch: (branch, symmetries(branch)), sorted(sb_branches)), 1):
-      o.write(f"Branch {str(i).zfill(zeroes)}, {len(s)} orbits, i.e. ")
+      o.write(f"Branch {str(i).zfill(zeroes)}, {len(s)} orbits, {len(branch)} Queens, i.e. ")
       o.write("{ ");o.write(", ".join(map(str,sorted(branch))));o.write(" }\n")
       bd = [[] for _ in range(N)]
       for b in sorted(map(sorted,s)):
