@@ -24,6 +24,7 @@ scanlines work as a nice image, the maths is then equivalent to being no less th
 coord are in 1..N, so opposite to ord a in coord (a,b) is N-a+1, so that gives bounds
 scanlines are in 2..2N, so for scanline a+b then opposite is 2N-(a+b)+2, bounds scanline
 trying to get it to construct linearly (rather than rely on set and deduplication) is the hard part (or knowing that it'll do it properly)
+there's either two or three spots on a scanline (discounting first Queen's row, otherwise there are 4 maximum) so we can either loop within the scanline or handle as a more complex loop when specifically constructing the branch?
 
 
 {a',b',c'} U {d' if c' not in I}
