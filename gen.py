@@ -86,7 +86,7 @@ for N, odd_N in [(N, N%2) for N in range(MIN_N, MAX_N+1)]:
     #    23       43    
 
     # TODO: Reduce to just generating fundamental
-    # TODO: Simplify
+    # TODO: Simplify.
 
     dob_branches, dsb_branches = set(), set()
     def include(branch):
