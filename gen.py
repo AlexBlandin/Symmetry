@@ -2,7 +2,7 @@
 from itertools import product, combinations, starmap
 
 # Configure
-MIN_N, MAX_N = 8, 20
+MIN_N, MAX_N = 1, 20
 for N, odd_N in [(N, N%2) for N in range(MIN_N, MAX_N+1)]:
   ob_branches, sb_branches = set(), set()
   
@@ -45,16 +45,6 @@ for N, odd_N in [(N, N%2) for N in range(MIN_N, MAX_N+1)]:
     for branch in map(frozenset, product(*rows, *cols)):
       if branch not in ob_branches and legal(branch):
         include(branch)
-  
-    # Display & Debugging
-    def board(squares): return ["".join("#" if (x,y) in squares else
-                                        "-" if (x,y) in product(indices,middle) or (x,y) in product(middle,indices) else
-                                        " " for x in indices) for y in indices]
-    def printout(branch, sym=True):
-      print(N, tuple(branch)); bd = [[] for _ in range(N)]
-      for b in symmetries(branch) if sym else [branch]:
-        for i, line in enumerate(board(b)): bd[i].append(line)
-      print("\n".join(" ".join(line) for line in bd));print()
 
     # (x,y) is a square with x,y in 1..N, diag in 2..2N, adia in 1-N..N-1
     # diag = x+y, fixed x (cols) -> y = diag-x, fixed y (rows) -> x = diag-y
@@ -114,9 +104,7 @@ for N, odd_N in [(N, N%2) for N in range(MIN_N, MAX_N+1)]:
                     if legal(frozenset(branch)):
                       include(branch)
 
-    if (len(ob_branches), len(sb_branches)) != (len(dob_branches), len(dsb_branches)):
-      for branch in sb_branches-dsb_branches:
-        printout(branch,False)
+    if (ob_branches, sb_branches) != (dob_branches, dsb_branches):
       print(f"{N} doesn't match, (ob, sb) are {(len(ob_branches), len(sb_branches))} != {(len(dob_branches), len(dsb_branches))}")
       break
 else:
