@@ -2,7 +2,7 @@
 from itertools import product, combinations, starmap
 
 # Configure
-MIN_N, MAX_N = 1, 50
+MIN_N, MAX_N = 1, 20
 for N, odd_N in [(N, N%2) for N in range(MIN_N, MAX_N+1)]:
   ob_branches, sb_branches = set(), set()
   
@@ -85,6 +85,7 @@ for N, odd_N in [(N, N%2) for N in range(MIN_N, MAX_N+1)]:
     #    12       32    
     #    23       43    
 
+    # TODO: Reduce to just generating fundamental
     # TODO: Simplify
 
     dob_branches, dsb_branches = set(), set()
