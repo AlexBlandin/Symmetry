@@ -2,7 +2,7 @@
 from itertools import product, combinations, starmap
 
 # Configure
-MIN_N, MAX_N = 1, 20
+MIN_N, MAX_N = 1, 50
 for N, odd_N in [(N, N%2) for N in range(MIN_N, MAX_N+1)]:
   ob_branches, sb_branches = set(), set()
   
@@ -24,11 +24,23 @@ for N, odd_N in [(N, N%2) for N in range(MIN_N, MAX_N+1)]:
              frozenset(mirrors(rotates(rotates(squares)))), frozenset(mirrors(rotates(rotates(rotates(squares))))),
              frozenset(rotates(squares)), frozenset(rotates(rotates(squares))), frozenset(rotates(rotates(rotates(squares)))) }
   
+  # Display & Debugging
+  def board(squares): return ["".join("#" if (x,y) in squares else
+                                      "-" if (x,y) in product(indices,middle) or (x,y) in product(middle,indices) else
+                                      " " for x in indices) for y in indices]
+  def printout(branch, single=False, multiple=False):
+    print(N, tuple(branch)); bd = [[] for _ in range(N)]
+    for b in (symmetries(branch) if not single else [branch] if not multiple else branch):
+      for i, line in enumerate(board(b)): bd[i].append(line)
+    print("\n".join(" ".join(line) for line in bd));print()
+
+  def lexo(branch):
+    return tuple(sorted(map(sorted,symmetries(branch)))[0])
   def include(branch):
     global ob_branches, sb_branches
     s = symmetries(branch)
     ob_branches |= s
-    sb_branches.add(tuple(sorted(map(sorted,s))[0])) # always get lexographically first branch
+    sb_branches.add(lexo(branch)) # always get lexographically first branch
 
   if odd_N: # Odd N is solved, so we don't check and have no reason to break
     mid = middle[0] # the intersection of row and column
@@ -75,13 +87,13 @@ for N, odd_N in [(N, N%2) for N in range(MIN_N, MAX_N+1)]:
 
     # TODO: Simplify
 
-    left, right = lambda t: t[0], lambda t: t[1]
     dob_branches, dsb_branches = set(), set()
     def include(branch):
       global dob_branches, dsb_branches
       s = symmetries(branch)
       dob_branches |= s
-      dsb_branches.add(tuple(sorted(map(sorted,s))[0]))
+      dsb_branches.add(lexo(branch))
+    left, right = lambda t: t[0], lambda t: t[1]
     def scanline(diag, coord=[], adia=[]):
       return {Q for Q in ((middle[0], diag-middle[0]), (middle[1], diag-middle[1]), (diag-middle[1],middle[1])) if sum(Q)==diag and 1<=Q[0]<=N and 1<=Q[1]<=N and Q[0] not in map(left, coord) and Q[1] not in map(right, coord) and Q[0]-Q[1] not in adia}
     for a in range(1+middle[0], 2*middle[0]): # This is correct and matches (also only generates the fundamentals as expected which is great) but since I'm simplifying I'll keep the checks to avoid breaking
@@ -95,17 +107,17 @@ for N, odd_N in [(N, N%2) for N in range(MIN_N, MAX_N+1)]:
               if rc2 in intersection or rc3 in intersection:
                 branch = (rc1, rc2, rc3)
                 if legal(frozenset(branch)):
-                  assert(branch not in dob_branches)
-                  include(branch)
+                  if frozenset(branch) in dob_branches: ...#printout([branch, lexo(branch)],True,True)
+                  else: include(branch)
               else:
                 for d in range(c+1, limit+1):
                   for rc4 in scanline(d, [rc1, rc2, rc3], [adg, rc2[0]-rc2[1], rc3[0]-rc3[1]]):
                     branch = (rc1, rc2, rc3, rc4)
                     if legal(frozenset(branch)):
-                      assert(branch not in dob_branches)
-                      include(branch)
+                      if frozenset(branch) in dob_branches: ...#printout([branch, lexo(branch)],True,True)
+                      else: include(branch)
 
-    if (ob_branches, sb_branches) != (dob_branches, dsb_branches):
+    if ob_branches != dob_branches or sb_branches != dsb_branches:
       print(f"{N} doesn't match, (ob, sb) are {(len(ob_branches), len(sb_branches))} != {(len(dob_branches), len(dsb_branches))}")
       break
 else:
