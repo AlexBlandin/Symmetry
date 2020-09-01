@@ -13,9 +13,6 @@ for N, odd_N in [(N, N%2) for N in range(MIN_N, MAX_N+1)]:
   cols = (product(middle, indices),) if odd_N else (product(middle[:1], indices), product(middle[1:], indices))
   numrc = len(rows) + len(cols)
 
-  # can trivially half the first row we branch on if we want a speed-up
-  # rows = (product(indices[:N//2+1], middle),) if odd_N else (product(indices[:N//2], middle[:1]), product(indices, middle[1:]))
-
   # Key Functions
   def legal(branch): return ((len(branch) == numrc or
                             (len(branch) == numrc-1 and len(branch & intersection))) and
@@ -76,6 +73,8 @@ for N, odd_N in [(N, N%2) for N in range(MIN_N, MAX_N+1)]:
     #    12       32    
     #    23       43    
 
+    # TODO: Simplify
+
     left, right = lambda t: t[0], lambda t: t[1]
     dob_branches, dsb_branches = set(), set()
     def include(branch):
@@ -85,7 +84,7 @@ for N, odd_N in [(N, N%2) for N in range(MIN_N, MAX_N+1)]:
       dsb_branches.add(tuple(sorted(map(sorted,s))[0]))
     def scanline(diag, coord=[], adia=[]):
       return {Q for Q in ((middle[0], diag-middle[0]), (middle[1], diag-middle[1]), (diag-middle[1],middle[1])) if sum(Q)==diag and 1<=Q[0]<=N and 1<=Q[1]<=N and Q[0] not in map(left, coord) and Q[1] not in map(right, coord) and Q[0]-Q[1] not in adia}
-    for a in range(1+middle[0], 2*middle[0]):
+    for a in range(1+middle[0], 2*middle[0]): # This is correct and matches (also only generates the fundamentals as expected which is great) but since I'm simplifying I'll keep the checks to avoid breaking
       limit = 2*N-a+2 # stack of opposing limits
       rc1 = (a-middle[0], middle[0]) # stack of coords representing Queens (get diag as sum of tuple)
       adg = rc1[0]-rc1[1] # antidiagonal
