@@ -96,12 +96,14 @@ for N, odd_N in [(N, N%2) for N in range(MIN_N, MAX_N+1)]:
               if rc2 in intersection or rc3 in intersection:
                 branch = (rc1, rc2, rc3)
                 if legal(frozenset(branch)):
+                  assert(branch not in dob_branches)
                   include(branch)
               else:
                 for d in range(c+1, limit+1):
                   for rc4 in scanline(d, [rc1, rc2, rc3], [adg, rc2[0]-rc2[1], rc3[0]-rc3[1]]):
                     branch = (rc1, rc2, rc3, rc4)
                     if legal(frozenset(branch)):
+                      assert(branch not in dob_branches)
                       include(branch)
 
     if (ob_branches, sb_branches) != (dob_branches, dsb_branches):
