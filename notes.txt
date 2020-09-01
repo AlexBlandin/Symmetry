@@ -31,7 +31,7 @@ there's either two or three spots on a scanline (discounting first Queen's row, 
   1+N/2 <= a < N
     a < b < 2N-a+2
       b < c < 2N-a+2
-        c < d < 2N-a+2 if c' not in I
+        c < d < 2N-a+2 if b' and c' not in I
 where a,b,c,d in 2..2N,
       ' is the function scanline->coordinate (a+b scanline, coord infers column/row), and
       I is the set of intersection squares
