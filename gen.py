@@ -2,7 +2,7 @@
 from itertools import product, combinations, starmap
 
 # Configure
-MIN_N, MAX_N = 1, 20
+MIN_N, MAX_N = 8, 8
 for N, odd_N in [(N, N%2) for N in range(MIN_N, MAX_N+1)]:
   ob_branches, sb_branches = set(), set()
   
@@ -95,16 +95,17 @@ for N, odd_N in [(N, N%2) for N in range(MIN_N, MAX_N+1)]:
       dob_branches |= s
       dsb_branches.add(lexo(branch))
     left, right = lambda t: t[0], lambda t: t[1]
-    def scanline(diag, coord=[], adia=[]):
-      return {Q for Q in ((middle[0], diag-middle[0]), (middle[1], diag-middle[1]), (diag-middle[1],middle[1])) if sum(Q)==diag and 1<=Q[0]<=N and 1<=Q[1]<=N and Q[0] not in map(left, coord) and Q[1] not in map(right, coord) and Q[0]-Q[1] not in adia}
+    def scanline(diag, v, coord=[], adia=[]): # simple vertical constraints in TODO: adiag limits (so we're doing the full orbital constraints, can then check with nested constraints after but first do the simple case)
+      return {Q for Q in ((middle[0], diag-middle[0]), (middle[1], diag-middle[1]), (diag-middle[1],middle[1])) if sum(Q)==diag and 1<=Q[0]<=N and 1<=Q[1]<=N and Q[0] not in map(left, coord) and Q[1] not in map(right, coord) and Q[0]-Q[1] not in adia and v[0]<=Q[1]<=v[1]} # v[0]<=Q[1]<=v[1] reduced 15 dupes to 11
     for a in range(1+middle[0], 2*middle[0]): # This is correct and matches but since I'm simplifying I'll keep the checks to avoid breaking
       limit = 2*N-a+2 # stack of opposing limits
       rc1 = (a-middle[0], middle[0]) # stack of coords representing Queens (get diag as sum of tuple)
+      v = (rc1[0], N-rc1[0]+1)
       adg = rc1[0]-rc1[1] # antidiagonal
       for b in range(a+1, limit+1):
-        for rc2 in scanline(b, [rc1], [adg]):
+        for rc2 in scanline(b, v, [rc1], [adg]):
           for c in range(b+1, limit+1):
-            for rc3 in scanline(c, [rc1, rc2], [adg, rc2[0]-rc2[1]]):
+            for rc3 in scanline(c, v, [rc1, rc2], [adg, rc2[0]-rc2[1]]):
               if rc2 in intersection or rc3 in intersection:
                 branch = (rc1, rc2, rc3)
                 if legal(frozenset(branch)):
@@ -112,7 +113,7 @@ for N, odd_N in [(N, N%2) for N in range(MIN_N, MAX_N+1)]:
                   else: include(branch)
               else:
                 for d in range(c+1, limit+1):
-                  for rc4 in scanline(d, [rc1, rc2, rc3], [adg, rc2[0]-rc2[1], rc3[0]-rc3[1]]):
+                  for rc4 in scanline(d, v, [rc1, rc2, rc3], [adg, rc2[0]-rc2[1], rc3[0]-rc3[1]]):
                     branch = (rc1, rc2, rc3, rc4)
                     if legal(frozenset(branch)):
                       if frozenset(branch) in dob_branches: printout([branch, lexo(branch)],True,True)
