@@ -87,7 +87,7 @@ for N, odd_N in [(N, N%2) for N in range(MIN_N, MAX_N+1)]:
 
     # TODO: Reduce to just generating fundamental
     # TODO: Simplify.
-
+    dupes = []
     dob_branches, dsb_branches = set(), set()
     def include(branch):
       global dob_branches, dsb_branches
@@ -109,20 +109,22 @@ for N, odd_N in [(N, N%2) for N in range(MIN_N, MAX_N+1)]:
               if rc2 in intersection or rc3 in intersection:
                 branch = (rc1, rc2, rc3)
                 if legal(frozenset(branch)):
-                  if frozenset(branch) in dob_branches: printout([branch, lexo(branch)],True,True)
+                  if frozenset(branch) in dob_branches: dupes.append(branch)
                   else: include(branch)
               else:
                 for d in range(c+1, limit+1):
                   for rc4 in scanline(d, v, [rc1, rc2, rc3], [adg, rc2[0]-rc2[1], rc3[0]-rc3[1]]):
                     branch = (rc1, rc2, rc3, rc4)
                     if legal(frozenset(branch)):
-                      if frozenset(branch) in dob_branches: printout([branch, lexo(branch)],True,True)
+                      if frozenset(branch) in dob_branches: dupes.append(branch)
                       else: include(branch)
 
     # all I can think of to deduplicate is fully constrain inwards (more than just diagonal scanline and first limit constraining)
     # then using each time we generate a full orbit like that to place around and get the low orbit branches, then we can
     # nest in from there, repeating the low orbit pattern etc, but how do we deduplicate "naturally"?
-
+    with open("dupes.txt", mode="w") as o:
+      newline="\n"
+      o.write("\n".join(f"{N} {tuple(branch)}\n{newline.join(board(branch))}\n" for branch in dupes))
     if ob_branches != dob_branches or sb_branches != dsb_branches:
       print(f"{N} doesn't match, (ob, sb) are {(len(ob_branches), len(sb_branches))} != {(len(dob_branches), len(dsb_branches))}")
       break
