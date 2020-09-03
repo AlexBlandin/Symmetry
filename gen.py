@@ -88,12 +88,8 @@ for N, odd_N in [(N, N%2) for N in range(MIN_N, MAX_N+1)]:
     # TODO: Reduce to just generating fundamental
     # TODO: Simplify.
     dupes = []
-    dob_branches, dsb_branches = set(), set()
-    def include(branch):
-      global dob_branches, dsb_branches
-      s = symmetries(branch)
-      dob_branches |= s
-      dsb_branches.add(lexo(branch))
+    dob_branches, dsb_branches = ob_branches, sb_branches # duplicated output for verification
+    ob_branches, sb_branches = set(), set() # reset and carry on
     left, right = lambda t: t[0], lambda t: t[1]
     def scanline(diag, v, coord=[], adia=[]): # simple vertical constraints in TODO: adiag limits (so we're doing the full orbital constraints, can then check with nested constraints after but first do the simple case)
       return {Q for Q in ((middle[0], diag-middle[0]), (middle[1], diag-middle[1]), (diag-middle[1],middle[1])) if sum(Q)==diag and 1<=Q[0]<=N and 1<=Q[1]<=N and Q[0] not in map(left, coord) and Q[1] not in map(right, coord) and Q[0]-Q[1] not in adia and v[0]<=Q[1]<=v[1]} # v[0]<=Q[1]<=v[1] reduced 15 dupes to 11
@@ -109,14 +105,14 @@ for N, odd_N in [(N, N%2) for N in range(MIN_N, MAX_N+1)]:
               if rc2 in intersection or rc3 in intersection:
                 branch = (rc1, rc2, rc3)
                 if legal(frozenset(branch)):
-                  if frozenset(branch) in dob_branches: dupes.append(branch)
+                  if frozenset(branch) in ob_branches: dupes.append(branch)
                   else: include(branch)
               else:
                 for d in range(c+1, limit+1):
                   for rc4 in scanline(d, v, [rc1, rc2, rc3], [adg, rc2[0]-rc2[1], rc3[0]-rc3[1]]):
                     branch = (rc1, rc2, rc3, rc4)
                     if legal(frozenset(branch)):
-                      if frozenset(branch) in dob_branches: dupes.append(branch)
+                      if frozenset(branch) in ob_branches: dupes.append(branch)
                       else: include(branch)
 
     # all I can think of to deduplicate is fully constrain inwards (more than just diagonal scanline and first limit constraining)
@@ -126,7 +122,7 @@ for N, odd_N in [(N, N%2) for N in range(MIN_N, MAX_N+1)]:
       newline="\n"
       o.write("\n".join(f"{N} {tuple(branch)}\n{newline.join(board(branch))}\n" for branch in dupes))
     if ob_branches != dob_branches or sb_branches != dsb_branches:
-      print(f"{N} doesn't match, (ob, sb) are {(len(ob_branches), len(sb_branches))} != {(len(dob_branches), len(dsb_branches))}")
+      print(f"{N} doesn't match, (ob, sb) are {(len(dob_branches), len(dsb_branches))} != {(len(ob_branches), len(sb_branches))}")
       break
 else:
   print("All green.")
