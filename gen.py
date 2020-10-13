@@ -87,6 +87,8 @@ for N, odd_N in [(N, N%2) for N in range(MIN_N, MAX_N+1)]:
 
     # TODO: Reduce to just generating fundamental
     # TODO: Simplify.
+    # TODO: NOTE: make use of order to iteration? since dupes all have pattern where at least one across the diagonal are as far from edge as rc1
+    #             can we use the order of iteration and knowledge of symmetry to prevent that whole rabbithole? so allowed once then blocked?
     dupes = []
     dob_branches, dsb_branches = ob_branches, sb_branches # duplicated output for verification
     ob_branches, sb_branches = set(), set() # reset and carry on
