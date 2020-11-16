@@ -16,6 +16,10 @@ Or, you can use a package manager such as [Poetry](https://github.com/python-poe
 
 `$ python3 sym.py` is all you need to run it. Supports [PyPy3.6 v7.3.1+](https://www.pypy.org/).
 
+## Cases
+
+`$ python3 gen.py` will generate examples to help figure out what is going on.
+
 ## Verify
 
 `$ python3 verify.py` will check `$ python3 sym.py`'s output for consistency and sanity.

@@ -1,5 +1,5 @@
 
-SB(odd N) = { { {(a,m), (m,b)} | a < b < m } | 1 <= a < m } U { {(m,m)} } given a,b in 1..N and m=(N-1)/2  (m is integral as odd N)
+SB(odd N) = { {(a,m), (m,b)} | a in 1..m-2, b in a+1..m-1 } U { {(m,m)} } given m=(N-1)/2  (int m as odd N)
 
 as nested loops
 
@@ -10,7 +10,7 @@ for a in 1 ... mid (exclusive)
 branch = {(mid, mid)} # handle 1-orbit case separately
 include(branch)
 
-this gives an outer Queen and an "inner" Queen for the branch (since for odd N they cannot be the same distance from the midpoint)
+this gives an "outer" Queen and an "inner" Queen for the branch (since for odd N they cannot be the same distance from the midpoint)
 since it is constructed this way, the outer constrains the inner, and it thus generates all legal branches except the midpoint itself (which we include by union)
 the 8-way symmetry can be observed in that we generate the outer Queen on the left half and the inner Queens on the upper half, and so we can follow the rotations around as clearly 4-way and then mirror the branch by anti-diagonal symmetry and rotate again for the remaining 4-ways (as we can see by clockwise rotation then either the outer or inner Queen is "leading" in the rotation and is always the one leading unless we mirror the two, wherein the other now leads)
 
@@ -49,7 +49,7 @@ ODD N:
 
 branches(odd N) = (N-1)(N-3) + 1
 
-reduced(odd N) = (N-1)(N-3)/8 + 1
+|sb(odd N)| = (N-1)(N-3)/8 + 1
 
 we derive the branches formula from the (N-1)*(N-1) product of the row*col (discounting the midpoint for -1), with then, assuming we are picking from the column, discounting for the two diagonally attacking Queens on the row (so N-1-2=N-3), and then adding the central square as it cannot pair with any others in this case but must be included as a valid branch
 
@@ -77,8 +77,9 @@ EVEN N:
 
 oeis superseeker guessed from even N 8..20:
 sb(n=N-7 (so N=8->n=1)) = a(n) = 2n^4 + 2n^3 + 11n^2 + 6n + 9.
-ofsetting so they're on the evens (n=N/2-3) gives (n^4 - 22n^3 + 202n^2 - 888n + 1584)/8
-which matches maxima's (n^4-22*n^3+202*n^2-888*n+1584)/8
+ofsetting so they're on the evens (n=N/2-3) gives
+|sb(even N)| = (N^4 - 22N^3 + 202N^2 - 888N + 1584)/8
+which matches maxima's (N^4-22*N^3+202*N^2-888*N+1584)/8
 The next few terms are 9977, 15534, 23169.
 as calculated:
 22 | 9977
