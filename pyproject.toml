@@ -1,37 +1,52 @@
-[tool.poetry]
+[project]
 name = "symmetry"
+description = "generate nqueens symmetries"
 version = "0.1.0"
-description = ""
-authors = ["AlexBlandin"]
+readme = "README.md"
+requires-python = ">=3.10"
+license = "MIT"
+authors = [{ name = "AlexBlandin" }]
+dependencies = []
 
-[tool.poetry.dependencies]
-python = "^3.9"
-tabulate = "^0.8.10"
+[project.optional-dependencies]
+dev = ["ruff", "pdbp", "basedmypy", "basedpyright"]
 
-[tool.poetry.group.dev.dependencies]
-pylint = "^2.14.5"
-yapf = "^0.32.0"
-isort = "^5.10.1"
-pyupgrade = "^2.37.3"
+[tool.ruff]
+indent-width = 2
+target-version = "py310"
+line-length = 120
 
-[build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
+[tool.ruff.lint]
+select = ["ALL"]
+ignore = [
+  "ERA",    # code comments actually help 
+  "INP001", # useless before hatch
+  "TD003",  # not using github to track todo/issues
+  "S311",   # I know when to use secrets
+  # "T20",    # print is good, actually 
+  "W191",   # ruff format
+  "E111",   # ruff format
+  "E114",   # ruff format
+  "E117",   # ruff format
+  "E203",   # ruff format
+  "D206",   # ruff format
+  "D212",   # ruff format
+  "D300",   # ruff format
+  "Q",      # ruff format
+  "COM812", # ruff format
+  "COM819", # ruff format
+  "ISC001", # ruff format
+  "ISC002", # ruff format
+]
 
-[tool.yapf]
-based_on_style = "pep8"
-indent_width = 2
-continuation_indent_width = 2
-column_limit = 120
-blank_line_before_nested_class_or_def = false
-blank_lines_around_top_level_definition = 1
-coalesce_brackets = true
-dedent_closing_brackets = true
-indent_dictionary_value = true
-indent_blank_lines = true
-space_between_ending_comma_and_closing_bracket = true
-spaces_around_default_or_named_assign = true
-spaces_before_comment = 1
+[tool.ruff.lint.pydocstyle]
+convention = "google"
+
+[tool.ruff.format]
+quote-style = "double"
+line-ending = "lf"
+indent-style = "space"
+skip-magic-trailing-comma = false
 
 [tool.isort]
 ensure_newline_before_comments = true

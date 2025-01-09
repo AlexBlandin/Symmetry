@@ -8,6 +8,7 @@ tempCodeRunnerFile.py
 *.so
 
 # Distribution / packaging
+.ruff_cache/
 .Python
 build/
 develop-eggs/
