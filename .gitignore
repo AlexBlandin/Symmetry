@@ -10,6 +10,7 @@ tempCodeRunnerFile.py
 # Distribution / packaging
 .ruff_cache/
 .Python
+poetry.lock
 build/
 develop-eggs/
 dist/
