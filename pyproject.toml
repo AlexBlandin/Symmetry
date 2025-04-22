@@ -3,7 +3,7 @@ name = "symmetry"
 description = "generate nqueens symmetries"
 version = "0.1.0"
 readme = "README.md"
-requires-python = ">=3.10"
+requires-python = ">=3.11"
 license = "MIT"
 authors = [{ name = "AlexBlandin" }]
 dependencies = []
@@ -13,7 +13,7 @@ dev = ["ruff", "pdbp", "basedmypy", "basedpyright"]
 
 [tool.ruff]
 indent-width = 2
-target-version = "py310"
+target-version = "py311"
 line-length = 120
 
 [tool.ruff.lint]
