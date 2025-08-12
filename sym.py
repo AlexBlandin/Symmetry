@@ -69,7 +69,7 @@ for N, odd_N in [(N, N % 2) for N in range(MIN_N, MAX_N + 1)]:
     global ob_branches, sb_branches
     s = symmetries(branch)
     c = len(s)
-    ob_branches.update({b: c for b in s})
+    ob_branches.update(dict.fromkeys(s, c))
     sb_branches.add(lexo(branch))
     lengths.update([len(branch)])
 
@@ -88,7 +88,7 @@ for N, odd_N in [(N, N % 2) for N in range(MIN_N, MAX_N + 1)]:
       global ob_branches, sb_branches
       s = symmetries(branch)
       c = len(s)
-      ob_branches.update({b: c for b in s})
+      ob_branches.update(dict.fromkeys(s, c))
       sb_branches.add(lexo(branch))
       lengths.update([len(branch)])
 
@@ -161,7 +161,7 @@ for N, odd_N in [(N, N % 2) for N in range(MIN_N, MAX_N + 1)]:
     err.append(f"sb_branches implies {len(sb_branches)} sb")
   if sb != sum(lengths.values()):
     err.append(f"lengths implies {sum(lengths.values())} sb")
-  if len(err):
+  if err:
     err = ", ".join(err)
   table.append([N, ob, sb, quotient, lengths, orbits, fundamental] + [err] * bool(len(err)))
   sorted_sb_branches = sorted(sorted(str(branch) for branch in map(set, sb_branches)), key=lambda branch: len(branch))
